@@ -1,5 +1,5 @@
 {
-  "name": "iaflex",
+  "name": "flixai",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -15,12 +15,15 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "3.1.1",
+    "@react-native-community/slider": "^4.5.0",
     "@react-navigation/native": "^6.0.2",
     "@tamagui/config": "^1.88.18",
+    "@tamagui/linear-gradient": "^1.88.18",
     "@tamagui/metro-plugin": "^1.88.18",
     "babel-preset-expo": "^10.0.1",
     "expo": "~50.0.5",
     "expo-font": "~11.10.2",
+    "expo-linear-gradient": "~12.7.1",
     "expo-linking": "~6.2.1",
     "expo-router": "~3.4.6",
     "expo-splash-screen": "~0.26.4",

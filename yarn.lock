@@ -2949,6 +2949,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/slider@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "@react-native-community/slider@npm:4.5.0"
+  checksum: acf8abf9018735e8a0f52b07af0fe0577a9f693733bec42eebe410ebcac527db2be7d8b657bd2a4f4034a8e16d914306ed843e0e13884abe24ae87dbefa2ad6e
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.73.1, @react-native/assets-registry@npm:~0.73.1":
   version: 0.73.1
   resolution: "@react-native/assets-registry@npm:0.73.1"
@@ -3996,7 +4003,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tamagui/linear-gradient@npm:1.88.18":
+"@tamagui/linear-gradient@npm:1.88.18, @tamagui/linear-gradient@npm:^1.88.18":
   version: 1.88.18
   resolution: "@tamagui/linear-gradient@npm:1.88.18"
   dependencies:
@@ -6742,6 +6749,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-linear-gradient@npm:~12.7.1":
+  version: 12.7.1
+  resolution: "expo-linear-gradient@npm:12.7.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 7836acb751adea60de84982e394c3ca41c54110311dc5ed7ad656053a7bb5e1c5e97865cd90f0256dfbd5c700d4a80030f215adfa7d12b9dbb9c13662eacc3cd
+  languageName: node
+  linkType: hard
+
 "expo-linking@npm:~6.2.1":
   version: 6.2.2
   resolution: "expo-linking@npm:6.2.2"
@@ -7075,6 +7091,41 @@ __metadata:
   checksum: 7fa7942849eef4d5385ee96a0a9a5a9afe885836fd72ed6a4280312a38690afea275e7d09b343fe97daf0412d833f8ac4b78c17fc756386d9ebebf0759d707a7
   languageName: node
   linkType: hard
+
+"flixai@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "flixai@workspace:."
+  dependencies:
+    "@babel/core": "npm:^7.23.3"
+    "@expo/metro-runtime": "npm:3.1.1"
+    "@react-native-community/slider": "npm:^4.5.0"
+    "@react-navigation/native": "npm:^6.0.2"
+    "@tamagui/config": "npm:^1.88.18"
+    "@tamagui/linear-gradient": "npm:^1.88.18"
+    "@tamagui/metro-plugin": "npm:^1.88.18"
+    "@types/react": "npm:~18.2.14"
+    babel-preset-expo: "npm:^10.0.1"
+    expo: "npm:~50.0.5"
+    expo-font: "npm:~11.10.2"
+    expo-linear-gradient: "npm:~12.7.1"
+    expo-linking: "npm:~6.2.1"
+    expo-router: "npm:~3.4.6"
+    expo-splash-screen: "npm:~0.26.4"
+    expo-status-bar: "npm:~1.11.1"
+    expo-system-ui: "npm:~2.9.3"
+    expo-web-browser: "npm:~12.8.2"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    react-helmet-async: "npm:~2.0.4"
+    react-native: "npm:0.73.2"
+    react-native-safe-area-context: "npm:4.8.2"
+    react-native-screens: "npm:~3.29.0"
+    react-native-web: "npm:^0.19.9"
+    react-query: "npm:^3.39.3"
+    replicate: "npm:^0.25.2"
+    tamagui: "npm:^1.88.18"
+  languageName: unknown
+  linkType: soft
 
 "flow-enums-runtime@npm:^0.0.6":
   version: 0.0.6
@@ -7642,38 +7693,6 @@ __metadata:
   checksum: d37883e6b7e1be62e1ddae29cac83fa59fb93c068bc8eb1561585439adbad91dcf7e264ee2a82c4378fc58049f7bd853544a4a81bf00d4aff717f641052323e7
   languageName: node
   linkType: hard
-
-"iaflex@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "iaflex@workspace:."
-  dependencies:
-    "@babel/core": "npm:^7.23.3"
-    "@expo/metro-runtime": "npm:3.1.1"
-    "@react-navigation/native": "npm:^6.0.2"
-    "@tamagui/config": "npm:^1.88.18"
-    "@tamagui/metro-plugin": "npm:^1.88.18"
-    "@types/react": "npm:~18.2.14"
-    babel-preset-expo: "npm:^10.0.1"
-    expo: "npm:~50.0.5"
-    expo-font: "npm:~11.10.2"
-    expo-linking: "npm:~6.2.1"
-    expo-router: "npm:~3.4.6"
-    expo-splash-screen: "npm:~0.26.4"
-    expo-status-bar: "npm:~1.11.1"
-    expo-system-ui: "npm:~2.9.3"
-    expo-web-browser: "npm:~12.8.2"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
-    react-helmet-async: "npm:~2.0.4"
-    react-native: "npm:0.73.2"
-    react-native-safe-area-context: "npm:4.8.2"
-    react-native-screens: "npm:~3.29.0"
-    react-native-web: "npm:^0.19.9"
-    react-query: "npm:^3.39.3"
-    replicate: "npm:^0.25.2"
-    tamagui: "npm:^1.88.18"
-  languageName: unknown
-  linkType: soft
 
 "iconv-lite@npm:^0.6.2":
   version: 0.6.3
