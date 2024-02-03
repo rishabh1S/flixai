@@ -1,25 +1,50 @@
-import React from "react";
-import { Label, YStack, Text } from "tamagui";
+import React, { useState } from "react";
+import { Label, YStack, Text, XStack } from "tamagui";
 import Slider from "@react-native-community/slider";
 
 interface SlidersProps {
   title: string;
   min: number;
   max: number;
+  step: number;
   defaultValue: number;
+  onValueChange: (value: number) => void;
 }
 
-const Sliders: React.FC<SlidersProps> = ({ title, min, max, defaultValue }) => {
+const Sliders: React.FC<SlidersProps> = ({
+  title,
+  min,
+  max,
+  step,
+  defaultValue,
+  onValueChange,
+}) => {
+  const [sliderValue, setSliderValue] = useState(defaultValue);
+
+  const handleValueChange = (value: number) => {
+    setSliderValue(value);
+    onValueChange(value);
+  };
+
   return (
     <YStack>
-      <Label>{title}</Label>
+      <XStack justifyContent="space-between" alignContent="center">
+        <Label>{title}</Label>
+        <Label color="gray">
+          {sliderValue % 1 === 0
+            ? sliderValue.toFixed(0)
+            : sliderValue.toFixed(2)}
+        </Label>
+      </XStack>
       <Slider
         minimumValue={min}
         maximumValue={max}
         value={defaultValue}
+        step={step}
         minimumTrackTintColor="#CD2B31"
         maximumTrackTintColor="red"
         thumbTintColor="#EB9091"
+        onValueChange={handleValueChange}
       />
       <Text color="gray" fontSize="$2">
         {`Default: ${defaultValue}`}

@@ -12,7 +12,31 @@ import {
 import { Feather } from "@expo/vector-icons";
 import Sliders from "./Sliders";
 
-const Accordians = () => {
+interface AccordiansProps {
+  negativePrompt: string;
+  setNegativePrompt: React.Dispatch<React.SetStateAction<string>>;
+  imageSeed: string;
+  setImageSeed: React.Dispatch<React.SetStateAction<string>>;
+  sharpness: number;
+  setSharpness: React.Dispatch<React.SetStateAction<number>>;
+  guidanceScale: number;
+  setGuidanceScale: React.Dispatch<React.SetStateAction<number>>;
+  refinerSwitch: number;
+  setRefinerSwitch: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Accordians: React.FC<AccordiansProps> = ({
+  negativePrompt,
+  setNegativePrompt,
+  imageSeed,
+  setImageSeed,
+  sharpness,
+  setSharpness,
+  guidanceScale,
+  setGuidanceScale,
+  refinerSwitch,
+  setRefinerSwitch,
+}) => {
   return (
     <Accordion overflow="hidden" type="multiple" theme="red">
       <Accordion.Item value="a1">
@@ -50,22 +74,47 @@ const Accordians = () => {
               rows={4}
               borderWidth={1}
               placeholder="unrealistic, saturated, watermark..."
+              value={negativePrompt}
+              onChangeText={setNegativePrompt}
             />
           </YStack>
           <YStack>
             <Label>Image Seed</Label>
-            <Input cursorColor="white" flex={1} size="$4" placeholder="-1" />
+            <Input
+              cursorColor="white"
+              flex={1}
+              size="$4"
+              placeholder="-1"
+              value={imageSeed}
+              onChangeText={setImageSeed}
+            />
             <Text color="gray" fontSize="$2">
               Seed to generate image, -1 for random
             </Text>
           </YStack>
-          <Sliders title="Sharpness" min={0} max={30} defaultValue={2} />
-          <Sliders title="Guidance Scale" min={1} max={30} defaultValue={4} />
+          <Sliders
+            title="Sharpness"
+            min={0}
+            max={30}
+            step={1}
+            defaultValue={2}
+            onValueChange={setSharpness}
+          />
+          <Sliders
+            title="Guidance Scale"
+            min={1}
+            max={30}
+            step={1}
+            defaultValue={4}
+            onValueChange={setGuidanceScale}
+          />
           <Sliders
             title="Refiner Switch"
             min={0.1}
             max={1}
+            step={0.01}
             defaultValue={0.5}
+            onValueChange={setRefinerSwitch}
           />
         </Accordion.Content>
       </Accordion.Item>

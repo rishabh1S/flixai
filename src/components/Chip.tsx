@@ -3,11 +3,18 @@ import React from "react";
 
 interface ChipProps {
   title: string;
+  selected: boolean;
+  onPress: () => void;
 }
-const Chip: React.FC<ChipProps> = ({ title }) => {
+const Chip: React.FC<ChipProps> = ({ title, selected, onPress }) => {
   return (
-    <TouchableOpacity>
-      <View style={styles.container}>
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={[
+          styles.container,
+          { backgroundColor: selected ? "#F2555A" : "transparent" },
+        ]}
+      >
         <Text style={styles.text}>{title}</Text>
       </View>
     </TouchableOpacity>
@@ -18,7 +25,7 @@ export default Chip;
 
 const styles = StyleSheet.create({
   container: {
-    borderColor: "#EB9091",
+    borderColor: "#F2555A",
     paddingVertical: 4,
     paddingHorizontal: 16,
     borderWidth: 1,

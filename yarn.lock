@@ -6700,6 +6700,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-blur@npm:~12.9.1":
+  version: 12.9.1
+  resolution: "expo-blur@npm:12.9.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 4e34ebd0e08cb617abb4bb30ec5dfdd31a468cc3c039cc5dbfa646969ba91e3979e8e86c99b620c76ace07ee79dd49ed24b5e5d0ff0017d5e7e17f65cc80b864
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~15.4.0, expo-constants@npm:~15.4.3":
   version: 15.4.3
   resolution: "expo-constants@npm:15.4.3"
@@ -7106,6 +7115,7 @@ __metadata:
     "@types/react": "npm:~18.2.14"
     babel-preset-expo: "npm:^10.0.1"
     expo: "npm:~50.0.5"
+    expo-blur: "npm:~12.9.1"
     expo-font: "npm:~11.10.2"
     expo-linear-gradient: "npm:~12.7.1"
     expo-linking: "npm:~6.2.1"
@@ -7114,6 +7124,7 @@ __metadata:
     expo-status-bar: "npm:~1.11.1"
     expo-system-ui: "npm:~2.9.3"
     expo-web-browser: "npm:~12.8.2"
+    lottie-react-native: "npm:^6.6.0"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
     react-helmet-async: "npm:~2.0.4"
@@ -8827,6 +8838,26 @@ __metadata:
   bin:
     loose-envify: cli.js
   checksum: 6517e24e0cad87ec9888f500c5b5947032cdfe6ef65e1c1936a0c48a524b81e65542c9c3edc91c97d5bddc806ee2a985dbc79be89215d613b1de5db6d1cfe6f4
+  languageName: node
+  linkType: hard
+
+"lottie-react-native@npm:^6.6.0":
+  version: 6.6.0
+  resolution: "lottie-react-native@npm:6.6.0"
+  peerDependencies:
+    "@dotlottie/react-player": ^1.6.1
+    "@lottiefiles/react-lottie-player": ^3.5.3
+    react: "*"
+    react-native: ">=0.46"
+    react-native-windows: ">=0.63.x"
+  peerDependenciesMeta:
+    "@dotlottie/react-player":
+      optional: true
+    "@lottiefiles/react-lottie-player":
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: 07c486e2477fbad76f1ad0543abba0a0d50fc25a521bbc078b8a0cbddf19c322f5b02d9f7d08f1531d17f50732aa779193411e49f37e7d73158dee39c18d557a
   languageName: node
   linkType: hard
 

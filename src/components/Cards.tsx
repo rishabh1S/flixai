@@ -1,30 +1,42 @@
 import React from "react";
-import { Card, H3, H4, Image } from "tamagui";
+import { TouchableOpacity } from "react-native";
+import { Card, H4, Image } from "tamagui";
+import { BlurView } from "expo-blur";
 
-interface ImageCardProps {
+interface CardsProps {
   uri: string;
   title: string;
+  selected: boolean;
+  onPress: () => void;
 }
 
-const Cards: React.FC<ImageCardProps> = ({ uri, title }) => {
+const Cards: React.FC<CardsProps> = ({ uri, title, selected, onPress }) => {
   return (
-    <Card elevate size="$4.5" marginRight="$2" width={120} height={85}>
-      <Card.Header>
-        <H4 fontSize={18}>{title}</H4>
-      </Card.Header>
-      <Card.Background>
-        <Image
-          resizeMode="cover"
-          alignSelf="center"
-          source={{
-            width: 120,
-            height: 85,
-            uri: uri,
-          }}
-          borderRadius={16}
-        />
-      </Card.Background>
-    </Card>
+    <TouchableOpacity onPress={onPress}>
+      <Card
+        elevate
+        marginRight="$2"
+        width={120}
+        height={85}
+        overflow="hidden"
+        borderWidth={selected ? 1 : 0}
+        borderColor="$red11Dark"
+      >
+        <Card.Header>
+          <H4 fontSize={18}>{selected ? null : title}</H4>
+        </Card.Header>
+        <Card.Background>
+          <Image
+            alignSelf="center"
+            source={{
+              width: 120,
+              height: 85,
+              uri: uri,
+            }}
+          />
+        </Card.Background>
+      </Card>
+    </TouchableOpacity>
   );
 };
 

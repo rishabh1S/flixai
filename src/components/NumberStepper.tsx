@@ -6,9 +6,17 @@ import { AntDesign } from "@expo/vector-icons";
 interface NumberStepperProps {
   min: number;
   max: number;
+  value: number;
+  onDecrease: () => void;
+  onIncrease: () => void;
 }
-const NumberStepper: React.FC<NumberStepperProps> = ({ min, max }) => {
-  const [value, setValue] = useState(min);
+const NumberStepper: React.FC<NumberStepperProps> = ({
+  min,
+  max,
+  value,
+  onDecrease,
+  onIncrease,
+}) => {
   return (
     <XStack
       justifyContent="space-between"
@@ -25,14 +33,7 @@ const NumberStepper: React.FC<NumberStepperProps> = ({ min, max }) => {
         <Label fontSize="$7">Images</Label>
       </XStack>
       <XStack alignItems="center" gap="$2">
-        <Button
-          size="$2"
-          onPress={() => {
-            if (value > min) {
-              setValue(value - 1);
-            }
-          }}
-        >
+        <Button size="$2" onPress={onDecrease}>
           <AntDesign name="minus" size={18} color="white" />
         </Button>
         <View
@@ -43,14 +44,7 @@ const NumberStepper: React.FC<NumberStepperProps> = ({ min, max }) => {
         >
           <Text>{value}</Text>
         </View>
-        <Button
-          size="$2"
-          onPress={() => {
-            if (value < max) {
-              setValue(value + 1);
-            }
-          }}
-        >
+        <Button size="$2" onPress={onIncrease}>
           <AntDesign name="plus" size={18} color="white" />
         </Button>
       </XStack>
