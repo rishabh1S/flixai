@@ -1,10 +1,10 @@
-import { router } from "expo-router";
 import React, { useState } from "react";
-import { TouchableOpacity, Alert } from "react-native";
+import { Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "@tamagui/linear-gradient";
+import { aspectRatios, presetData } from "@/src/constants/data";
 import {
   Button,
-  Image,
   Label,
   ScrollView,
   TextArea,
@@ -14,22 +14,22 @@ import {
   YStack,
   Switch,
 } from "tamagui";
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { Accordians, Cards, Chip, NumberStepper } from "@/src/components";
-import { Feather } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-
-const aspectRatios = [
-  { title: "1:1", resolution: "1024x1024" },
-  { title: "3:5", resolution: "768x1280" },
-  { title: "9:7", resolution: "1152x896" },
-  { title: "18:9", resolution: "1408x704" },
-  { title: "5:2", resolution: "1600x640" },
-];
+import {
+  Accordians,
+  Cards,
+  Chip,
+  Headers,
+  NumberStepper,
+} from "@/src/components";
+import {
+  Feather,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+import ResultModal from "@/src/components/ResultModal";
 
 export default function GenerateScreen() {
+  const [isModalVisible, setModalVisible] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [selectedResolution, setSelectedResolution] = useState(aspectRatios[2]);
   const [imageQuality, setImageQuality] = useState("Speed");
@@ -56,44 +56,13 @@ export default function GenerateScreen() {
       );
       return;
     }
-    router.push({
-      pathname: "/resultModal",
-      params: {
-        prompt,
-        resolution: selectedResolution.resolution,
-        imageQuality,
-        imageNumber,
-        selectedPreset,
-        negativePrompt,
-        imageSeed,
-        sharpness,
-        guidanceScale,
-        refinerSwitch,
-      },
-    });
+    setModalVisible(true);
   };
 
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
       <SafeAreaView style={{ marginBottom: 10 }}>
-        <View
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          marginHorizontal={16}
-          marginVertical={8}
-        >
-          <View>
-            <Image
-              flex={1}
-              width={100}
-              source={require("../../../assets/images/logo.png")}
-            />
-          </View>
-          <TouchableOpacity onPress={() => router.replace("/")}>
-            <AntDesign name="message1" size={24} color="white" />
-          </TouchableOpacity>
-        </View>
+        <Headers />
         <View marginHorizontal="$2.5">
           <View flexDirection="row" alignItems="center" gap="$2">
             <Label size="$5">Enter your prompt</Label>
@@ -110,6 +79,10 @@ export default function GenerateScreen() {
           />
         </View>
       </SafeAreaView>
+      <ResultModal
+        isVisible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -172,24 +145,15 @@ export default function GenerateScreen() {
             Choose Preset
           </Label>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <Cards
-              title="Default"
-              uri="https://res.cloudinary.com/dnp36kqdc/image/upload/v1706910913/FlixAi/default-sample.png"
-              selected={selectedPreset === "Default"}
-              onPress={() => setSelectedPreset("Default")}
-            />
-            <Cards
-              title="Realistic"
-              uri="https://res.cloudinary.com/dnp36kqdc/image/upload/v1706910913/FlixAi/realistic-sample.png"
-              selected={selectedPreset === "Realistic"}
-              onPress={() => setSelectedPreset("Realistic")}
-            />
-            <Cards
-              title="Anime"
-              uri="https://res.cloudinary.com/dnp36kqdc/image/upload/v1706910914/FlixAi/anime-sample.png"
-              selected={selectedPreset === "Anime"}
-              onPress={() => setSelectedPreset("Anime")}
-            />
+            {presetData.map((preset) => (
+              <Cards
+                key={preset.key}
+                title={preset.title}
+                uri={preset.uri}
+                selected={selectedPreset === preset.key}
+                onPress={() => setSelectedPreset(preset.key)}
+              />
+            ))}
           </ScrollView>
         </YStack>
         <YStack marginVertical="$2.5">
@@ -208,7 +172,8 @@ export default function GenerateScreen() {
         </YStack>
         <View flex={1} justifyContent="flex-end" marginBottom="$2">
           <Button
-            backgroundColor="$red11Dark"
+            backgroundColor="$red10Dark"
+            theme="red"
             borderRadius="$6"
             marginHorizontal="$2.5"
             onPress={handleGenerate}
