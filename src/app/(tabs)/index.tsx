@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "@tamagui/linear-gradient";
@@ -27,11 +27,12 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import ResultModal from "@/src/components/ResultModal";
 import { generateImage } from "@/api/index";
+import { router } from "expo-router";
+import { useImageContext } from "@/src/context/ImageContext";
 
 export default function GenerateScreen() {
-  const [isModalVisible, setModalVisible] = useState(false);
+  const { updateGeneratedImages, updatePrompt } = useImageContext();
   const [prompt, setPrompt] = useState("");
   const [selectedResolution, setSelectedResolution] = useState(aspectRatios[2]);
   const [imageQuality, setImageQuality] = useState("Speed");
@@ -46,7 +47,6 @@ export default function GenerateScreen() {
   const [refinerSwitch, setRefinerSwitch] = useState(0.5);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [generatedImage, setGeneratedImage] = useState("");
 
   const isValidPrompt = prompt
     .trim()
@@ -65,6 +65,8 @@ export default function GenerateScreen() {
     setIsLoading(true);
 
     const params = {
+      prompt,
+      selectedPreset,
       selectedResolution,
       imageQuality,
       imageNumber,
@@ -76,12 +78,10 @@ export default function GenerateScreen() {
     };
 
     try {
-      const response = await generateImage({
-        prompt,
-        ...params,
-      });
-      setGeneratedImage(response.output[0]);
-      setModalVisible(true);
+      const response = await generateImage(params);
+      updateGeneratedImages(response.output);
+      updatePrompt(prompt);
+      router.push("/resultModal");
     } catch (error) {
       console.error(error);
     } finally {
@@ -113,12 +113,6 @@ export default function GenerateScreen() {
               />
             </View>
           </SafeAreaView>
-          <ResultModal
-            isVisible={isModalVisible}
-            onClose={() => setModalVisible(false)}
-            imageUrl={generatedImage}
-            prompt={prompt}
-          />
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
@@ -156,7 +150,6 @@ export default function GenerateScreen() {
               </YStack>
               <Switch
                 size="$2"
-                theme="red"
                 onCheckedChange={(value) =>
                   setImageQuality(value ? "Quality" : "Speed")
                 }
