@@ -20,13 +20,21 @@ import {
   Octicons,
   Feather,
 } from "@expo/vector-icons";
+import * as Clipboard from "expo-clipboard";
 
 interface ResultModalProps {
   isVisible: boolean;
   onClose: () => void;
+  imageUrl: string;
+  prompt: string;
 }
 
-const ResultModal: React.FC<ResultModalProps> = ({ isVisible, onClose }) => {
+const ResultModal: React.FC<ResultModalProps> = ({
+  isVisible,
+  onClose,
+  imageUrl,
+  prompt,
+}) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -45,7 +53,7 @@ const ResultModal: React.FC<ResultModalProps> = ({ isVisible, onClose }) => {
       <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
         <SafeAreaView
           style={{
-            marginBottom: 12,
+            marginBottom: 8,
           }}
         >
           <View
@@ -72,7 +80,7 @@ const ResultModal: React.FC<ResultModalProps> = ({ isVisible, onClose }) => {
           <Card elevate overflow="hidden">
             <Image
               source={{
-                uri: "https://res.cloudinary.com/dnp36kqdc/image/upload/v1706910913/FlixAi/default-sample.png",
+                uri: imageUrl,
               }}
               style={{ aspectRatio: 9 / 13 }}
             />
@@ -115,9 +123,19 @@ const ResultModal: React.FC<ResultModalProps> = ({ isVisible, onClose }) => {
               size="$5"
               borderWidth={1}
               rows={5}
-              placeholder="Forest Elf"
+              placeholder={prompt}
               disabled
             />
+            <TouchableOpacity
+              onPress={async () => await Clipboard.setStringAsync(prompt)}
+            >
+              <MaterialIcons
+                name="content-copy"
+                size={24}
+                color="#CD2B31"
+                style={{ position: "absolute", bottom: 8, right: 8 }}
+              />
+            </TouchableOpacity>
           </YStack>
         </YStack>
       </LinearGradient>

@@ -15,8 +15,8 @@ import Sliders from "./Sliders";
 interface AccordiansProps {
   negativePrompt: string;
   setNegativePrompt: React.Dispatch<React.SetStateAction<string>>;
-  imageSeed: string;
-  setImageSeed: React.Dispatch<React.SetStateAction<string>>;
+  imageSeed: number;
+  setImageSeed: React.Dispatch<React.SetStateAction<number>>;
   sharpness: number;
   setSharpness: React.Dispatch<React.SetStateAction<number>>;
   guidanceScale: number;
@@ -85,8 +85,8 @@ const Accordians: React.FC<AccordiansProps> = ({
               flex={1}
               size="$4"
               placeholder="-1"
-              value={imageSeed}
-              onChangeText={setImageSeed}
+              value={imageSeed.toString()}
+              onChangeText={(text) => setImageSeed(parseInt(text, 10))}
             />
             <Text color="gray" fontSize="$2">
               Seed to generate image, -1 for random
