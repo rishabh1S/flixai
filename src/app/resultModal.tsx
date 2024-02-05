@@ -1,31 +1,40 @@
-import React, { useState } from "react";
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
-  View,
-  Text,
-  Image,
-  Card,
-  Button,
-  XStack,
-  YStack,
-  TextArea,
-  Label,
-  ScrollView,
-} from "tamagui";
-import { Dimensions, Pressable, TouchableOpacity } from "react-native";
-import {
-  MaterialIcons,
   MaterialCommunityIcons,
+  MaterialIcons,
   Octicons,
 } from "@expo/vector-icons";
+import { LinearGradient } from "@tamagui/linear-gradient";
 import * as Clipboard from "expo-clipboard";
+import * as FileSystem from "expo-file-system";
+import * as Haptics from "expo-haptics";
+import * as MediaLibrary from "expo-media-library";
 import { router } from "expo-router";
-import { useImageContext } from "../context/ImageContext";
-import Carousel from "react-native-reanimated-carousel";
+import React, { useState } from "react";
+import {
+  Alert,
+  Dimensions,
+  Pressable,
+  Share,
+  TouchableOpacity,
+} from "react-native";
 import ImageView from "react-native-image-viewing";
+import Carousel from "react-native-reanimated-carousel";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  Button,
+  Card,
+  Image,
+  Label,
+  ScrollView,
+  Text,
+  TextArea,
+  View,
+  XStack,
+  YStack,
+} from "tamagui";
+import { useImageContext } from "../context/ImageContext";
 var { width, height } = Dimensions.get("window");
-
+import Toast from "react-native-simple-toast";
 interface DotIndicatorProps {
   totalDots: number;
   activeIndex: number;
@@ -53,46 +62,77 @@ const DotIndicator: React.FC<DotIndicatorProps> = ({
   </XStack>
 );
 
-const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => (
-  <Pressable onPress={onPress}>
-    <YStack gap="$2">
-      <Card elevate overflow="hidden">
-        <Image source={{ uri: item }} style={{ aspectRatio: 9 / 13 }} />
-      </Card>
-      <XStack
-        theme={"red"}
-        gap="$4"
-        justifyContent="center"
-        marginVertical="$2"
-      >
-        <Button
-          iconAfter={<Octicons name="download" size={24} color="white" />}
-          size="$3"
+const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
+  const handleDownload = async () => {
+    try {
+      const { status } = await MediaLibrary.requestPermissionsAsync();
+
+      if (status !== "granted") {
+        Alert.alert(
+          "Permission Denied",
+          "Please grant permission to save images."
+        );
+        return;
+      }
+
+      const res = await FileSystem.downloadAsync(
+        item,
+        `${FileSystem.documentDirectory}${item.split("/").pop()}`
+      );
+      await MediaLibrary.createAssetAsync(res.uri);
+      Toast.show("Download complete ✅", Toast.BOTTOM);
+    } catch (error) {
+      Toast.show("Failed to save image. Please try again.", Toast.BOTTOM);
+    }
+  };
+
+  return (
+    <Pressable onPress={onPress}>
+      <YStack gap="$2">
+        <Card elevate overflow="hidden">
+          <Image source={{ uri: item }} style={{ aspectRatio: 9 / 13 }} />
+        </Card>
+        <XStack
+          theme={"red"}
+          gap="$4"
+          justifyContent="center"
+          marginVertical="$2"
         >
-          Download
-        </Button>
-        <Button
-          iconAfter={<MaterialIcons name="publish" size={24} color="white" />}
-          size="$3"
-        >
-          Post
-        </Button>
-        <Button
-          iconAfter={
-            <MaterialCommunityIcons
-              name="share-outline"
-              size={24}
-              color="white"
-            />
-          }
-          size="$3"
-        >
-          Share
-        </Button>
-      </XStack>
-    </YStack>
-  </Pressable>
-);
+          <Button
+            iconAfter={<Octicons name="download" size={24} color="white" />}
+            size="$3"
+            onPress={handleDownload}
+          >
+            Download
+          </Button>
+          <Button
+            iconAfter={<MaterialIcons name="publish" size={24} color="white" />}
+            size="$3"
+          >
+            Post
+          </Button>
+          <Button
+            iconAfter={
+              <MaterialCommunityIcons
+                name="share-outline"
+                size={24}
+                color="white"
+              />
+            }
+            onPress={() =>
+              Share.share({
+                message: `Check out this amazing image generated with FlixAi! 🚀✨\n\n${item}\n\nDownload the app now to create your own unique images: [Your App Download Link]`,
+              })
+            }
+            size="$3"
+          >
+            Share
+          </Button>
+        </XStack>
+      </YStack>
+    </Pressable>
+  );
+};
 
 export default function resultModal() {
   const { generatedImages, prompt } = useImageContext();
@@ -166,7 +206,10 @@ export default function resultModal() {
             disabled
           />
           <TouchableOpacity
-            onPress={async () => await Clipboard.setStringAsync(prompt)}
+            onPress={async () => {
+              await Clipboard.setStringAsync(prompt);
+              Haptics.selectionAsync();
+            }}
           >
             <MaterialIcons
               name="content-copy"

@@ -1,19 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { aspectRatios, presetData } from "@/src/constants/data";
-import {
-  Button,
-  Label,
-  ScrollView,
-  TextArea,
-  Text,
-  View,
-  XStack,
-  YStack,
-  Switch,
-} from "tamagui";
+import { generateImage } from "@/api/index";
 import {
   Accordians,
   Cards,
@@ -22,15 +7,31 @@ import {
   Loader,
   NumberStepper,
 } from "@/src/components";
+import { aspectRatios, presetData } from "@/src/constants/data";
+import { defaultValues } from "@/src/constants/default";
+import { randomPrompts } from "@/src/constants/randomPrompts";
+import { useImageContext } from "@/src/context/ImageContext";
 import {
-  Feather,
+  FontAwesome5,
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { generateImage } from "@/api/index";
+import { LinearGradient } from "@tamagui/linear-gradient";
 import { router } from "expo-router";
-import { useImageContext } from "@/src/context/ImageContext";
-import { defaultValues } from "@/src/constants/default";
+import React, { useEffect, useState } from "react";
+import { Alert } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  Button,
+  Label,
+  ScrollView,
+  Switch,
+  Text,
+  TextArea,
+  View,
+  XStack,
+  YStack,
+} from "tamagui";
 
 export default function GenerateScreen() {
   const { updateGeneratedImages, updatePrompt } = useImageContext();
@@ -62,6 +63,12 @@ export default function GenerateScreen() {
     .trim()
     .split(/\s+/)
     .some((word) => word.length > 1);
+
+  const handleSurpriseMeClick = () => {
+    const randomPrompt =
+      randomPrompts[Math.floor(Math.random() * randomPrompts.length)];
+    setPrompt(randomPrompt);
+  };
 
   const handleGenerate = async () => {
     if (!isValidPrompt) {
@@ -106,12 +113,28 @@ export default function GenerateScreen() {
         <Loader />
       ) : (
         <>
-          <SafeAreaView style={{ marginBottom: 10 }}>
+          <SafeAreaView style={{ marginBottom: 15 }}>
             <Headers />
             <View marginHorizontal="$2.5">
-              <View flexDirection="row" alignItems="center" gap="$2">
+              <View
+                flexDirection="row"
+                alignItems="center"
+                justifyContent="space-between"
+                gap="$2"
+                marginHorizontal="$1"
+              >
                 <Label size="$5">Enter your prompt</Label>
-                <Feather name="info" size={18} color="blue" />
+                <Button
+                  onPress={handleSurpriseMeClick}
+                  theme="red"
+                  iconAfter={
+                    <FontAwesome5 name="lightbulb" size={14} color="yellow" />
+                  }
+                  size="$2"
+                  borderRadius="$4"
+                >
+                  <Text>Surprise Me</Text>
+                </Button>
               </View>
               <TextArea
                 cursorColor="white"
@@ -189,7 +212,7 @@ export default function GenerateScreen() {
               <Label fontSize="$7" marginBottom="$1">
                 Choose Preset
               </Label>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <XStack>
                 {presetData.map((preset) => (
                   <Cards
                     key={preset.key}
@@ -199,7 +222,7 @@ export default function GenerateScreen() {
                     onPress={() => setSelectedPreset(preset.key)}
                   />
                 ))}
-              </ScrollView>
+              </XStack>
             </YStack>
             <YStack marginVertical="$2.5">
               <Accordians
