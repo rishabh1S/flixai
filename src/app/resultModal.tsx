@@ -13,7 +13,7 @@ import {
   Label,
   ScrollView,
 } from "tamagui";
-import { Dimensions, TouchableOpacity } from "react-native";
+import { Dimensions, Pressable, TouchableOpacity } from "react-native";
 import {
   MaterialIcons,
   MaterialCommunityIcons,
@@ -23,7 +23,7 @@ import * as Clipboard from "expo-clipboard";
 import { router } from "expo-router";
 import { useImageContext } from "../context/ImageContext";
 import Carousel from "react-native-reanimated-carousel";
-
+import ImageView from "react-native-image-viewing";
 var { width, height } = Dimensions.get("window");
 
 interface DotIndicatorProps {
@@ -31,26 +31,78 @@ interface DotIndicatorProps {
   activeIndex: number;
 }
 
+interface ResultItemProps {
+  item: string;
+  onPress: () => void;
+}
+
+const DotIndicator: React.FC<DotIndicatorProps> = ({
+  totalDots,
+  activeIndex,
+}) => (
+  <XStack justifyContent="center" gap="$2">
+    {Array.from({ length: totalDots }).map((_, index) => (
+      <View
+        key={index}
+        width={8}
+        height={8}
+        borderRadius="$10"
+        backgroundColor={index === activeIndex ? "$red10Light" : "gray"}
+      />
+    ))}
+  </XStack>
+);
+
+const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => (
+  <Pressable onPress={onPress}>
+    <YStack gap="$2">
+      <Card elevate overflow="hidden">
+        <Image source={{ uri: item }} style={{ aspectRatio: 9 / 13 }} />
+      </Card>
+      <XStack
+        theme={"red"}
+        gap="$4"
+        justifyContent="center"
+        marginVertical="$2"
+      >
+        <Button
+          iconAfter={<Octicons name="download" size={24} color="white" />}
+          size="$3"
+        >
+          Download
+        </Button>
+        <Button
+          iconAfter={<MaterialIcons name="publish" size={24} color="white" />}
+          size="$3"
+        >
+          Post
+        </Button>
+        <Button
+          iconAfter={
+            <MaterialCommunityIcons
+              name="share-outline"
+              size={24}
+              color="white"
+            />
+          }
+          size="$3"
+        >
+          Share
+        </Button>
+      </XStack>
+    </YStack>
+  </Pressable>
+);
+
 export default function resultModal() {
   const { generatedImages, prompt } = useImageContext();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isImageViewVisible, setIsImageViewVisible] = useState(false);
 
-  const DotIndicator: React.FC<DotIndicatorProps> = ({
-    totalDots,
-    activeIndex,
-  }) => (
-    <XStack justifyContent="center" gap="$2">
-      {Array.from({ length: totalDots }).map((_, index) => (
-        <View
-          key={index}
-          width={8}
-          height={8}
-          borderRadius="$10"
-          backgroundColor={index === activeIndex ? "$red10Light" : "gray"}
-        />
-      ))}
-    </XStack>
-  );
+  const openImageView = (index: React.SetStateAction<number>) => {
+    setActiveIndex(index);
+    setIsImageViewVisible(true);
+  };
 
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
@@ -80,60 +132,30 @@ export default function resultModal() {
         marginHorizontal="$3"
         showsVerticalScrollIndicator={false}
       >
-        <Carousel
-          data={generatedImages}
-          renderItem={({ item }) => (
-            <YStack gap="$2">
-              <Card elevate overflow="hidden">
-                <Image source={{ uri: item }} style={{ aspectRatio: 9 / 13 }} />
-              </Card>
-              <XStack
-                theme={"red"}
-                gap="$4"
-                justifyContent="center"
-                marginVertical="$2"
-              >
-                <Button
-                  iconAfter={
-                    <Octicons name="download" size={24} color="white" />
-                  }
-                  size="$3"
-                >
-                  Download
-                </Button>
-                <Button
-                  iconAfter={
-                    <MaterialIcons name="publish" size={24} color="white" />
-                  }
-                  size="$3"
-                >
-                  Post
-                </Button>
-                <Button
-                  iconAfter={
-                    <MaterialCommunityIcons
-                      name="share-outline"
-                      size={24}
-                      color="white"
-                    />
-                  }
-                  size="$3"
-                >
-                  Share
-                </Button>
-              </XStack>
-            </YStack>
-          )}
-          width={width * 0.94}
-          height={height * 0.7}
-          pagingEnabled
-          onSnapToItem={(index) => setActiveIndex(index)}
-        />
-        <YStack marginTop="$2">
-          <DotIndicator
-            totalDots={generatedImages.length}
-            activeIndex={activeIndex}
+        {generatedImages.length > 1 ? (
+          <Carousel
+            data={generatedImages}
+            renderItem={({ item, index }) => (
+              <ResultItem item={item} onPress={() => openImageView(index)} />
+            )}
+            width={width * 0.93}
+            height={height * 0.7}
+            pagingEnabled
+            onSnapToItem={(index) => setActiveIndex(index)}
           />
+        ) : (
+          <ResultItem
+            item={generatedImages[0]}
+            onPress={() => openImageView(0)}
+          />
+        )}
+        <YStack marginTop="$2">
+          {generatedImages.length > 1 && (
+            <DotIndicator
+              totalDots={generatedImages.length}
+              activeIndex={activeIndex}
+            />
+          )}
           <Label fontSize="$7">Prompt</Label>
           <TextArea
             theme={"red"}
@@ -154,6 +176,12 @@ export default function resultModal() {
             />
           </TouchableOpacity>
         </YStack>
+        <ImageView
+          images={generatedImages.map((uri) => ({ uri }))}
+          imageIndex={activeIndex}
+          visible={isImageViewVisible}
+          onRequestClose={() => setIsImageViewVisible(false)}
+        />
       </ScrollView>
     </LinearGradient>
   );

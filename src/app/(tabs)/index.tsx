@@ -30,23 +30,33 @@ import {
 import { generateImage } from "@/api/index";
 import { router } from "expo-router";
 import { useImageContext } from "@/src/context/ImageContext";
+import { defaultValues } from "@/src/constants/default";
 
 export default function GenerateScreen() {
   const { updateGeneratedImages, updatePrompt } = useImageContext();
   const [prompt, setPrompt] = useState("");
-  const [selectedResolution, setSelectedResolution] = useState(aspectRatios[2]);
+  const [selectedResolution, setSelectedResolution] = useState(aspectRatios[3]);
   const [imageQuality, setImageQuality] = useState("Speed");
   const [imageNumber, setImageNumber] = useState(1);
   const [selectedPreset, setSelectedPreset] = useState("Default");
 
   // Advanced
   const [negativePrompt, setNegativePrompt] = useState("");
+  const [styleSelections, setStyleSelections] = useState("");
   const [imageSeed, setImageSeed] = useState(-1);
   const [sharpness, setSharpness] = useState(2);
   const [guidanceScale, setGuidanceScale] = useState(4);
   const [refinerSwitch, setRefinerSwitch] = useState(0.5);
 
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const presetDefaults = defaultValues[selectedPreset];
+    setNegativePrompt(presetDefaults.negative_prompt);
+    setStyleSelections(presetDefaults.style_selections);
+    setGuidanceScale(presetDefaults.guidance_scale);
+    setRefinerSwitch(presetDefaults.refiner_switch);
+  }, [selectedPreset]);
 
   const isValidPrompt = prompt
     .trim()
@@ -75,6 +85,7 @@ export default function GenerateScreen() {
       sharpness,
       guidanceScale,
       refinerSwitch,
+      styleSelections,
     };
 
     try {
@@ -120,8 +131,13 @@ export default function GenerateScreen() {
               flexGrow: 1,
             }}
           >
-            <YStack marginHorizontal="$2.5" marginBottom="$3" gap="$2">
-              <Label fontSize="$7">Aspect Ratio</Label>
+            <YStack marginHorizontal="$2.5" marginBottom="$3" gap="$2.5">
+              <YStack>
+                <Label fontSize="$7">Aspect Ratios</Label>
+                <Text color="gray" marginTop="$-2" fontSize="$1">
+                  width x height
+                </Text>
+              </YStack>
               <XStack justifyContent="space-between">
                 {aspectRatios.map((aspectRatio) => (
                   <Chip
@@ -191,7 +207,6 @@ export default function GenerateScreen() {
                 setNegativePrompt={setNegativePrompt}
                 imageSeed={imageSeed}
                 setImageSeed={setImageSeed}
-                sharpness={sharpness}
                 setSharpness={setSharpness}
                 guidanceScale={guidanceScale}
                 setGuidanceScale={setGuidanceScale}

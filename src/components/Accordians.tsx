@@ -17,7 +17,6 @@ interface AccordiansProps {
   setNegativePrompt: React.Dispatch<React.SetStateAction<string>>;
   imageSeed: number;
   setImageSeed: React.Dispatch<React.SetStateAction<number>>;
-  sharpness: number;
   setSharpness: React.Dispatch<React.SetStateAction<number>>;
   guidanceScale: number;
   setGuidanceScale: React.Dispatch<React.SetStateAction<number>>;
@@ -30,7 +29,6 @@ const Accordians: React.FC<AccordiansProps> = ({
   setNegativePrompt,
   imageSeed,
   setImageSeed,
-  sharpness,
   setSharpness,
   guidanceScale,
   setGuidanceScale,
@@ -105,7 +103,7 @@ const Accordians: React.FC<AccordiansProps> = ({
             min={1}
             max={30}
             step={1}
-            defaultValue={4}
+            defaultValue={guidanceScale}
             onValueChange={setGuidanceScale}
           />
           <Sliders
@@ -113,7 +111,7 @@ const Accordians: React.FC<AccordiansProps> = ({
             min={0.1}
             max={1}
             step={0.01}
-            defaultValue={0.5}
+            defaultValue={refinerSwitch}
             onValueChange={setRefinerSwitch}
           />
         </Accordion.Content>

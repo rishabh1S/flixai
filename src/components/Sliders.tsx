@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Label, YStack, Text, XStack } from "tamagui";
 import Slider from "@react-native-community/slider";
 
@@ -20,6 +20,10 @@ const Sliders: React.FC<SlidersProps> = ({
   onValueChange,
 }) => {
   const [sliderValue, setSliderValue] = useState(defaultValue);
+
+  useEffect(() => {
+    setSliderValue(defaultValue);
+  }, [defaultValue]);
 
   const handleValueChange = (value: number) => {
     setSliderValue(value);
@@ -47,7 +51,11 @@ const Sliders: React.FC<SlidersProps> = ({
         onValueChange={handleValueChange}
       />
       <Text color="gray" fontSize="$2">
-        {`Default: ${defaultValue}`}
+        {`Default: ${
+          defaultValue % 1 === 0
+            ? defaultValue.toFixed(0)
+            : defaultValue.toFixed(2)
+        }`}
       </Text>
     </YStack>
   );

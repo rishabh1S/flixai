@@ -24,6 +24,7 @@ export const generateImage = async (params: {
   refinerSwitch: number;
   prompt: string;
   selectedPreset: string;
+  styleSelections: string;
 }): Promise<GenerateImageResponse> => {
   try {
     const {
@@ -37,34 +38,38 @@ export const generateImage = async (params: {
       sharpness,
       guidanceScale,
       refinerSwitch,
+      styleSelections,
     } = params;
 
-    let endpoint: `${string}/${string}`;
-
-    if (selectedPreset === "Realistic") {
-      endpoint =
-        "konieshadow/fooocus-api-realistic:612fd74b69e6c030e88f6548848593a1aaabe16a09cb79e6d714718c15f37f47";
-    } else if (selectedPreset === "Anime") {
-      endpoint =
-        "konieshadow/fooocus-api-anime:a750658f54c4f8bec1c8b0e352ce2666c22f2f919d391688ff4fc16e48b3a28f";
-    } else {
-      endpoint =
-        "konieshadow/fooocus-api:fda927242b1db6affa1ece4f54c37f19b964666bf23b0d06ae2439067cd344a4";
-    }
-
-    const output = await replicate.run(endpoint, {
-      input: {
-        prompt: prompt,
-        sharpness: sharpness,
-        image_seed: imageSeed,
-        image_number: imageNumber,
-        guidance_scale: guidanceScale,
-        refiner_switch: refinerSwitch,
-        negative_prompt: negativePrompt,
-        aspect_ratios_selection: selectedResolution.resolution,
-        performance_selection: imageQuality,
-      },
-    });
+    const output = await replicate.run(
+      "konieshadow/fooocus-api:fda927242b1db6affa1ece4f54c37f19b964666bf23b0d06ae2439067cd344a4",
+      {
+        input: {
+          prompt: prompt,
+          cn_type1: "ImagePrompt",
+          cn_type2: "ImagePrompt",
+          cn_type3: "ImagePrompt",
+          cn_type4: "ImagePrompt",
+          sharpness: sharpness,
+          image_seed: imageSeed,
+          uov_method: "Disabled",
+          image_number: imageNumber,
+          guidance_scale: guidanceScale,
+          refiner_switch: refinerSwitch,
+          negative_prompt: negativePrompt,
+          style_selections: styleSelections,
+          uov_upscale_value: 0,
+          outpaint_selections: "",
+          outpaint_distance_top: 0,
+          performance_selection: imageQuality,
+          outpaint_distance_left: 0,
+          aspect_ratios_selection: selectedResolution.resolution,
+          outpaint_distance_right: 0,
+          outpaint_distance_bottom: 0,
+          inpaint_additional_prompt: "",
+        },
+      }
+    );
     //@ts-ignore
     return { output };
   } catch (error) {

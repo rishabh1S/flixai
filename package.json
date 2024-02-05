@@ -39,6 +39,7 @@
     "react-helmet-async": "~2.0.4",
     "react-native": "0.73.2",
     "react-native-gesture-handler": "^2.14.1",
+    "react-native-image-viewing": "^0.2.2",
     "react-native-modal": "^13.0.1",
     "react-native-reanimated": "^3.6.2",
     "react-native-reanimated-carousel": "^3.5.1",
