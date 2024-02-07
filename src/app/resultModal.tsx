@@ -166,44 +166,47 @@ export default function resultModal() {
           </Text>
           <View />
         </View>
-      </SafeAreaView>
-      <ScrollView
-        gap="$2"
-        marginHorizontal="$3"
-        showsVerticalScrollIndicator={false}
-      >
-        {generatedImages.length > 1 ? (
-          <Carousel
-            data={generatedImages}
-            renderItem={({ item, index }) => (
-              <ResultItem item={item} onPress={() => openImageView(index)} />
-            )}
-            width={width * 0.93}
-            height={height * 0.7}
-            pagingEnabled
-            onSnapToItem={(index) => setActiveIndex(index)}
-          />
-        ) : (
-          <ResultItem
-            item={generatedImages[0]}
-            onPress={() => openImageView(0)}
-          />
-        )}
-        <YStack marginTop="$2">
-          {generatedImages.length > 1 && (
-            <DotIndicator
-              totalDots={generatedImages.length}
-              activeIndex={activeIndex}
+        <YStack marginHorizontal="$3">
+          {generatedImages.length > 1 ? (
+            <Carousel
+              data={generatedImages}
+              renderItem={({ item, index }) => (
+                <ResultItem item={item} onPress={() => openImageView(index)} />
+              )}
+              width={width * 0.93}
+              height={height * 0.7}
+              pagingEnabled
+              onSnapToItem={(index) => setActiveIndex(index)}
+            />
+          ) : (
+            <ResultItem
+              item={generatedImages[0]}
+              onPress={() => openImageView(0)}
             />
           )}
+          <View marginTop="$2">
+            {generatedImages.length > 1 && (
+              <DotIndicator
+                totalDots={generatedImages.length}
+                activeIndex={activeIndex}
+              />
+            )}
+          </View>
+        </YStack>
+      </SafeAreaView>
+      <ScrollView
+        marginHorizontal="$3"
+        marginBottom="$3"
+        showsVerticalScrollIndicator={false}
+      >
+        <YStack>
           <Label fontSize="$7">Prompt</Label>
           <TextArea
             theme={"red"}
-            size="$5"
             borderWidth={1}
             rows={5}
-            placeholder={prompt}
-            disabled
+            value={prompt}
+            editable={false}
           />
           <TouchableOpacity
             onPress={async () => {

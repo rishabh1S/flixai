@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Accordion,
   View,
@@ -8,9 +8,15 @@ import {
   TextArea,
   Input,
   YStack,
+  Button,
+  XStack,
+  Switch,
+  Image,
 } from "tamagui";
 import { Feather } from "@expo/vector-icons";
 import Sliders from "./Sliders";
+import * as ImagePicker from "expo-image-picker";
+import { AntDesign } from "@expo/vector-icons";
 
 interface AccordiansProps {
   negativePrompt: string;
@@ -18,10 +24,9 @@ interface AccordiansProps {
   imageSeed: number;
   setImageSeed: React.Dispatch<React.SetStateAction<number>>;
   setSharpness: React.Dispatch<React.SetStateAction<number>>;
-  guidanceScale: number;
-  setGuidanceScale: React.Dispatch<React.SetStateAction<number>>;
-  refinerSwitch: number;
-  setRefinerSwitch: React.Dispatch<React.SetStateAction<number>>;
+  cnImage: string | undefined;
+  setCnImage: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setCnType: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Accordians: React.FC<AccordiansProps> = ({
@@ -30,11 +35,26 @@ const Accordians: React.FC<AccordiansProps> = ({
   imageSeed,
   setImageSeed,
   setSharpness,
-  guidanceScale,
-  setGuidanceScale,
-  refinerSwitch,
-  setRefinerSwitch,
+  cnImage,
+  setCnImage,
+  setCnType,
 }) => {
+  const pickImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        setCnImage(result.assets[0].uri);
+      }
+    } catch (error) {
+      console.error("Error picking image: ", error);
+    }
+  };
+
   return (
     <Accordion overflow="hidden" type="multiple" theme="red">
       <Accordion.Item value="a1">
@@ -62,15 +82,74 @@ const Accordians: React.FC<AccordiansProps> = ({
           flexDirection="column"
         >
           <YStack>
-            <View flexDirection="row" alignItems="center" gap="$2">
-              <Label>Negative prompt</Label>
-              <Feather name="info" size={18} color="red" />
-            </View>
+            <Label>Upload Image</Label>
+            {!cnImage ? (
+              <Button
+                backgroundColor="$red2Dark"
+                borderColor="$red8Dark"
+                size="$6"
+                borderRadius="$3"
+                onPress={pickImage}
+              >
+                <YStack alignItems="center">
+                  <Feather name="upload" size={24} color="white" />
+                  <Text>Click to upload</Text>
+                </YStack>
+              </Button>
+            ) : (
+              <Button
+                backgroundColor="$red2Dark"
+                borderColor="$red8Dark"
+                size="$6"
+                borderRadius="$3"
+              >
+                <XStack alignItems="center" gap="$3">
+                  <Image
+                    source={{ uri: cnImage }}
+                    borderRadius="$3"
+                    width="$5"
+                    height="$5"
+                  />
+                  <Text fontSize={10} color="gray">
+                    {cnImage.split("/").pop()}
+                  </Text>
+                  <Button
+                    padding="$1.5"
+                    size="$2"
+                    chromeless
+                    onPress={() => setCnImage(undefined)}
+                  >
+                    <AntDesign name="close" size={16} color="white" />
+                  </Button>
+                </XStack>
+              </Button>
+            )}
+          </YStack>
+          <XStack
+            alignItems="center"
+            justifyContent="space-between"
+            marginTop="$2"
+          >
+            <YStack>
+              <Label fontSize="$7">Face Swap</Label>
+              <Text color="gray" marginTop="$-2" fontSize="$1">
+                Turn this on to swap the face
+              </Text>
+            </YStack>
+            <Switch
+              size="$2"
+              onCheckedChange={(value) =>
+                setCnType(value ? "FaceSwap" : "ImagePrompt")
+              }
+            >
+              <Switch.Thumb animation="bouncy" />
+            </Switch>
+          </XStack>
+          <YStack>
+            <Label>Negative prompt</Label>
             <TextArea
               cursorColor="white"
-              size="$5"
               rows={4}
-              borderWidth={1}
               placeholder="unrealistic, saturated, watermark..."
               value={negativePrompt}
               onChangeText={setNegativePrompt}
@@ -97,22 +176,6 @@ const Accordians: React.FC<AccordiansProps> = ({
             step={1}
             defaultValue={2}
             onValueChange={setSharpness}
-          />
-          <Sliders
-            title="Guidance Scale"
-            min={1}
-            max={30}
-            step={1}
-            defaultValue={guidanceScale}
-            onValueChange={setGuidanceScale}
-          />
-          <Sliders
-            title="Refiner Switch"
-            min={0.1}
-            max={1}
-            step={0.01}
-            defaultValue={refinerSwitch}
-            onValueChange={setRefinerSwitch}
           />
         </Accordion.Content>
       </Accordion.Item>

@@ -42,6 +42,9 @@ export default function GenerateScreen() {
   const [selectedPreset, setSelectedPreset] = useState("Default");
 
   // Advanced
+
+  const [cnImage, setCnImage] = useState<string | undefined>();
+  const [cnType, setCnType] = useState("ImagePrompt");
   const [negativePrompt, setNegativePrompt] = useState("");
   const [styleSelections, setStyleSelections] = useState("");
   const [imageSeed, setImageSeed] = useState(-1);
@@ -93,6 +96,8 @@ export default function GenerateScreen() {
       guidanceScale,
       refinerSwitch,
       styleSelections,
+      cnImage,
+      cnType,
     };
 
     try {
@@ -231,10 +236,9 @@ export default function GenerateScreen() {
                 imageSeed={imageSeed}
                 setImageSeed={setImageSeed}
                 setSharpness={setSharpness}
-                guidanceScale={guidanceScale}
-                setGuidanceScale={setGuidanceScale}
-                refinerSwitch={refinerSwitch}
-                setRefinerSwitch={setRefinerSwitch}
+                cnImage={cnImage}
+                setCnImage={setCnImage}
+                setCnType={setCnType}
               />
             </YStack>
             <View flex={1} justifyContent="flex-end" marginBottom="$2">

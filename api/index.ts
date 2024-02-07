@@ -23,13 +23,15 @@ export const generateImage = async (params: {
   guidanceScale: number;
   refinerSwitch: number;
   prompt: string;
-  selectedPreset: string;
   styleSelections: string;
+  cnImage: string | undefined;
+  cnType: string;
 }): Promise<GenerateImageResponse> => {
   try {
     const {
       prompt,
-      selectedPreset,
+      cnImage,
+      cnType,
       selectedResolution,
       imageQuality,
       imageNumber,
@@ -46,10 +48,8 @@ export const generateImage = async (params: {
       {
         input: {
           prompt: prompt,
-          cn_type1: "ImagePrompt",
-          cn_type2: "ImagePrompt",
-          cn_type3: "ImagePrompt",
-          cn_type4: "ImagePrompt",
+          cn_img1: cnImage,
+          cn_type1: cnType,
           sharpness: sharpness,
           image_seed: imageSeed,
           uov_method: "Disabled",
@@ -73,6 +73,7 @@ export const generateImage = async (params: {
     //@ts-ignore
     return { output };
   } catch (error) {
+    console.log("Error: ", error);
     throw new Error("Error generating image");
   }
 };
