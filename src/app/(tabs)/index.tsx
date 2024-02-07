@@ -152,13 +152,7 @@ export default function GenerateScreen() {
               />
             </View>
           </SafeAreaView>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              paddingBottom: 60,
-              flexGrow: 1,
-            }}
-          >
+          <ScrollView showsVerticalScrollIndicator={false}>
             <YStack marginHorizontal="$2.5" marginBottom="$3" gap="$2.5">
               <YStack>
                 <Label fontSize="$7">Aspect Ratios</Label>
@@ -241,23 +235,23 @@ export default function GenerateScreen() {
                 setCnType={setCnType}
               />
             </YStack>
-            <View flex={1} justifyContent="flex-end" marginBottom="$2">
-              <Button
-                backgroundColor="$red10Dark"
-                theme="red"
-                borderRadius="$6"
-                marginHorizontal="$2.5"
-                onPress={handleGenerate}
-              >
-                Generate
-                <MaterialCommunityIcons
-                  name="star-four-points-outline"
-                  size={24}
-                  color="white"
-                />
-              </Button>
-            </View>
           </ScrollView>
+          <View justifyContent="flex-end" paddingTop="$2" paddingBottom={65}>
+            <Button
+              backgroundColor="$red10Dark"
+              theme="red"
+              borderRadius="$6"
+              marginHorizontal="$2.5"
+              onPress={handleGenerate}
+            >
+              Generate
+              <MaterialCommunityIcons
+                name="star-four-points-outline"
+                size={24}
+                color="white"
+              />
+            </Button>
+          </View>
         </>
       )}
     </LinearGradient>
