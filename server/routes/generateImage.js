@@ -1,32 +1,12 @@
+import express from "express";
 import Replicate from "replicate";
 
-interface AspectRatio {
-  title: string;
-  resolution: string;
-}
-
-interface GenerateImageResponse {
-  output: string[];
-}
-
+const router = express.Router();
 const replicate = new Replicate({
   auth: process.env.EXPO_PUBLIC_REPLICATE_API_TOKEN,
 });
 
-export const generateImage = async (params: {
-  selectedResolution: AspectRatio;
-  imageQuality: string;
-  imageNumber: number;
-  negativePrompt: string;
-  imageSeed: number;
-  sharpness: number;
-  guidanceScale: number;
-  refinerSwitch: number;
-  prompt: string;
-  styleSelections: string;
-  cnImage: string | undefined;
-  cnType: string;
-}): Promise<GenerateImageResponse> => {
+router.post("/", async (req, res) => {
   try {
     const {
       prompt,
@@ -41,7 +21,7 @@ export const generateImage = async (params: {
       guidanceScale,
       refinerSwitch,
       styleSelections,
-    } = params;
+    } = req.body;
 
     const output = await replicate.run(
       "konieshadow/fooocus-api:fda927242b1db6affa1ece4f54c37f19b964666bf23b0d06ae2439067cd344a4",
@@ -70,10 +50,12 @@ export const generateImage = async (params: {
         },
       }
     );
-    //@ts-ignore
-    return { output };
+
+    res.json({ output });
   } catch (error) {
     console.log("Error: ", error);
-    throw new Error("Error generating image");
+    res.status(500).json({ error: "Error generating image" });
   }
-};
+});
+
+export default router;
