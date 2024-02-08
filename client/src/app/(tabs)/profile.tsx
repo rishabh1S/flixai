@@ -1,9 +1,11 @@
-import { Text, View } from "tamagui";
+import { LinearGradient } from "@tamagui/linear-gradient";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
   return (
-    <View flex={1} alignItems="center">
-      <Text fontSize={20}>Tab Four</Text>
-    </View>
+    <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
+      <SafeAreaView style={{ marginBottom: 15 }}></SafeAreaView>
+    </LinearGradient>
   );
 }
