@@ -24,4 +24,14 @@ const presetData = [
   },
 ];
 
-export { aspectRatios, presetData };
+const dummyImages = [
+  "https://replicate.delivery/pbxt/IKQENHlFlIooIZghLcxpaTz3IteCWIOviBbIVx4C175iLKKJA/fae1eeba-3259-40cd-9d72-e742c018a898.png",
+  "https://replicate.delivery/pbxt/ywrtFkWfAJRle06uDzNC5kgHxUlJbz9C7MwJ2iNGPJQvCuTSA/fee56087-4f97-4ca5-ac04-fd861071de7d.png",
+  "https://res.cloudinary.com/dnp36kqdc/image/upload/v1706910913/FlixAi/realistic-sample.png",
+  "https://res.cloudinary.com/dnp36kqdc/image/upload/v1706910913/FlixAi/default-sample.png",
+  "https://replicate.delivery/pbxt/ywrtFkWfAJRle06uDzNC5kgHxUlJbz9C7MwJ2iNGPJQvCuTSA/fee56087-4f97-4ca5-ac04-fd861071de7d.png",
+  "https://replicate.delivery/pbxt/ywrtFkWfAJRle06uDzNC5kgHxUlJbz9C7MwJ2iNGPJQvCuTSA/fee56087-4f97-4ca5-ac04-fd861071de7d.png",
+  "https://res.cloudinary.com/dnp36kqdc/image/upload/v1706910913/FlixAi/realistic-sample.png",
+];
+
+export { aspectRatios, presetData, dummyImages };

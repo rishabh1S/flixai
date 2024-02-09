@@ -31,7 +31,11 @@ const PostList = () => {
         <Label fontWeight={"bold"} fontSize={"$7"}>
           Exploration
         </Label>
-        <TouchableOpacity onPress={() => router.navigate("/explore")}>
+        <TouchableOpacity
+          onPress={() =>
+            router.push({ pathname: "/explore", params: { activeTab: "tab1" } })
+          }
+        >
           <Text color={"$red10Dark"}>See All</Text>
         </TouchableOpacity>
       </XStack>

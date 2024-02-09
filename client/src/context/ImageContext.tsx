@@ -14,11 +14,7 @@ interface ImageContextValue {
 const ImageContext = createContext<ImageContextValue | undefined>(undefined);
 
 export const ImageProvider: React.FC<ImageContextProps> = ({ children }) => {
-  const [generatedImages, setGeneratedImages] = useState<string[]>([
-    "https://replicate.delivery/pbxt/IKQENHlFlIooIZghLcxpaTz3IteCWIOviBbIVx4C175iLKKJA/fae1eeba-3259-40cd-9d72-e742c018a898.png",
-    "https://res.cloudinary.com/dnp36kqdc/image/upload/v1706910913/FlixAi/realistic-sample.png",
-    "https://replicate.delivery/pbxt/ywrtFkWfAJRle06uDzNC5kgHxUlJbz9C7MwJ2iNGPJQvCuTSA/fee56087-4f97-4ca5-ac04-fd861071de7d.png",
-  ]);
+  const [generatedImages, setGeneratedImages] = useState<string[]>([]);
   const [prompt, setPrompt] = useState<string>("");
 
   const updateGeneratedImages = (images: string[]) => {

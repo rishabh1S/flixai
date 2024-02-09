@@ -12,7 +12,7 @@ export default function HomeScreen() {
       <SafeAreaView style={{ marginBottom: 15 }}>
         <Headers />
       </SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false} marginBottom="$7">
+      <ScrollView showsVerticalScrollIndicator={false}>
         <YStack gap="$2" marginHorizontal="$2" paddingHorizontal="$3">
           <Text fontSize={"$9"} fontWeight={"800"}>
             Unleash Your{" "}
@@ -41,7 +41,7 @@ export default function HomeScreen() {
             </LinearGradient>
           </Pressable>
         </YStack>
-        <YStack gap="$5" marginVertical="$4">
+        <YStack gap="$5" marginVertical="$4" paddingBottom="$6">
           <PostList />
           <CreatorList />
         </YStack>

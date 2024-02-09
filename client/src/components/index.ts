@@ -7,6 +7,9 @@ import NumberStepper from "./NumberStepper";
 import Loader from "./Loader";
 import PostList from "./PostList";
 import CreatorList from "./CreatorList";
+import TabsLayout from "./TabsLayout";
+import UsersTab from "./UsersTab";
+import PostsTab from "./PostsTab";
 
 export {
   Cards,
@@ -18,4 +21,7 @@ export {
   Headers,
   PostList,
   CreatorList,
+  TabsLayout,
+  UsersTab,
+  PostsTab,
 };

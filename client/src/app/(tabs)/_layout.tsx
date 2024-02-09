@@ -13,8 +13,12 @@ export default function TabLayout() {
         tabBarStyle: {
           backgroundColor: "rgba(0, 0, 0, 0.85)",
           position: "absolute",
+          borderTopWidth: 0,
           elevation: 0,
           height: 55,
+        },
+        tabBarIconStyle: {
+          marginBottom: 8,
         },
         tabBarShowLabel: false,
       }}

@@ -1,21 +1,18 @@
-import { FlashList } from "@shopify/flash-list";
-import { router } from "expo-router";
+import { Dimensions, TouchableOpacity } from "react-native";
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import { XStack, YStack, Text, Avatar, Button, View } from "tamagui";
+import { Avatar, View, XStack, YStack, Text, Button, Image } from "tamagui";
+import { FlashList } from "@shopify/flash-list";
+import { dummyImages } from "../constants/data";
 
-const CreatorList = () => {
-  const data = Array.from({ length: 3 }, (_, index) => index + 1);
+const width = Dimensions.get("window").width;
+
+const UsersTab = () => {
+  const data = Array.from({ length: 12 }, (_, index) => index + 1);
 
   const renderItem = () => {
     return (
       <TouchableOpacity>
-        <View
-          marginBottom="$2.5"
-          backgroundColor={"$red5Dark"}
-          padding="$2"
-          borderRadius={"$10"}
-        >
+        <View padding="$3.5">
           <XStack gap="$4" alignItems="center" justifyContent="space-between">
             <Avatar circular size="$6">
               <Avatar.Image
@@ -60,39 +57,32 @@ const CreatorList = () => {
             </Button>
           </XStack>
         </View>
+        <XStack>
+          {dummyImages.map((source, index) => (
+            <Image
+              key={index}
+              source={{
+                uri: source,
+                width: width * 0.333,
+                height: width * 0.33,
+              }}
+            />
+          ))}
+        </XStack>
       </TouchableOpacity>
     );
   };
 
   return (
-    <YStack gap="$3">
-      <XStack
-        justifyContent="space-between"
-        alignItems="center"
-        marginHorizontal="$4"
-      >
-        <Text fontWeight={"bold"} fontSize={"$7"}>
-          Top Creators
-        </Text>
-        <TouchableOpacity
-          onPress={() =>
-            router.push({ pathname: "/explore", params: { activeTab: "tab2" } })
-          }
-        >
-          <Text color={"$red10Dark"}>See All</Text>
-        </TouchableOpacity>
-      </XStack>
-      <FlashList
-        removeClippedSubviews
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 15 }}
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderItem}
-        estimatedItemSize={60}
-      />
-    </YStack>
+    <FlashList
+      removeClippedSubviews
+      showsVerticalScrollIndicator={false}
+      data={data}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={renderItem}
+      estimatedItemSize={60}
+    />
   );
 };
 
-export default CreatorList;
+export default UsersTab;
