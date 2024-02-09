@@ -75,12 +75,12 @@ const UsersTab = () => {
 
   return (
     <FlashList
-      removeClippedSubviews
+      removeClippedSubviews={true}
       showsVerticalScrollIndicator={false}
       data={data}
       keyExtractor={(item, index) => index.toString()}
       renderItem={renderItem}
-      estimatedItemSize={60}
+      estimatedItemSize={250}
     />
   );
 };

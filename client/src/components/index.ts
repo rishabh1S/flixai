@@ -10,6 +10,7 @@ import CreatorList from "./CreatorList";
 import TabsLayout from "./TabsLayout";
 import UsersTab from "./UsersTab";
 import PostsTab from "./PostsTab";
+import Profile from "./Profile";
 
 export {
   Cards,
@@ -24,4 +25,5 @@ export {
   TabsLayout,
   UsersTab,
   PostsTab,
+  Profile,
 };

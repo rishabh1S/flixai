@@ -41,7 +41,7 @@ const PostList = () => {
       </XStack>
       <FlashList
         horizontal
-        removeClippedSubviews
+        removeClippedSubviews={true}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 15 }}
         data={data}

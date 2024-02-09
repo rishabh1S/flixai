@@ -1,13 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LayoutRectangle } from "react-native";
 import type { StackProps, TabLayout, TabsTabProps } from "tamagui";
-import { AnimatePresence, Text, Tabs, YStack, styled, XStack } from "tamagui";
-import { Ionicons } from "@expo/vector-icons";
-import { PostsTab, UsersTab } from "@/src/components";
+import {
+  AnimatePresence,
+  Text,
+  Tabs,
+  YStack,
+  styled,
+  XStack,
+  Button,
+} from "tamagui";
+import { Ionicons, EvilIcons } from "@expo/vector-icons";
+import PostsTab from "./PostsTab";
+import UsersTab from "./UsersTab";
 
 interface TabsLayoutProps {
   activeTab: string;
 }
+
+const Tab1Content = () => (
+  <>
+    <XStack
+      marginVertical="$2"
+      paddingHorizontal="$4"
+      justifyContent="space-between"
+    >
+      <XStack gap="$3">
+        <Button size="$2" borderRadius="$7">
+          Following
+        </Button>
+        <Button size="$2" borderRadius="$7">
+          Recent
+        </Button>
+      </XStack>
+      <EvilIcons name="redo" size={24} color="white" />
+    </XStack>
+    <PostsTab />
+  </>
+);
 
 const TabsLayout: React.FC<TabsLayoutProps> = ({ activeTab }) => {
   const [tabState, setTabState] = useState<{
@@ -51,6 +81,12 @@ const TabsLayout: React.FC<TabsLayoutProps> = ({ activeTab }) => {
       setIntentIndicator(layout);
     }
   };
+
+  useEffect(() => {
+    if (activeAt) {
+      setActiveIndicator(activeAt);
+    }
+  }, [activeAt]);
 
   return (
     <Tabs
@@ -138,7 +174,7 @@ const TabsLayout: React.FC<TabsLayoutProps> = ({ activeTab }) => {
             flex={1}
             justifyContent="center"
           >
-            {currentTab === "tab1" ? <PostsTab /> : <UsersTab />}
+            {currentTab === "tab1" ? <Tab1Content /> : <UsersTab />}
           </Tabs.Content>
         </AnimatedYStack>
       </AnimatePresence>

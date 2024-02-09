@@ -2,14 +2,22 @@ import { FlashList } from "@shopify/flash-list";
 import { router } from "expo-router";
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { XStack, YStack, Text, Avatar, Button, View } from "tamagui";
+import {
+  XStack,
+  YStack,
+  Text,
+  Avatar,
+  Button,
+  View,
+  ScrollView,
+} from "tamagui";
 
 const CreatorList = () => {
   const data = Array.from({ length: 3 }, (_, index) => index + 1);
 
-  const renderItem = () => {
+  const renderItem = (item: number, index: React.Key | null | undefined) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity key={index}>
         <View
           marginBottom="$2.5"
           backgroundColor={"$red5Dark"}
@@ -82,15 +90,12 @@ const CreatorList = () => {
           <Text color={"$red10Dark"}>See All</Text>
         </TouchableOpacity>
       </XStack>
-      <FlashList
-        removeClippedSubviews
+      <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 15 }}
-        data={data}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={renderItem}
-        estimatedItemSize={60}
-      />
+      >
+        {data.map((item, index) => renderItem(item, index))}
+      </ScrollView>
     </YStack>
   );
 };

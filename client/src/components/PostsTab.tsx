@@ -1,8 +1,7 @@
 import React from "react";
-import { Button, XStack, Image } from "tamagui";
+import { Image } from "tamagui";
 import { dummyImages } from "../constants/data";
 import { Dimensions, FlatList } from "react-native";
-import { EvilIcons } from "@expo/vector-icons";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -43,31 +42,13 @@ const PostsTab = () => {
   };
 
   return (
-    <>
-      <XStack
-        marginVertical="$2"
-        paddingHorizontal="$4"
-        justifyContent="space-between"
-      >
-        <XStack gap="$3">
-          <Button size={"$2"} borderRadius={"$7"}>
-            Following
-          </Button>
-          <Button size={"$2"} borderRadius={"$7"}>
-            Recent
-          </Button>
-        </XStack>
-        <EvilIcons name="redo" size={24} color="white" />
-      </XStack>
-      <FlatList
-        data={repeatedDummyImages}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={2}
-        renderItem={renderItem}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-      />
-    </>
+    <FlatList
+      data={repeatedDummyImages}
+      showsVerticalScrollIndicator={false}
+      keyExtractor={(item, index) => index.toString()}
+      numColumns={2}
+      renderItem={renderItem}
+    />
   );
 };
 

@@ -2,7 +2,12 @@ import React from "react";
 import { Tabs } from "expo-router";
 import { View } from "tamagui";
 import { colorTokens } from "@tamagui/themes";
-import { Ionicons, AntDesign, FontAwesome6, Feather } from "@expo/vector-icons";
+import {
+  Ionicons,
+  AntDesign,
+  FontAwesome6,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { BottomTabBar } from "@react-navigation/bottom-tabs";
 
 export default function TabLayout() {
@@ -50,13 +55,13 @@ export default function TabLayout() {
         name="save"
         options={{
           tabBarIcon: ({ color }) => (
-            <Feather name="bookmark" size={28} color={color} />
+            <MaterialIcons name="perm-media" size={24} color={color} />
           ),
           headerShown: false,
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="account"
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="person-outline" size={30} color={color} />
