@@ -1,5 +1,8 @@
 import express from "express";
 import Replicate from "replicate";
+import * as dotenv from "dotenv";
+
+dotenv.config();
 
 const router = express.Router();
 const replicate = new Replicate({

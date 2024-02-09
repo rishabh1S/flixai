@@ -1,12 +1,9 @@
 import express from "express";
-import * as dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 
 import connectDB from "./mongo/connect.js";
 import generateImage from "./routes/generateImage.js";
-
-dotenv.config();
 
 const app = express();
 app.use(cors());
