@@ -7366,12 +7366,14 @@ __metadata:
     react-native-gesture-handler: "npm:^2.14.1"
     react-native-image-viewing: "npm:^0.2.2"
     react-native-modal: "npm:^13.0.1"
+    react-native-pager-view: "npm:^6.2.3"
     react-native-reanimated: "npm:^3.6.2"
     react-native-reanimated-carousel: "npm:^3.5.1"
     react-native-safe-area-context: "npm:4.8.2"
     react-native-screens: "npm:~3.29.0"
     react-native-simple-toast: "npm:^3.2.0"
     react-native-swiper: "npm:^1.6.0"
+    react-native-tab-view: "npm:^3.5.2"
     react-native-web: "npm:^0.19.9"
     react-query: "npm:^3.39.3"
     tamagui: "npm:^1.88.18"
@@ -10858,6 +10860,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-pager-view@npm:^6.2.3":
+  version: 6.2.3
+  resolution: "react-native-pager-view@npm:6.2.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 9c08c9ffc27f3b6069f23d24ba5c1073a55fb67db4a45bcf490e544a37f26a9cfe7ad72259543f71f3f78a1fb26c78f711c076d905389d599c69c43fe29b7a67
+  languageName: node
+  linkType: hard
+
 "react-native-reanimated-carousel@npm:^3.5.1":
   version: 3.5.1
   resolution: "react-native-reanimated-carousel@npm:3.5.1"
@@ -10930,6 +10942,19 @@ __metadata:
   dependencies:
     prop-types: "npm:^15.5.10"
   checksum: f432212be0bb6fbd4338e7a5e7128672ae32faad496992dfefef4b195ee85caf99ab93b200b3102c2e0f44ee98ee5b37e6420ce121d94b58bd2fac8f0f30c215
+  languageName: node
+  linkType: hard
+
+"react-native-tab-view@npm:^3.5.2":
+  version: 3.5.2
+  resolution: "react-native-tab-view@npm:3.5.2"
+  dependencies:
+    use-latest-callback: "npm:^0.1.5"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-pager-view: "*"
+  checksum: 417e608dab14c23277e48e583e0573e90b136fa87ccf3907d104da3717e7b2d0889d699b2341f35e2bbaad9dea89255398ac60f4380d84a042ba77759409a550
   languageName: node
   linkType: hard
 
@@ -12732,7 +12757,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-latest-callback@npm:^0.1.7":
+"use-latest-callback@npm:^0.1.5, use-latest-callback@npm:^0.1.7":
   version: 0.1.9
   resolution: "use-latest-callback@npm:0.1.9"
   peerDependencies:

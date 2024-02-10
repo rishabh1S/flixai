@@ -1,12 +1,18 @@
-import React from "react";
-import { Image } from "tamagui";
+import React, { useState } from "react";
+import { Button, Image, XStack } from "tamagui";
 import { dummyImages } from "../constants/data";
-import { Dimensions, FlatList } from "react-native";
+import { Dimensions, FlatList, Pressable, RefreshControl } from "react-native";
+import { EvilIcons } from "@expo/vector-icons";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
-const PostsTab = () => {
+interface PostsTabProps {
+  showOptions: boolean;
+}
+
+const PostsTab: React.FC<PostsTabProps> = ({ showOptions }) => {
+  const [refreshing, setRefreshing] = useState(false);
   const repeatedDummyImages = Array.from(
     { length: 8 },
     (_, index) => dummyImages
@@ -41,14 +47,50 @@ const PostsTab = () => {
     );
   };
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
+  }, []);
+
   return (
-    <FlatList
-      data={repeatedDummyImages}
-      showsVerticalScrollIndicator={false}
-      keyExtractor={(item, index) => index.toString()}
-      numColumns={2}
-      renderItem={renderItem}
-    />
+    <>
+      {showOptions && (
+        <XStack
+          marginVertical="$2"
+          paddingHorizontal="$4"
+          justifyContent="space-between"
+        >
+          <XStack gap="$3">
+            <Button size="$2" borderRadius="$7">
+              Following
+            </Button>
+            <Button size="$2" borderRadius="$7">
+              Recent
+            </Button>
+          </XStack>
+          <Pressable onPress={onRefresh}>
+            <EvilIcons name="redo" size={24} color="white" />
+          </Pressable>
+        </XStack>
+      )}
+      <FlatList
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            colors={["#ffffff"]}
+            progressBackgroundColor="#111"
+          />
+        }
+        data={repeatedDummyImages}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2}
+        renderItem={renderItem}
+      />
+    </>
   );
 };
 

@@ -26,7 +26,7 @@ export default function SaveScreen() {
           <View></View>
         </XStack>
       </SafeAreaView>
-      <PostsTab />
+      <PostsTab showOptions={false} />
     </LinearGradient>
   );
 }

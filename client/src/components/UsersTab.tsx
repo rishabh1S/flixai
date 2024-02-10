@@ -1,5 +1,5 @@
-import { Dimensions, TouchableOpacity } from "react-native";
-import React from "react";
+import { Dimensions, RefreshControl, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import { Avatar, View, XStack, YStack, Text, Button, Image } from "tamagui";
 import { FlashList } from "@shopify/flash-list";
 import { dummyImages } from "../constants/data";
@@ -7,6 +7,7 @@ import { dummyImages } from "../constants/data";
 const width = Dimensions.get("window").width;
 
 const UsersTab = () => {
+  const [refreshing, setRefreshing] = useState(false);
   const data = Array.from({ length: 12 }, (_, index) => index + 1);
 
   const renderItem = () => {
@@ -73,8 +74,23 @@ const UsersTab = () => {
     );
   };
 
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1500);
+  }, []);
+
   return (
     <FlashList
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          colors={["#ffffff"]}
+          progressBackgroundColor="#111"
+        />
+      }
       removeClippedSubviews={true}
       showsVerticalScrollIndicator={false}
       data={data}

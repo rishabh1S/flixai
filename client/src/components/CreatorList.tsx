@@ -84,7 +84,10 @@ const CreatorList = () => {
         </Text>
         <TouchableOpacity
           onPress={() =>
-            router.push({ pathname: "/explore", params: { activeTab: "tab2" } })
+            router.push({
+              pathname: "/explore",
+              params: { activeTab: "second" },
+            })
           }
         >
           <Text color={"$red10Dark"}>See All</Text>

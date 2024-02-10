@@ -33,7 +33,10 @@ const PostList = () => {
         </Label>
         <TouchableOpacity
           onPress={() =>
-            router.push({ pathname: "/explore", params: { activeTab: "tab1" } })
+            router.push({
+              pathname: "/explore",
+              params: { activeTab: "first" },
+            })
           }
         >
           <Text color={"$red10Dark"}>See All</Text>
