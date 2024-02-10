@@ -1,8 +1,9 @@
-import { Dimensions, RefreshControl, TouchableOpacity } from "react-native";
+import { Dimensions, Pressable, RefreshControl } from "react-native";
 import React, { useState } from "react";
 import { Avatar, View, XStack, YStack, Text, Button, Image } from "tamagui";
 import { FlashList } from "@shopify/flash-list";
 import { dummyImages } from "../constants/data";
+import { router } from "expo-router";
 
 const width = Dimensions.get("window").width;
 
@@ -12,7 +13,7 @@ const UsersTab = () => {
 
   const renderItem = () => {
     return (
-      <TouchableOpacity>
+      <Pressable onPress={() => router.push("/home/profile")}>
         <View padding="$3.5">
           <XStack gap="$4" alignItems="center" justifyContent="space-between">
             <Avatar circular size="$6">
@@ -70,7 +71,7 @@ const UsersTab = () => {
             />
           ))}
         </XStack>
-      </TouchableOpacity>
+      </Pressable>
     );
   };
 

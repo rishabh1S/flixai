@@ -8,10 +8,11 @@ import {
   View,
   Button,
 } from "tamagui";
-import React from "react";
+import React, { useState } from "react";
 import { dummyImages } from "../constants/data";
-import { Dimensions } from "react-native";
+import { Dimensions, Pressable } from "react-native";
 import { FlashList } from "@shopify/flash-list";
+import { router } from "expo-router";
 
 const width = Dimensions.get("window").width;
 
@@ -20,20 +21,25 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = ({ isSelf }) => {
+  const [isFollowed, setIsFollowed] = useState(false);
   const repeatedDummyImages = Array.from(
     { length: 8 },
     (_, index) => dummyImages
   ).flat();
 
   const renderGridItem = ({ item }: any) => (
-    <Image
-      source={{
-        uri: item,
-        width: width * 0.48,
-        height: width * 0.4,
-      }}
-      style={{ margin: 2 }}
-    />
+    <Pressable
+      onPress={() => router.push(isSelf ? "/account/post" : "/home/post")}
+    >
+      <Image
+        source={{
+          uri: item,
+          width: width * 0.48,
+          height: width * 0.4,
+        }}
+        style={{ margin: 2 }}
+      />
+    </Pressable>
   );
 
   return (
@@ -81,12 +87,13 @@ const Profile: React.FC<ProfileProps> = ({ isSelf }) => {
             </YStack>
             {!isSelf && (
               <Button
+                onPress={() => setIsFollowed(!isFollowed)}
                 marginVertical="$4"
                 size="$3"
-                backgroundColor="$red9Dark"
+                backgroundColor={isFollowed ? "$gray2" : "$red9Dark"}
                 theme="red"
               >
-                Follow
+                {isFollowed ? "Following" : "Follow"}
               </Button>
             )}
           </YStack>

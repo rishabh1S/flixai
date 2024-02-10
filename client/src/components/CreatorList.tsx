@@ -1,7 +1,6 @@
-import { FlashList } from "@shopify/flash-list";
 import { router } from "expo-router";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { Pressable, TouchableOpacity } from "react-native";
 import {
   XStack,
   YStack,
@@ -17,7 +16,7 @@ const CreatorList = () => {
 
   const renderItem = (item: number, index: React.Key | null | undefined) => {
     return (
-      <TouchableOpacity key={index}>
+      <Pressable key={index} onPress={() => router.push("/home/profile")}>
         <View
           marginBottom="$2.5"
           backgroundColor={"$red5Dark"}
@@ -68,7 +67,7 @@ const CreatorList = () => {
             </Button>
           </XStack>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     );
   };
 
@@ -85,7 +84,7 @@ const CreatorList = () => {
         <TouchableOpacity
           onPress={() =>
             router.push({
-              pathname: "/explore",
+              pathname: "/home/explore",
               params: { activeTab: "second" },
             })
           }

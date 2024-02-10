@@ -1,27 +1,44 @@
 import { View, Text, YStack, Avatar, Input, XStack, TextArea } from "tamagui";
-import React from "react";
+import React, { useState } from "react";
 import { LinearGradient } from "@tamagui/linear-gradient";
 import { Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 export default function EditScreen() {
+  const [userProfileUri, setUserProfileUri] = useState(
+    "https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
+  );
+
+  const pickImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        setUserProfileUri(result.assets[0].uri);
+      }
+    } catch (error) {
+      console.error("Error picking image: ", error);
+    }
+  };
+
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
       <YStack alignItems="center" marginVertical="$4" gap="$3">
-        <Avatar circular size={"$13"}>
-          <Avatar.Image
-            accessibilityLabel="Cam"
-            src={
-              "https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
-            }
-          />
-          <Avatar.Fallback backgroundColor="$red10" />
-        </Avatar>
-        <Pressable>
+        <Pressable onPress={pickImage}>
+          <Avatar circular size={"$13"}>
+            <Avatar.Image accessibilityLabel="Cam" src={userProfileUri} />
+            <Avatar.Fallback backgroundColor="$red10" />
+          </Avatar>
           <View
             position="absolute"
-            bottom="$4"
-            left="$7"
+            bottom="$3"
+            right="$2"
             borderRadius="$7"
             backgroundColor={"$color6"}
             padding={5}

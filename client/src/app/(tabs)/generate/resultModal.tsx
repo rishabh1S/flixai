@@ -32,7 +32,7 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-import { useImageContext } from "../context/ImageContext";
+import { useImageContext } from "@/src/context/ImageContext";
 var { width, height } = Dimensions.get("window");
 import Toast from "react-native-simple-toast";
 interface DotIndicatorProps {

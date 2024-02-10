@@ -1,7 +1,7 @@
 import { Stack, router } from "expo-router";
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { Button, Text } from "tamagui";
+import { Button } from "tamagui";
 import { Ionicons } from "@expo/vector-icons";
 
 const StackLayout = () => {
@@ -30,6 +30,16 @@ const StackLayout = () => {
               Edit Profile
             </Button>
           ),
+        }}
+      />
+      <Stack.Screen
+        name="post"
+        options={{
+          headerTitle: "Posts",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTitleAlign: "center",
         }}
       />
       <Stack.Screen

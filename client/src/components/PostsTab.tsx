@@ -3,6 +3,7 @@ import { Button, Image, XStack } from "tamagui";
 import { dummyImages } from "../constants/data";
 import { Dimensions, FlatList, Pressable, RefreshControl } from "react-native";
 import { EvilIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -36,14 +37,18 @@ const PostsTab: React.FC<PostsTabProps> = ({ showOptions }) => {
     }
 
     return (
-      <Image
-        source={{
-          uri: item,
-          width: itemWidth,
-          height: itemHeight,
-        }}
-        style={{ margin: 2 }}
-      />
+      <Pressable
+        onPress={() => router.push(showOptions ? "/home/post" : "/save/detail")}
+      >
+        <Image
+          source={{
+            uri: item,
+            width: itemWidth,
+            height: itemHeight,
+          }}
+          style={{ margin: 2 }}
+        />
+      </Pressable>
     );
   };
 

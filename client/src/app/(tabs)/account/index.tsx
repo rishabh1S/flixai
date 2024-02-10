@@ -1,10 +1,40 @@
 import { LinearGradient } from "@tamagui/linear-gradient";
-import React from "react";
+import React, { ReactElement } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Avatar, Text, Label, View, YStack, Button } from "tamagui";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Avatar, Text, Label, View, YStack, Button, XStack } from "tamagui";
+import {
+  MaterialIcons,
+  AntDesign,
+  Ionicons,
+  Feather,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { Pressable } from "react-native";
 import { router } from "expo-router";
+
+interface ActionButtonProps {
+  icon: ReactElement;
+  title: string;
+  onPress?: () => void;
+}
+
+const ActionButton: React.FC<ActionButtonProps> = ({
+  icon,
+  title,
+  onPress,
+}) => (
+  <Pressable
+    onPress={onPress}
+    android_ripple={{ color: "rgba(255, 255, 255, 0.1)" }}
+  >
+    <XStack alignItems="center" paddingVertical="$2.5">
+      <View paddingHorizontal="$5">{icon}</View>
+      <Text fontSize="$7" marginLeft="$2" color="$color11">
+        {title}
+      </Text>
+    </XStack>
+  </Pressable>
+);
 
 export default function AccountScreen() {
   return (
@@ -55,6 +85,51 @@ export default function AccountScreen() {
         >
           View my profile
         </Button>
+      </YStack>
+      <YStack marginTop="$11">
+        <ActionButton
+          icon={<AntDesign name="edit" size={28} color="#E5484D" />}
+          title="Edit Profile"
+          onPress={() => router.push("/account/edit")}
+        />
+        <ActionButton
+          icon={
+            <Ionicons name="notifications-outline" size={28} color="#FF6369" />
+          }
+          title="Manage Notifications"
+        />
+        <ActionButton
+          icon={<MaterialIcons name="help-outline" size={28} color="#FF6369" />}
+          title="Need Help"
+        />
+        <ActionButton
+          icon={<Feather name="star" size={28} color="#FF6369" />}
+          title="Like us? Rate us!"
+        />
+        <ActionButton
+          icon={
+            <MaterialCommunityIcons
+              name="share-outline"
+              size={30}
+              color="#FF6369"
+            />
+          }
+          title="Share FlixAi"
+        />
+        <ActionButton
+          icon={<MaterialIcons name="logout" size={30} color="#FF6369" />}
+          title="Logout"
+        />
+      </YStack>
+      <YStack flex={1} justifyContent="flex-end" marginBottom="$11" gap="$2">
+        <Pressable>
+          <Text color="$red11Light" textAlign="center">
+            Delete my account
+          </Text>
+        </Pressable>
+        <Text textAlign="center" color="$color9" fontSize="$1">
+          App Version 0.5.0 (beta)
+        </Text>
       </YStack>
     </LinearGradient>
   );

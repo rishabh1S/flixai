@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { Pressable, TouchableOpacity } from "react-native";
 import { Avatar, Card, Text, Image, XStack } from "tamagui";
 
 interface CardsProps {
@@ -24,7 +24,7 @@ const Cards: React.FC<CardsProps> = ({
   mr,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <Pressable onPress={onPress}>
       <Card
         elevate
         animation="bouncy"
@@ -58,7 +58,7 @@ const Cards: React.FC<CardsProps> = ({
           />
         </Card.Background>
       </Card>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -9,8 +9,28 @@ import { useColorScheme } from "react-native";
 import { TamaguiProvider } from "tamagui";
 import { config } from "../../tamagui.config";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import * as SecureStore from "expo-secure-store";
 import { ImageProvider } from "../context/ImageContext";
+
+const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+const tokenCache = {
+  async getToken(key: string) {
+    try {
+      return SecureStore.getItemAsync(key);
+    } catch (err) {
+      return null;
+    }
+  },
+  async saveToken(key: string, value: string) {
+    try {
+      return SecureStore.setItemAsync(key, value);
+    } catch (err) {
+      return;
+    }
+  },
+};
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -19,7 +39,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
+  initialRouteName: "/",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -53,14 +73,9 @@ function RootLayoutNav() {
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <ImageProvider>
           <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="explore" options={{ headerShown: false }} />
-            <Stack.Screen name="edit" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="resultModal"
-              options={{ presentation: "modal", headerShown: false }}
-            />
           </Stack>
         </ImageProvider>
       </ThemeProvider>

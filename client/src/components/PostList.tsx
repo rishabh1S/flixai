@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { Text, YStack, XStack, Card, H3, Avatar, Image, Label } from "tamagui";
+import { Text, YStack, XStack, Image, Label } from "tamagui";
 import { FlashList } from "@shopify/flash-list";
 import Cards from "./Cards";
 import { router } from "expo-router";
@@ -14,7 +14,7 @@ const PostList = () => {
         title="Abstract Portrait with light effects"
         uri="https://replicate.delivery/pbxt/ywrtFkWfAJRle06uDzNC5kgHxUlJbz9C7MwJ2iNGPJQvCuTSA/fee56087-4f97-4ca5-ac04-fd861071de7d.png"
         avataruri="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
-        onPress={() => null}
+        onPress={() => router.push("/home/post")}
         width={220}
         height={300}
         mr="$4"
@@ -34,7 +34,7 @@ const PostList = () => {
         <TouchableOpacity
           onPress={() =>
             router.push({
-              pathname: "/explore",
+              pathname: "/home/explore",
               params: { activeTab: "first" },
             })
           }

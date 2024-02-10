@@ -11,6 +11,7 @@ import TabsLayout from "./TabsLayout";
 import UsersTab from "./UsersTab";
 import PostsTab from "./PostsTab";
 import Profile from "./Profile";
+import Post from "./Post";
 
 export {
   Cards,
@@ -26,4 +27,5 @@ export {
   UsersTab,
   PostsTab,
   Profile,
+  Post,
 };

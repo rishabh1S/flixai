@@ -34,7 +34,7 @@ export default function TabLayout() {
       )}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           tabBarIcon: ({ color }) => (
             <AntDesign name="home" size={30} color={color} />

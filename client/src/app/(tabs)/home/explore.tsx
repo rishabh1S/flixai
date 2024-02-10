@@ -2,15 +2,7 @@ import { LinearGradient } from "@tamagui/linear-gradient";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Headers, TabsLayout } from "@/src/components";
-import {
-  H5,
-  Input,
-  ScrollView,
-  SizableText,
-  Tabs,
-  Text,
-  XStack,
-} from "tamagui";
+import { Input, Text, XStack, YStack } from "tamagui";
 import { AntDesign } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 import { useLocalSearchParams } from "expo-router";

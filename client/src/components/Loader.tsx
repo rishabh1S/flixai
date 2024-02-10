@@ -20,9 +20,12 @@ const Loader = () => {
 
 const styles = StyleSheet.create({
   container: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 20,
     minHeight: "100%",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.9)",
   },
   animation: {
     width: 400,
