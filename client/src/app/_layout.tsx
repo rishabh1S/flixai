@@ -4,7 +4,7 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack, useRouter } from "expo-router";
 import { useColorScheme } from "react-native";
 import { TamaguiProvider } from "tamagui";
 import { config } from "../../tamagui.config";
@@ -12,6 +12,7 @@ import { useFonts } from "expo-font";
 import React, { useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
 import { ImageProvider } from "../context/ImageContext";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -62,11 +63,26 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <ClerkProvider
+      publishableKey={CLERK_PUBLISHABLE_KEY!}
+      tokenCache={tokenCache}
+    >
+      <RootLayoutNav />
+    </ClerkProvider>
+  );
 }
 
 function RootLayoutNav() {
+  const router = useRouter();
+  const { isLoaded, isSignedIn } = useAuth();
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      router.push("/(tabs)/home/");
+    }
+  }, [isLoaded]);
 
   return (
     <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
@@ -75,7 +91,6 @@ function RootLayoutNav() {
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           </Stack>
         </ImageProvider>
       </ThemeProvider>
