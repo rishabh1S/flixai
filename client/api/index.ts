@@ -12,3 +12,14 @@ export const generateImage = async (params: any): Promise<any> => {
     throw new Error("Error generating image");
   }
 };
+
+export const generateUsername = async (): Promise<string> => {
+  try {
+    const response = await axios.post(`${server_url}/generateUsername`);
+
+    return response.data.username;
+  } catch (error) {
+    console.error("Error generating username:", error);
+    throw new Error("Error generating username");
+  }
+};

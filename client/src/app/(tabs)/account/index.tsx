@@ -11,6 +11,7 @@ import {
 } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 import { router } from "expo-router";
+import { useAuth } from "@clerk/clerk-expo";
 
 interface ActionButtonProps {
   icon: ReactElement;
@@ -37,6 +38,7 @@ const ActionButton: React.FC<ActionButtonProps> = ({
 );
 
 export default function AccountScreen() {
+  const { signOut } = useAuth();
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
       <SafeAreaView
@@ -117,6 +119,10 @@ export default function AccountScreen() {
           title="Share FlixAi"
         />
         <ActionButton
+          onPress={() => {
+            signOut();
+            router.push("/landing");
+          }}
           icon={<MaterialIcons name="logout" size={30} color="#FF6369" />}
           title="Logout"
         />

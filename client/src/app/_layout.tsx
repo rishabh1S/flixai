@@ -39,7 +39,6 @@ export {
 } from "expo-router";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "/",
 };
 
@@ -79,8 +78,8 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   useEffect(() => {
-    if (isLoaded && isSignedIn) {
-      router.push("/(tabs)/home/");
+    if (isLoaded && !isSignedIn) {
+      router.push("/landing");
     }
   }, [isLoaded]);
 
@@ -89,8 +88,8 @@ function RootLayoutNav() {
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <ImageProvider>
           <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="landing" options={{ headerShown: false }} />
           </Stack>
         </ImageProvider>
       </ThemeProvider>

@@ -7759,8 +7759,8 @@ __metadata:
     react-native: "npm:0.73.4"
     react-native-gesture-handler: "npm:^2.14.1"
     react-native-image-viewing: "npm:^0.2.2"
-    react-native-modal: "npm:^13.0.1"
     react-native-pager-view: "npm:^6.2.3"
+    react-native-raw-bottom-sheet: "npm:^2.2.0"
     react-native-reanimated: "npm:^3.6.2"
     react-native-reanimated-carousel: "npm:^3.5.1"
     react-native-safe-area-context: "npm:4.8.2"
@@ -11026,7 +11026,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.5.10, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:15.8.1, prop-types@npm:^15.5.10, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -11253,15 +11253,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-animatable@npm:1.3.3":
-  version: 1.3.3
-  resolution: "react-native-animatable@npm:1.3.3"
-  dependencies:
-    prop-types: "npm:^15.7.2"
-  checksum: be7552f9eca8a881e64ce4650849da4a20d68023a445288d609e4dce0ad454ebccefbe52a0cd4ee412782731174b84cdd89acbb384107ad1ed2af05441593ed3
-  languageName: node
-  linkType: hard
-
 "react-native-css-interop@npm:~0.0.21":
   version: 0.0.22
   resolution: "react-native-css-interop@npm:0.0.22"
@@ -11311,19 +11302,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-modal@npm:^13.0.1":
-  version: 13.0.1
-  resolution: "react-native-modal@npm:13.0.1"
-  dependencies:
-    prop-types: "npm:^15.6.2"
-    react-native-animatable: "npm:1.3.3"
-  peerDependencies:
-    react: "*"
-    react-native: ">=0.65.0"
-  checksum: 7b9096127f5195e28bf8016bed5e8760e060e533358ba41f829605233b7f0e9e7e94941884c9fdb0d14d288c02a2944b516754477af24b0173c57777f2aa5018
-  languageName: node
-  linkType: hard
-
 "react-native-pager-view@npm:^6.2.3":
   version: 6.2.3
   resolution: "react-native-pager-view@npm:6.2.3"
@@ -11331,6 +11309,13 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 9c08c9ffc27f3b6069f23d24ba5c1073a55fb67db4a45bcf490e544a37f26a9cfe7ad72259543f71f3f78a1fb26c78f711c076d905389d599c69c43fe29b7a67
+  languageName: node
+  linkType: hard
+
+"react-native-raw-bottom-sheet@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "react-native-raw-bottom-sheet@npm:2.2.0"
+  checksum: f00b759430b549082410fc7ce071fc49c928e72495ce17ef7fdbbcba604395323370e0f847f5064fd2102614ce48ea13f43347582aa9dba0aad8eb845425539b
   languageName: node
   linkType: hard
 

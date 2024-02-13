@@ -4,6 +4,7 @@ import cors from "cors";
 
 import connectDB from "./mongo/connect.js";
 import generateImage from "./routes/generateImage.js";
+import generateUsername from "./routes/generateUsername.js";
 
 const app = express();
 app.use(cors());
@@ -18,6 +19,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/generateImage", generateImage);
+app.use("/generateUsername", generateUsername);
 
 const startServer = async () => {
   try {

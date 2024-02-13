@@ -12,6 +12,8 @@ import UsersTab from "./UsersTab";
 import PostsTab from "./PostsTab";
 import Profile from "./Profile";
 import Post from "./Post";
+import LoginPage from "./LoginPage";
+import SignUpPage from "./SignUpPage";
 
 export {
   Cards,
@@ -28,4 +30,6 @@ export {
   PostsTab,
   Profile,
   Post,
+  LoginPage,
+  SignUpPage,
 };
