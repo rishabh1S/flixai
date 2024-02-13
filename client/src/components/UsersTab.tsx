@@ -13,7 +13,7 @@ const UsersTab = () => {
 
   const renderItem = () => {
     return (
-      <Pressable onPress={() => router.push("/home/profile")}>
+      <Pressable onPress={() => router.navigate("/profile")}>
         <View padding="$3.5">
           <XStack gap="$4" alignItems="center" justifyContent="space-between">
             <Avatar circular size="$6">

@@ -17,6 +17,7 @@ import { Feather } from "@expo/vector-icons";
 import Sliders from "./Sliders";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
+import { getCloudImageURI } from "@/api";
 
 interface AccordiansProps {
   negativePrompt: string;
@@ -39,16 +40,23 @@ const Accordians: React.FC<AccordiansProps> = ({
   setCnImage,
   setCnType,
 }) => {
+  const [cnDisplayFileName, setCnDisplayFileName] = React.useState<
+    string | undefined
+  >();
   const pickImage = async () => {
     try {
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         quality: 1,
+        base64: true,
       });
 
       if (!result.canceled) {
-        setCnImage(result.assets[0].uri);
+        const base64 = `data:image/jpeg;base64,${result.assets[0].base64}`;
+        setCnImage(base64);
+        const timestamp = new Date().toISOString();
+        setCnDisplayFileName(`${timestamp}.jpg`);
       }
     } catch (error) {
       console.error("Error picking image: ", error);
@@ -103,21 +111,31 @@ const Accordians: React.FC<AccordiansProps> = ({
                 size="$6"
                 borderRadius="$3"
               >
-                <XStack alignItems="center" gap="$3">
-                  <Image
-                    source={{ uri: cnImage }}
-                    borderRadius="$3"
-                    width="$5"
-                    height="$5"
-                  />
-                  <Text fontSize={10} color="gray">
-                    {cnImage.split("/").pop()}
-                  </Text>
+                <XStack
+                  alignItems="center"
+                  justifyContent="space-between"
+                  flex={1}
+                  gap="$3"
+                >
+                  <XStack alignItems="center" gap="$3">
+                    <Image
+                      source={{ uri: cnImage }}
+                      borderRadius="$3"
+                      width="$5"
+                      height="$5"
+                    />
+                    <Text fontSize="$2" color="gray">
+                      {cnDisplayFileName}
+                    </Text>
+                  </XStack>
                   <Button
                     padding="$1.5"
                     size="$2"
                     chromeless
-                    onPress={() => setCnImage(undefined)}
+                    onPress={() => {
+                      setCnImage(undefined);
+                      setCnDisplayFileName(undefined);
+                    }}
                   >
                     <AntDesign name="close" size={16} color="white" />
                   </Button>

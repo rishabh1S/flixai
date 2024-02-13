@@ -38,7 +38,7 @@ const PostsTab: React.FC<PostsTabProps> = ({ showOptions }) => {
 
     return (
       <Pressable
-        onPress={() => router.push(showOptions ? "/home/post" : "/save/detail")}
+        onPress={() => router.navigate(showOptions ? "/post" : "/save/detail")}
       >
         <Image
           source={{

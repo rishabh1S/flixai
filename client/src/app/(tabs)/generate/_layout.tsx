@@ -6,8 +6,14 @@ const StackLayout = () => {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
-        name="resultModal"
-        options={{ presentation: "modal", headerShown: false }}
+        name="result"
+        options={{
+          headerTitle: "Result",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          headerTitleAlign: "center",
+        }}
       />
     </Stack>
   );

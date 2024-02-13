@@ -4,11 +4,12 @@ import { LinearGradient } from "@tamagui/linear-gradient";
 import { Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { useUser } from "@clerk/clerk-expo";
 
 export default function EditScreen() {
-  const [userProfileUri, setUserProfileUri] = useState(
-    "https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
-  );
+  const { user } = useUser();
+  const [email, setEmail] = useState(user?.emailAddresses[0].emailAddress);
+  const userProfileUri = user?.imageUrl;
 
   const pickImage = async () => {
     try {
@@ -17,10 +18,14 @@ export default function EditScreen() {
         allowsEditing: true,
         aspect: [1, 1],
         quality: 1,
+        base64: true,
       });
 
       if (!result.canceled) {
-        setUserProfileUri(result.assets[0].uri);
+        const base64 = `data:image/png;base64,${result.assets[0].base64}`;
+        user?.setProfileImage({
+          file: base64,
+        });
       }
     } catch (error) {
       console.error("Error picking image: ", error);
@@ -56,7 +61,7 @@ export default function EditScreen() {
           <Text fontSize="$7" fontWeight="bold">
             Monica Geller
           </Text>
-          <Text color="$gray9">monica9913@gmail.com</Text>
+          <Text color="$gray9">{email}</Text>
         </YStack>
       </YStack>
       <YStack marginHorizontal="$3" marginTop="$7" gap="$7">

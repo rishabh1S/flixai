@@ -1,4 +1,4 @@
-import { generateImage } from "@/api/index";
+import { generateImage, getCloudImageURI } from "@/api/index";
 import {
   Accordians,
   Cards,
@@ -83,6 +83,15 @@ export default function GenerateScreen() {
     }
     try {
       setIsLoading(true);
+
+      if (cnImage) {
+        const cloudinaryURL = await getCloudImageURI(
+          cnImage,
+          "flixai/user-upload"
+        );
+        setCnImage(cloudinaryURL);
+      }
+
       const params = {
         prompt,
         selectedPreset,
@@ -101,7 +110,7 @@ export default function GenerateScreen() {
       const response = await generateImage(params);
       updateGeneratedImages(response.output);
       updatePrompt(prompt);
-      router.push("/generate/resultModal");
+      router.push("/generate/result");
     } catch (error) {
       console.error(error);
     } finally {

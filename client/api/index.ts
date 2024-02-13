@@ -23,3 +23,42 @@ export const generateUsername = async (): Promise<string> => {
     throw new Error("Error generating username");
   }
 };
+
+export const createUser = async (userData: any): Promise<any> => {
+  try {
+    const response = await axios.post(`${server_url}/createUser`, userData);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error creating user:", error);
+    throw new Error("Error creating user");
+  }
+};
+
+export const createPost = async (postData: any): Promise<any> => {
+  try {
+    const response = await axios.post(`${server_url}/createPost`, postData);
+
+    return response.data;
+  } catch (error) {
+    console.error("Error creating post:", error);
+    throw new Error("Error creating post");
+  }
+};
+
+export const getCloudImageURI = async (
+  imageURI: string,
+  folderName: string
+): Promise<string> => {
+  try {
+    const response = await axios.post(`${server_url}/cloudImage`, {
+      imageURI,
+      folderName,
+    });
+
+    return response.data.cloudinaryURL;
+  } catch (error) {
+    console.error("Error getting Cloudinary image URI:", error);
+    throw new Error("Error getting Cloudinary image URI");
+  }
+};

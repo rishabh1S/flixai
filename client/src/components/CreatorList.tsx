@@ -16,7 +16,7 @@ const CreatorList = () => {
 
   const renderItem = (item: number, index: React.Key | null | undefined) => {
     return (
-      <Pressable key={index} onPress={() => router.push("/home/profile")}>
+      <Pressable key={index} onPress={() => router.navigate("/profile")}>
         <View
           marginBottom="$2.5"
           backgroundColor={"$red5Dark"}
@@ -83,8 +83,8 @@ const CreatorList = () => {
         </Text>
         <TouchableOpacity
           onPress={() =>
-            router.push({
-              pathname: "/home/explore",
+            router.navigate({
+              pathname: "/explore",
               params: { activeTab: "second" },
             })
           }

@@ -14,7 +14,7 @@ const PostList = () => {
         title="Abstract Portrait with light effects"
         uri="https://replicate.delivery/pbxt/ywrtFkWfAJRle06uDzNC5kgHxUlJbz9C7MwJ2iNGPJQvCuTSA/fee56087-4f97-4ca5-ac04-fd861071de7d.png"
         avataruri="https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
-        onPress={() => router.push("/home/post")}
+        onPress={() => router.navigate("/post")}
         width={220}
         height={300}
         mr="$4"
@@ -33,8 +33,8 @@ const PostList = () => {
         </Label>
         <TouchableOpacity
           onPress={() =>
-            router.push({
-              pathname: "/home/explore",
+            router.navigate({
+              pathname: "/explore",
               params: { activeTab: "first" },
             })
           }

@@ -8,7 +8,6 @@ import * as Clipboard from "expo-clipboard";
 import * as FileSystem from "expo-file-system";
 import * as Haptics from "expo-haptics";
 import * as MediaLibrary from "expo-media-library";
-import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   Alert,
@@ -19,14 +18,12 @@ import {
 } from "react-native";
 import ImageView from "react-native-image-viewing";
 import Carousel from "react-native-reanimated-carousel";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Button,
   Card,
   Image,
   Label,
   ScrollView,
-  Text,
   TextArea,
   View,
   XStack,
@@ -90,7 +87,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
     <Pressable onPress={onPress}>
       <YStack gap="$2">
         <Card elevate overflow="hidden">
-          <Image source={{ uri: item }} style={{ aspectRatio: 9 / 13 }} />
+          <Image source={{ uri: item }} style={{ aspectRatio: 1 / 1.2 }} />
         </Card>
         <XStack
           theme={"red"}
@@ -134,7 +131,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
   );
 };
 
-export default function resultModal() {
+export default function result() {
   const { generatedImages, prompt } = useImageContext();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isImageViewVisible, setIsImageViewVisible] = useState(false);
@@ -146,27 +143,12 @@ export default function resultModal() {
 
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
-      <SafeAreaView
-        style={{
-          marginBottom: 8,
-        }}
+      <ScrollView
+        flex={1}
+        marginHorizontal="$3"
+        showsVerticalScrollIndicator={false}
       >
-        <View
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-between"
-          marginBottom={8}
-          paddingHorizontal="$4"
-        >
-          <TouchableOpacity onPress={() => router.back()}>
-            <MaterialIcons name="keyboard-backspace" size={26} color="white" />
-          </TouchableOpacity>
-          <Text fontSize="$7" marginLeft="$-3.5">
-            Result
-          </Text>
-          <View />
-        </View>
-        <YStack marginHorizontal="$3">
+        <YStack>
           {generatedImages.length > 1 ? (
             <Carousel
               data={generatedImages}
@@ -174,7 +156,7 @@ export default function resultModal() {
                 <ResultItem item={item} onPress={() => openImageView(index)} />
               )}
               width={width * 0.93}
-              height={height * 0.7}
+              height={height * 0.6}
               pagingEnabled
               onSnapToItem={(index) => setActiveIndex(index)}
             />
@@ -193,13 +175,7 @@ export default function resultModal() {
             )}
           </View>
         </YStack>
-      </SafeAreaView>
-      <ScrollView
-        marginHorizontal="$3"
-        marginBottom="$3"
-        showsVerticalScrollIndicator={false}
-      >
-        <YStack>
+        <YStack paddingBottom="$10">
           <Label fontSize="$7">Prompt</Label>
           <TextArea
             theme={"red"}
@@ -222,13 +198,13 @@ export default function resultModal() {
             />
           </TouchableOpacity>
         </YStack>
-        <ImageView
-          images={generatedImages.map((uri) => ({ uri }))}
-          imageIndex={activeIndex}
-          visible={isImageViewVisible}
-          onRequestClose={() => setIsImageViewVisible(false)}
-        />
       </ScrollView>
+      <ImageView
+        images={generatedImages.map((uri) => ({ uri }))}
+        imageIndex={activeIndex}
+        visible={isImageViewVisible}
+        onRequestClose={() => setIsImageViewVisible(false)}
+      />
     </LinearGradient>
   );
 }
