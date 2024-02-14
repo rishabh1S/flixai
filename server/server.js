@@ -4,7 +4,6 @@ import cors from "cors";
 import connectDB from "./mongo/connect.js";
 import generateImage from "./routes/generateImage.js";
 import generateUsername from "./routes/generateUsername.js";
-import createUser from "./routes/createUser.js";
 import createPost from "./routes/createPost.js";
 import cloudImage from "./routes/cloudImage.js";
 
@@ -23,7 +22,6 @@ app.get("/", async (req, res) => {
 
 app.use("/generateImage", generateImage);
 app.use("/generateUsername", generateUsername);
-app.use("/createUser", createUser);
 app.use("/createPost", createPost);
 app.use("/cloudImage", cloudImage);
 
