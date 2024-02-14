@@ -24,17 +24,6 @@ export const generateUsername = async (): Promise<string> => {
   }
 };
 
-export const createUser = async (userData: any): Promise<any> => {
-  try {
-    const response = await axios.post(`${server_url}/createUser`, userData);
-
-    return response.data;
-  } catch (error) {
-    console.error("Error creating user:", error);
-    throw new Error("Error creating user");
-  }
-};
-
 export const createPost = async (postData: any): Promise<any> => {
   try {
     const response = await axios.post(`${server_url}/createPost`, postData);

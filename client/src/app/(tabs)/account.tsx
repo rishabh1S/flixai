@@ -1,17 +1,18 @@
 import { LinearGradient } from "@tamagui/linear-gradient";
 import React, { ReactElement } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Avatar, Text, Label, View, YStack, Button, XStack } from "tamagui";
+import { Avatar, Text, Label, View, YStack, XStack } from "tamagui";
 import {
   MaterialIcons,
-  AntDesign,
   Ionicons,
   Feather,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { Pressable } from "react-native";
 import { router } from "expo-router";
 import { useAuth } from "@clerk/clerk-expo";
+import { Pressable } from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { useUser } from "@clerk/clerk-expo";
 
 interface ActionButtonProps {
   icon: ReactElement;
@@ -39,6 +40,33 @@ const ActionButton: React.FC<ActionButtonProps> = ({
 
 export default function AccountScreen() {
   const { signOut } = useAuth();
+  const { user } = useUser();
+  const userProfileUri = user?.imageUrl;
+  const username = user?.username;
+  const name = user?.fullName;
+  const email = user?.emailAddresses[0].emailAddress;
+
+  const pickImage = async () => {
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+        base64: true,
+      });
+
+      if (!result.canceled) {
+        const base64 = `data:image/png;base64,${result.assets[0].base64}`;
+        user?.setProfileImage({
+          file: base64,
+        });
+      }
+    } catch (error) {
+      console.error("Error picking image: ", error);
+    }
+  };
+
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
       <SafeAreaView
@@ -50,50 +78,38 @@ export default function AccountScreen() {
       >
         <Label fontSize={"$7"}>Account</Label>
       </SafeAreaView>
-      <YStack alignItems="center" gap="$2">
-        <YStack alignItems="center">
-          <Avatar circular size={"$10"}>
-            <Avatar.Image
-              accessibilityLabel="Cam"
-              src={
-                "https://images.unsplash.com/photo-1548142813-c348350df52b?&w=150&h=150&dpr=2&q=80"
-              }
-            />
+      <YStack alignItems="center" marginVertical="$2" gap="$3">
+        <Pressable onPress={pickImage}>
+          <Avatar circular size={"$12"}>
+            <Avatar.Image accessibilityLabel="Cam" src={userProfileUri} />
             <Avatar.Fallback backgroundColor="$red10" />
           </Avatar>
-          <Pressable onPress={() => router.push("/account/edit")}>
-            <View
-              marginTop="$-3"
-              borderRadius="$7"
-              backgroundColor={"$blue11Light"}
-              padding="$1"
-              borderColor="white"
-              borderWidth="$1"
-            >
-              <MaterialIcons name="edit" size={18} color="white" />
-            </View>
-          </Pressable>
-        </YStack>
-        <YStack alignItems="center">
+          <View
+            position="absolute"
+            bottom="$3"
+            right="$2"
+            borderRadius="$7"
+            backgroundColor={"$color6"}
+            padding={5}
+            borderColor="white"
+            borderWidth="$1"
+          >
+            <MaterialIcons
+              name="enhance-photo-translate"
+              size={18}
+              color="white"
+            />
+          </View>
+        </Pressable>
+        <YStack alignItems="center" gap="$1">
           <Text fontSize="$7" fontWeight="bold">
-            Monica Geller
+            {name}
           </Text>
-          <Text color="gray">moncat</Text>
+          <Text color="$gray9">{email}</Text>
+          <Text color="$gray11">@{username}</Text>
         </YStack>
-        <Button
-          onPress={() => router.push("/account/profile")}
-          marginTop="$2"
-          color="$red9Light"
-        >
-          View my profile
-        </Button>
       </YStack>
-      <YStack marginTop="$11">
-        <ActionButton
-          icon={<AntDesign name="edit" size={28} color="#E5484D" />}
-          title="Edit Profile"
-          onPress={() => router.push("/account/edit")}
-        />
+      <YStack marginTop="$15">
         <ActionButton
           icon={
             <Ionicons name="notifications-outline" size={28} color="#FF6369" />

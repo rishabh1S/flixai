@@ -1,6 +1,6 @@
 import { Text, Image, YStack, XStack, Label, Avatar } from "tamagui";
 import React, { useRef, useState } from "react";
-import { Dimensions, Pressable } from "react-native";
+import { Dimensions } from "react-native";
 import { Feather, FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import ImageView from "react-native-image-viewing";
 import {
@@ -98,12 +98,10 @@ const Post = () => {
           color="white"
           style={{ transform: [{ rotateY: "180deg" }] }}
         />
-        <FontAwesome
-          name="bookmark-o"
-          size={24}
-          color="white"
-          style={{ marginLeft: "auto" }}
-        />
+        <XStack marginLeft="auto" alignItems="center" gap="$2">
+          <FontAwesome name="magic" size={18} color="white" />
+          <Text>Try this</Text>
+        </XStack>
       </XStack>
       <YStack marginHorizontal="$3">
         <Text>373 likes</Text>

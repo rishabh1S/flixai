@@ -1,4 +1,13 @@
-import { Button, Input, View, Spinner, Text, Form, YStack } from "tamagui";
+import {
+  Button,
+  Input,
+  View,
+  Spinner,
+  Text,
+  Form,
+  YStack,
+  XStack,
+} from "tamagui";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "@tamagui/linear-gradient";
 import { Feather } from "@expo/vector-icons";
@@ -13,7 +22,8 @@ type SignUpPageProps = {
 
 const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
   const { isLoaded, signUp, setActive } = useSignUp();
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -24,24 +34,33 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
   const [status, setStatus] = useState<"off" | "submitting" | "submitted">(
     "off"
   );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (status === "submitting" && !isLoaded) {
+    if (status === "submitting" && !loading) {
       setStatus("off");
     }
-  }, [status, isLoaded]);
+  }, [status, loading]);
+
+  useEffect(() => {
+    const generateAndSetUsername = async () => {
+      const generatedUsername = await generateUsername();
+      setUsername(generatedUsername);
+    };
+    generateAndSetUsername();
+  }, []);
 
   const onSignUpPress = async () => {
     if (!isLoaded) {
       return;
     }
     try {
-      const generatedUsername = await generateUsername();
-      setUsername(generatedUsername);
       await signUp.create({
         emailAddress,
         password,
         username,
+        firstName,
+        lastName,
       });
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
       setPendingVerification(true);
@@ -55,6 +74,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
       return;
     }
     try {
+      setLoading(true);
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
@@ -62,6 +82,8 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
       router.push("/");
     } catch (err: any) {
       Alert.alert(`Error: ${err.errors[0].code}`, err.errors[0].longMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -101,15 +123,28 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
         ) : (
           <YStack>
             <YStack gap="$4" marginHorizontal="$3">
-              <Input
-                size="$5"
-                placeholder="Full Name"
-                textContentType="name"
-                borderRadius="$5"
-                cursorColor="white"
-                value={name}
-                onChangeText={(name) => setName(name)}
-              />
+              <XStack justifyContent="space-between">
+                <Input
+                  size="$5"
+                  width={"48%"}
+                  placeholder="First Name"
+                  textContentType="name"
+                  borderRadius="$5"
+                  cursorColor="white"
+                  value={firstName}
+                  onChangeText={(firstName) => setFirstName(firstName)}
+                />
+                <Input
+                  size="$5"
+                  width={"48%"}
+                  placeholder="Last Name"
+                  textContentType="name"
+                  borderRadius="$5"
+                  cursorColor="white"
+                  value={lastName}
+                  onChangeText={(lastName) => setLastName(lastName)}
+                />
+              </XStack>
               <Input
                 size="$5"
                 placeholder="Email address"

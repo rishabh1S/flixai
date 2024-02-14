@@ -34,28 +34,19 @@ export default function TabLayout() {
       )}
     >
       <Tabs.Screen
+        name="store"
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="storefront" size={30} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           tabBarIcon: ({ color }) => (
-            <AntDesign name="home" size={30} color={color} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="generate"
-        options={{
-          tabBarIcon: ({ color }) => (
             <FontAwesome6 name="wand-magic-sparkles" size={26} color={color} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tabs.Screen
-        name="save"
-        options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="perm-media" size={24} color={color} />
           ),
           headerShown: false,
         }}

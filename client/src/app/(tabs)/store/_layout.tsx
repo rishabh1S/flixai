@@ -6,9 +6,9 @@ const StackLayout = () => {
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen
-        name="result"
+        name="post"
         options={{
-          headerTitle: "Result",
+          headerTitle: "Posts",
           headerStyle: {
             backgroundColor: "black",
           },

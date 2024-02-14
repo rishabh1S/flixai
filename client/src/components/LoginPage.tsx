@@ -18,18 +18,20 @@ const LoginPage: React.FC<LoginPageProps> = ({ toggleVariant }) => {
   const [status, setStatus] = useState<"off" | "submitting" | "submitted">(
     "off"
   );
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (status === "submitting" && !isLoaded) {
+    if (status === "submitting" && !loading) {
       setStatus("off");
     }
-  }, [status, isLoaded]);
+  }, [status, loading]);
 
   const onSignInPress = async () => {
     if (!isLoaded) {
       return;
     }
     try {
+      setLoading(true);
       const completeSignIn = await signIn.create({
         identifier: emailAddress,
         password,
@@ -39,6 +41,8 @@ const LoginPage: React.FC<LoginPageProps> = ({ toggleVariant }) => {
       router.push("/");
     } catch (err: any) {
       Alert.alert(`Error: ${err.errors[0].code}`, err.errors[0].longMessage);
+    } finally {
+      setLoading(false);
     }
   };
 

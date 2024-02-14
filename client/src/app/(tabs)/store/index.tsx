@@ -1,19 +1,17 @@
 import { LinearGradient } from "@tamagui/linear-gradient";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Headers, TabsLayout } from "@/src/components";
-import { Input, Text, XStack, YStack } from "tamagui";
+import { Headers, PostsTab } from "@/src/components";
+import { Input, Text, XStack } from "tamagui";
 import { AntDesign } from "@expo/vector-icons";
 import { Pressable } from "react-native";
-import { useLocalSearchParams } from "expo-router";
 
-export default function ExploreScreen() {
+export default function HomeScreen() {
   const [searchText, setSearchText] = useState("");
-  const { activeTab } = useLocalSearchParams<{ activeTab: string }>();
 
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
-      <SafeAreaView style={{ marginBottom: 5 }}>
+      <SafeAreaView style={{ marginBottom: 10 }}>
         <Headers />
         <XStack
           marginHorizontal="$3"
@@ -44,7 +42,7 @@ export default function ExploreScreen() {
           />
         </XStack>
       </SafeAreaView>
-      <TabsLayout activeTab={activeTab} />
+      <PostsTab />
     </LinearGradient>
   );
 }

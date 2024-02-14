@@ -3,9 +3,10 @@ import { Button, Text, View, YStack, Image, XStack, Label } from "tamagui";
 import { Dimensions, TouchableOpacity } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { LoginPage, SignUpPage } from "@/src/components";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { Ionicons } from "@expo/vector-icons";
+import { usePathname } from "expo-router";
 
 type Variant = "LOGIN" | "REGISTER";
 const width = Dimensions.get("window").width;
@@ -14,6 +15,7 @@ const height = Dimensions.get("window").height;
 export default function LandingScreen() {
   const refRBSheet = useRef<RBSheet>(null);
   const [variant, setVariant] = useState<Variant>("LOGIN");
+  const pathName = usePathname();
 
   const toggleVariant = useCallback(() => {
     if (variant === "LOGIN") {
@@ -22,6 +24,10 @@ export default function LandingScreen() {
       setVariant("LOGIN");
     }
   }, [variant]);
+
+  useEffect(() => {
+    refRBSheet.current?.close();
+  }, [pathName]);
 
   return (
     <View backgroundColor="rgb(51, 17, 17)" flex={1}>
@@ -40,15 +46,35 @@ export default function LandingScreen() {
           position="absolute"
           bottom={0}
         />
+      </View>
+      <YStack
+        gap="$2"
+        marginHorizontal="$2"
+        paddingHorizontal="$3"
+        position="absolute"
+        bottom={140}
+      >
         <Image
           width={150}
           height={50}
           source={require("../../assets/images/logo.png")}
-          position="absolute"
-          bottom={-10}
-          left={width * 0.3}
         />
-      </View>
+        <Text fontSize={"$9"} fontWeight={"800"}>
+          Unleash Your{" "}
+          <Text color={"$red10Dark"} fontWeight={"800"}>
+            Imagination
+          </Text>{" "}
+          with Flix{" "}
+          <Text color={"$red10Dark"} fontWeight={"800"}>
+            AI
+          </Text>
+        </Text>
+        <Text color={"$color"} fontSize={"$3"}>
+          Flix AI is your creative hub for effortless image generation. Create,
+          share and connect with fellow users in a seamless experience powered
+          by the cutting-edge Fooocus API.
+        </Text>
+      </YStack>
       <YStack flex={1} justifyContent="flex-end" margin="$4" gap="$3">
         <Button
           theme="red"
