@@ -4,7 +4,7 @@ const server_url = process.env.EXPO_PUBLIC_SERVER_URL;
 
 export const generateImage = async (params: any): Promise<any> => {
   try {
-    const response = await axios.post(`${server_url}/generateImage`, params);
+    const response = await axios.post(`${server_url}/api/fooocus`, params);
 
     return response.data;
   } catch (error) {
@@ -15,7 +15,7 @@ export const generateImage = async (params: any): Promise<any> => {
 
 export const generateUsername = async (): Promise<string> => {
   try {
-    const response = await axios.post(`${server_url}/generateUsername`);
+    const response = await axios.post(`${server_url}/api/randomUser`);
 
     return response.data.username;
   } catch (error) {
@@ -26,7 +26,7 @@ export const generateUsername = async (): Promise<string> => {
 
 export const createPost = async (postData: any): Promise<any> => {
   try {
-    const response = await axios.post(`${server_url}/createPost`, postData);
+    const response = await axios.post(`${server_url}/api/post`, postData);
 
     return response.data;
   } catch (error) {
@@ -35,19 +35,22 @@ export const createPost = async (postData: any): Promise<any> => {
   }
 };
 
-export const getCloudImageURI = async (
-  imageURI: string,
-  folderName: string
-): Promise<string> => {
+export const fetchPosts = async (): Promise<any> => {
   try {
-    const response = await axios.post(`${server_url}/cloudImage`, {
-      imageURI,
-      folderName,
-    });
-
-    return response.data.cloudinaryURL;
+    const response = await axios.get(`${server_url}/api/post`);
+    return response.data;
   } catch (error) {
-    console.error("Error getting Cloudinary image URI:", error);
-    throw new Error("Error getting Cloudinary image URI");
+    console.error("Error getting posts:", error);
+    throw new Error("Error getting posts");
+  }
+};
+
+export const fetchPostById = async (postId: string): Promise<any> => {
+  try {
+    const response = await axios.get(`${server_url}/api/post/${postId}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error getting post with ID ${postId}:`, error);
+    throw new Error(`Error getting post with ID ${postId}`);
   }
 };

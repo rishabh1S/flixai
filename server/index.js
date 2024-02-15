@@ -2,16 +2,15 @@ import express from "express";
 import cors from "cors";
 
 import connectDB from "./mongo/connect.js";
-import generateImage from "./routes/generateImage.js";
+import fooocusImage from "./routes/fooocusRoutes.js";
 import generateUsername from "./routes/generateUsername.js";
-import createPost from "./routes/createPost.js";
-import cloudImage from "./routes/cloudImage.js";
+import postRoutes from "./routes/postRoutes.js";
 
 const app = express();
 app.use(cors());
 const port = 8080;
 
-app.use(express.json({ limit: "10mb" }));
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
 app.get("/", async (req, res) => {
@@ -20,10 +19,9 @@ app.get("/", async (req, res) => {
   });
 });
 
-app.use("/generateImage", generateImage);
-app.use("/generateUsername", generateUsername);
-app.use("/createPost", createPost);
-app.use("/cloudImage", cloudImage);
+app.use("/api/fooocus", fooocusImage);
+app.use("/api/randomUser", generateUsername);
+app.use("/api/post", postRoutes);
 
 const startServer = async () => {
   try {
