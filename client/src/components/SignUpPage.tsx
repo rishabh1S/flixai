@@ -1,27 +1,83 @@
-import {
-  Button,
-  Input,
-  View,
-  Spinner,
-  Text,
-  Form,
-  YStack,
-  XStack,
-} from "tamagui";
+import { Button, Input, View, Spinner, Text, Form, XStack } from "tamagui";
 import React, { useEffect, useState } from "react";
 import { LinearGradient } from "@tamagui/linear-gradient";
-import { Feather } from "@expo/vector-icons";
-import { Alert, TouchableOpacity } from "react-native";
+import { Alert } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 import { generateUsername } from "@/api";
+import TextInput from "./TextInput";
 
 type SignUpPageProps = {
   toggleVariant: () => void;
 };
 
-const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
+const VerificationScreen: React.FC = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
+  const [code, setCode] = useState("");
+  const [status, setStatus] = useState<"off" | "submitting" | "submitted">(
+    "off"
+  );
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (status === "submitting" && !loading) {
+      setStatus("off");
+    }
+  }, [status, loading]);
+
+  const onPressVerify = async () => {
+    if (!isLoaded) {
+      return;
+    }
+    try {
+      setLoading(true);
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+      await setActive({ session: completeSignUp.createdSessionId });
+      router.push("/");
+    } catch (err: any) {
+      Alert.alert(`Error: ${err.errors[0].code}`, err.errors[0].longMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Form
+      onSubmit={() => setStatus("submitting")}
+      gap="$7"
+      marginHorizontal="$3"
+    >
+      <Input
+        size="$5"
+        placeholder="Verification Code"
+        maxLength={6}
+        value={code}
+        onChangeText={(code) => setCode(code)}
+        keyboardType="numeric"
+        cursorColor="white"
+      />
+      <Form.Trigger asChild disabled={status !== "off"}>
+        <Button
+          onPress={onPressVerify}
+          theme="red"
+          backgroundColor="$red10"
+          iconAfter={
+            status === "submitting"
+              ? () => <Spinner color="$color" />
+              : undefined
+          }
+        >
+          Verify Email
+        </Button>
+      </Form.Trigger>
+    </Form>
+  );
+};
+
+const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
+  const { isLoaded, signUp } = useSignUp();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -30,7 +86,6 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [pendingVerification, setPendingVerification] = useState(false);
-  const [code, setCode] = useState("");
   const [status, setStatus] = useState<"off" | "submitting" | "submitted">(
     "off"
   );
@@ -55,6 +110,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
       return;
     }
     try {
+      setLoading(true);
       await signUp.create({
         emailAddress,
         password,
@@ -66,22 +122,6 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
       setPendingVerification(true);
     } catch (err: any) {
       Alert.alert(`Error: ${err.errors[0].code}`, err.errors[0].longMessage);
-    }
-  };
-
-  const onPressVerify = async () => {
-    if (!isLoaded) {
-      return;
-    }
-    try {
-      setLoading(true);
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
-      });
-      await setActive({ session: completeSignUp.createdSessionId });
-      router.push("/");
-    } catch (err: any) {
-      Alert.alert(`Error: ${err.errors[0].code}`, err.errors[0].longMessage);
     } finally {
       setLoading(false);
     }
@@ -91,106 +131,69 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
       <View flex={1} justifyContent="center">
         {pendingVerification ? (
-          <Form
-            onSubmit={() => setStatus("submitting")}
-            gap="$7"
-            marginHorizontal="$3"
-          >
-            <Input
-              size="$5"
-              placeholder="Verification Code"
-              maxLength={6}
-              value={code}
-              onChangeText={(code) => setCode(code)}
-              keyboardType="numeric"
-              cursorColor="white"
-            />
-            <Form.Trigger asChild disabled={status !== "off"}>
-              <Button
-                onPress={onPressVerify}
-                theme="red"
-                backgroundColor="$red10"
-                iconAfter={
-                  status === "submitting"
-                    ? () => <Spinner color="$color" />
-                    : undefined
-                }
-              >
-                Verify Email
-              </Button>
-            </Form.Trigger>
-          </Form>
+          <VerificationScreen />
         ) : (
-          <YStack>
-            <YStack gap="$4" marginHorizontal="$3">
+          <>
+            <Form
+              onSubmit={() => setStatus("submitting")}
+              gap="$4"
+              marginHorizontal="$3"
+            >
               <XStack justifyContent="space-between">
-                <Input
-                  size="$5"
-                  width={"48%"}
-                  placeholder="First Name"
-                  textContentType="name"
-                  borderRadius="$5"
-                  cursorColor="white"
-                  value={firstName}
-                  onChangeText={(firstName) => setFirstName(firstName)}
-                />
-                <Input
-                  size="$5"
-                  width={"48%"}
-                  placeholder="Last Name"
-                  textContentType="name"
-                  borderRadius="$5"
-                  cursorColor="white"
-                  value={lastName}
-                  onChangeText={(lastName) => setLastName(lastName)}
-                />
+                <View width={"48%"}>
+                  <TextInput
+                    placeholder="First Name"
+                    textContentType="name"
+                    value={firstName}
+                    onChangeText={(firstName) => setFirstName(firstName)}
+                  />
+                </View>
+                <View width={"48%"}>
+                  <TextInput
+                    placeholder="Last Name"
+                    textContentType="name"
+                    value={lastName}
+                    onChangeText={(lastName) => setLastName(lastName)}
+                  />
+                </View>
               </XStack>
-              <Input
-                size="$5"
+              <TextInput
                 placeholder="Email address"
                 textContentType="emailAddress"
-                borderRadius="$5"
-                cursorColor="white"
                 value={emailAddress}
                 onChangeText={(email) => setEmailAddress(email)}
               />
-              <View>
-                <Input
-                  size="$5"
-                  placeholder="Password"
-                  textContentType="password"
-                  borderRadius="$5"
-                  cursorColor="white"
-                  secureTextEntry={!showPassword}
-                  value={password}
-                  onChangeText={(password) => setPassword(password)}
-                />
-                <TouchableOpacity
-                  onPress={() => setShowPassword(!showPassword)}
-                  style={{ position: "absolute", right: 12, top: 15 }}
+              <TextInput
+                placeholder="Password"
+                textContentType="password"
+                secureTextEntry={!showPassword}
+                value={password}
+                onChangeText={(password) => setPassword(password)}
+                showPassword={showPassword}
+                setShowPassword={setShowPassword}
+              />
+              <Form.Trigger asChild disabled={status !== "off"}>
+                <Button
+                  onPress={onSignUpPress}
+                  theme="red"
+                  backgroundColor="$red10"
+                  iconAfter={
+                    status === "submitting"
+                      ? () => <Spinner color="$color" />
+                      : undefined
+                  }
                 >
-                  <Feather
-                    name={showPassword ? "eye-off" : "eye"}
-                    size={22}
-                    color="gray"
-                  />
-                </TouchableOpacity>
-              </View>
-              <Button
-                theme="red"
-                backgroundColor="$red10"
-                onPress={onSignUpPress}
-              >
-                Sign Up
-              </Button>
-            </YStack>
+                  Sign Up
+                </Button>
+              </Form.Trigger>
+            </Form>
             <Text textAlign="center" marginTop="$5" color="$color11">
               Already have an account?{" "}
               <Text onPress={toggleVariant} color="$red10">
                 Login
               </Text>
             </Text>
-          </YStack>
+          </>
         )}
       </View>
     </LinearGradient>

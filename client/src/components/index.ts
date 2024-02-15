@@ -4,6 +4,7 @@ import Accordians from "./Accordians";
 import Sliders from "./Sliders";
 import Chip from "./Chip";
 import NumberStepper from "./NumberStepper";
+import TextInput from "./TextInput";
 import Loader from "./Loader";
 import PostsTab from "./PostsTab";
 import Post from "./Post";
@@ -16,6 +17,7 @@ export {
   Sliders,
   Chip,
   NumberStepper,
+  TextInput,
   Loader,
   Headers,
   PostsTab,

@@ -1,5 +1,11 @@
 import { useUser } from "@clerk/clerk-expo";
-import React, { createContext, useContext, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 
 interface UserContextProps {
   children: ReactNode;
@@ -15,14 +21,21 @@ interface UserContextValue {
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export const UserProvider: React.FC<UserContextProps> = ({ children }) => {
-  const { user } = useUser();
+  const { user, isLoaded } = useUser();
+  const [userContextValue, setUserContextValue] = useState<UserContextValue>(
+    {}
+  );
 
-  const userContextValue: UserContextValue = {
-    userProfileUri: user?.imageUrl,
-    username: user?.username!,
-    name: user?.fullName!,
-    email: user?.emailAddresses[0].emailAddress,
-  };
+  useEffect(() => {
+    if (isLoaded && user) {
+      setUserContextValue({
+        userProfileUri: user.imageUrl,
+        username: user.username!,
+        name: user.fullName!,
+        email: user.emailAddresses[0].emailAddress,
+      });
+    }
+  }, [user, isLoaded]);
 
   return (
     <UserContext.Provider value={userContextValue}>
