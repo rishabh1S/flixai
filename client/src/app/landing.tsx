@@ -39,10 +39,10 @@ export default function LandingScreen() {
         <LinearGradient
           colors={[
             "transparent",
-            "rgba(51, 17, 17, 0.7)",
+            "rgba(51, 17, 17, 0.8)",
             "rgba(51, 17, 17, 1)",
           ]}
-          style={{ width, height: height * 0.2 }}
+          style={{ width, height: height * 0.3 }}
           position="absolute"
           bottom={0}
         />

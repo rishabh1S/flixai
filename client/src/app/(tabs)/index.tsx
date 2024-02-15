@@ -110,7 +110,7 @@ export default function GenerateScreen() {
       const response = await generateImage(params);
       updateGeneratedImages(response.output);
       updatePrompt(prompt);
-      router.push("/generate/result");
+      router.push("/result");
     } catch (error) {
       console.error(error);
     } finally {

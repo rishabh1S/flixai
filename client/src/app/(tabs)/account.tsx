@@ -13,6 +13,8 @@ import { useAuth } from "@clerk/clerk-expo";
 import { Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useUser } from "@clerk/clerk-expo";
+import Alerts from "@/src/components/Alerts";
+import { useUserContext } from "@/src/context/UserContext";
 
 interface ActionButtonProps {
   icon: ReactElement;
@@ -41,10 +43,24 @@ const ActionButton: React.FC<ActionButtonProps> = ({
 export default function AccountScreen() {
   const { signOut } = useAuth();
   const { user } = useUser();
-  const userProfileUri = user?.imageUrl;
-  const username = user?.username;
-  const name = user?.fullName;
-  const email = user?.emailAddresses[0].emailAddress;
+  const { userProfileUri, username, name, email } = useUserContext();
+
+  const Logout = async () => {
+    try {
+      await signOut();
+      router.push("/landing");
+    } catch (error) {
+      console.error("Error signing out the current user: ", error);
+    }
+  };
+  const deleteAccount = async () => {
+    try {
+      await user?.delete();
+      router.push("/landing");
+    } catch (error) {
+      console.error("Error deleting user: ", error);
+    }
+  };
 
   const pickImage = async () => {
     try {
@@ -135,20 +151,19 @@ export default function AccountScreen() {
           title="Share FlixAi"
         />
         <ActionButton
-          onPress={() => {
-            signOut();
-            router.push("/landing");
-          }}
+          onPress={() => Logout()}
           icon={<MaterialIcons name="logout" size={30} color="#FF6369" />}
           title="Logout"
         />
       </YStack>
       <YStack flex={1} justifyContent="flex-end" marginBottom="$11" gap="$2">
-        <Pressable>
-          <Text color="$red11Light" textAlign="center">
-            Delete my account
-          </Text>
-        </Pressable>
+        <Alerts
+          title="Confirm Account Deletion"
+          content="This will permanently delete your account. This action cannot be undone are you sure?"
+          btnText="Delete my account"
+          actionBtnText="Delete"
+          action={deleteAccount}
+        />
         <Text textAlign="center" color="$color9" fontSize="$1">
           App Version 0.5.0 (beta)
         </Text>

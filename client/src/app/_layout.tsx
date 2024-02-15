@@ -11,8 +11,9 @@ import { config } from "../../tamagui.config";
 import { useFonts } from "expo-font";
 import React, { useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
-import { ImageProvider } from "../context/ImageContext";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { UserProvider } from "../context/UserContext";
+import { ImageProvider } from "../context/ImageContext";
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -86,12 +87,24 @@ function RootLayoutNav() {
   return (
     <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <ImageProvider>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="landing" options={{ headerShown: false }} />
-          </Stack>
-        </ImageProvider>
+        <UserProvider>
+          <ImageProvider>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="landing" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="result"
+                options={{
+                  headerTitle: "Result",
+                  headerStyle: {
+                    backgroundColor: "black",
+                  },
+                  headerTitleAlign: "center",
+                }}
+              />
+            </Stack>
+          </ImageProvider>
+        </UserProvider>
       </ThemeProvider>
     </TamaguiProvider>
   );

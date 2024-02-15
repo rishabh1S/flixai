@@ -1,9 +1,9 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
-import { View, Image } from "tamagui";
-import { Ionicons } from "@expo/vector-icons";
+import { View, Image, Avatar } from "tamagui";
+import { useUserContext } from "../context/UserContext";
 
 const Headers = () => {
+  const { userProfileUri } = useUserContext();
   return (
     <View
       flexDirection="row"
@@ -19,9 +19,10 @@ const Headers = () => {
           source={require("../../assets/images/logo.png")}
         />
       </View>
-      <TouchableOpacity>
-        <Ionicons name="notifications-outline" size={24} color="white" />
-      </TouchableOpacity>
+      <Avatar circular size={"$3"}>
+        <Avatar.Image accessibilityLabel="Cam" src={userProfileUri} />
+        <Avatar.Fallback backgroundColor="$red10" />
+      </Avatar>
     </View>
   );
 };
