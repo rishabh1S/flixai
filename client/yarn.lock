@@ -6627,6 +6627,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"date-fns@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "date-fns@npm:3.3.1"
+  checksum: 98231936765dfb6fc6897676319b500a06a39f051b2c3ecbdd541a07ce9b1344b770277b8bfb1049fb7a2f70bf365ac8e6f1e2bb452b10e1a8101d518ca7f95d
+  languageName: node
+  linkType: hard
+
 "dayjs@npm:^1.8.15":
   version: 1.11.10
   resolution: "dayjs@npm:1.11.10"
@@ -7745,6 +7752,7 @@ __metadata:
     "@types/react": "npm:~18.2.14"
     axios: "npm:^1.6.7"
     babel-preset-expo: "npm:^10.0.1"
+    date-fns: "npm:^3.3.1"
     expo: "npm:~50.0.6"
     expo-auth-session: "npm:~5.4.0"
     expo-blur: "npm:~12.9.1"

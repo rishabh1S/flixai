@@ -8,8 +8,10 @@ import TextInput from "./TextInput";
 import Loader from "./Loader";
 import PostsTab from "./PostsTab";
 import Post from "./Post";
+import OtherPost from "./OtherPost";
 import LoginPage from "./LoginPage";
 import SignUpPage from "./SignUpPage";
+import Alerts from "./Alerts";
 
 export {
   Cards,
@@ -22,6 +24,8 @@ export {
   Headers,
   PostsTab,
   Post,
+  OtherPost,
   LoginPage,
   SignUpPage,
+  Alerts,
 };

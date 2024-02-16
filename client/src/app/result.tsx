@@ -1,7 +1,7 @@
 import {
   MaterialCommunityIcons,
   MaterialIcons,
-  Octicons,
+  Feather,
 } from "@expo/vector-icons";
 import { LinearGradient } from "@tamagui/linear-gradient";
 import * as Clipboard from "expo-clipboard";
@@ -29,9 +29,13 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-import { useImageContext } from "@/src/context/ImageContext";
+import { useGlobalContext } from "@/src/context/GlobalContext";
 var { width, height } = Dimensions.get("window");
 import Toast from "react-native-simple-toast";
+import { Alerts } from "@/src/components";
+import { createPost } from "@/api";
+import { useUserContext } from "../context/UserContext";
+
 interface DotIndicatorProps {
   totalDots: number;
   activeIndex: number;
@@ -60,6 +64,9 @@ const DotIndicator: React.FC<DotIndicatorProps> = ({
 );
 
 const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
+  const { prompt } = useGlobalContext();
+  const { username, userProfileUri } = useUserContext();
+
   const handleDownload = async () => {
     try {
       const { status } = await MediaLibrary.requestPermissionsAsync();
@@ -83,6 +90,24 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
     }
   };
 
+  const handlePublish = async () => {
+    try {
+      const postData = {
+        username,
+        userProfileUri,
+        imageURL: item,
+        prompt,
+        createdAt: new Date(),
+      };
+      await createPost(postData);
+
+      Toast.show("Posted successfully ✅", Toast.BOTTOM);
+    } catch (error) {
+      console.error("Failed to publish post:", error);
+      Toast.show("Failed to publish post. Please try again.", Toast.BOTTOM);
+    }
+  };
+
   return (
     <Pressable onPress={onPress}>
       <YStack gap="$2">
@@ -96,18 +121,19 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
           marginVertical="$2"
         >
           <Button
-            iconAfter={<Octicons name="download" size={24} color="white" />}
+            iconAfter={<Feather name="download" size={24} color="white" />}
             size="$3"
             onPress={handleDownload}
           >
             Download
           </Button>
-          <Button
-            iconAfter={<MaterialIcons name="publish" size={24} color="white" />}
-            size="$3"
-          >
-            Post
-          </Button>
+          <Alerts
+            title="Share your Creation"
+            content="This will make your creation and prompt publicly visible on the Explore Feed."
+            btnText="Post"
+            actionBtnText="Post"
+            action={handlePublish}
+          />
           <Button
             iconAfter={
               <MaterialCommunityIcons
@@ -132,7 +158,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
 };
 
 export default function result() {
-  const { generatedImages, prompt } = useImageContext();
+  const { generatedImages, prompt } = useGlobalContext();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isImageViewVisible, setIsImageViewVisible] = useState(false);
 
@@ -140,6 +166,21 @@ export default function result() {
     setActiveIndex(index);
     setIsImageViewVisible(true);
   };
+
+  const ImageViewFooter = (
+    <XStack marginVertical="$4" justifyContent="center" gap="$4">
+      <Pressable
+        style={{ backgroundColor: "#211", padding: 10, borderRadius: 25 }}
+      >
+        <Feather name="download" size={28} color="white" />
+      </Pressable>
+      <Pressable
+        style={{ backgroundColor: "#211", padding: 10, borderRadius: 25 }}
+      >
+        <MaterialCommunityIcons name="share-outline" size={28} color="white" />
+      </Pressable>
+    </XStack>
+  );
 
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
@@ -204,6 +245,7 @@ export default function result() {
         imageIndex={activeIndex}
         visible={isImageViewVisible}
         onRequestClose={() => setIsImageViewVisible(false)}
+        FooterComponent={() => ImageViewFooter}
       />
     </LinearGradient>
   );

@@ -156,7 +156,7 @@ export default function AccountScreen() {
           title="Logout"
         />
       </YStack>
-      <YStack flex={1} justifyContent="flex-end" marginBottom="$11" gap="$2">
+      <YStack flex={1} justifyContent="flex-end" marginBottom="$10" gap="$2">
         <Alerts
           title="Confirm Account Deletion"
           content="This will permanently delete your account. This action cannot be undone are you sure?"

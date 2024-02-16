@@ -8,17 +8,15 @@ import {
 } from "@expo/vector-icons";
 import ImageView from "react-native-image-viewing";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useLocalSearchParams } from "expo-router";
-import { fetchPostById } from "@/api";
 import { formatDistanceToNow, parseISO } from "date-fns";
 
 const width = Dimensions.get("window").width;
 
-const Post = () => {
-  const { id } = useLocalSearchParams<{
-    id: string;
-  }>();
-  const [post, setPost] = useState<any>();
+interface OtherPostProps {
+  post: any;
+}
+
+const OtherPost: React.FC<OtherPostProps> = ({ post }) => {
   const [isImageViewVisible, setImageViewVisible] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const maxLines = showMore ? undefined : 1;
@@ -26,19 +24,6 @@ const Post = () => {
   const image = {
     uri: post?.imageURL,
   };
-
-  useEffect(() => {
-    const getPostDetails = async () => {
-      try {
-        const postData = await fetchPostById(id);
-        setPost(postData.data);
-      } catch (error) {
-        console.error("Error fetching post details:", error);
-      }
-    };
-
-    getPostDetails();
-  }, [id]);
 
   useEffect(() => {
     setShowMore(false);
@@ -121,4 +106,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default OtherPost;

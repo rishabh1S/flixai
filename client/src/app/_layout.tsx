@@ -13,7 +13,7 @@ import React, { useEffect } from "react";
 import * as SecureStore from "expo-secure-store";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { UserProvider } from "../context/UserContext";
-import { ImageProvider } from "../context/ImageContext";
+import { GlobalProvider } from "../context/GlobalContext";
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -88,7 +88,7 @@ function RootLayoutNav() {
     <TamaguiProvider config={config} defaultTheme={colorScheme as any}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <UserProvider>
-          <ImageProvider>
+          <GlobalProvider>
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="landing" options={{ headerShown: false }} />
@@ -103,7 +103,7 @@ function RootLayoutNav() {
                 }}
               />
             </Stack>
-          </ImageProvider>
+          </GlobalProvider>
         </UserProvider>
       </ThemeProvider>
     </TamaguiProvider>

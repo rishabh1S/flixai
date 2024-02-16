@@ -42,7 +42,7 @@ export default function LandingScreen() {
             "rgba(51, 17, 17, 0.8)",
             "rgba(51, 17, 17, 1)",
           ]}
-          style={{ width, height: height * 0.3 }}
+          style={{ width, height: height * 0.4 }}
           position="absolute"
           bottom={0}
         />
@@ -52,7 +52,7 @@ export default function LandingScreen() {
         marginHorizontal="$2"
         paddingHorizontal="$3"
         position="absolute"
-        bottom={140}
+        bottom={150}
       >
         <Image
           width={150}
@@ -75,7 +75,7 @@ export default function LandingScreen() {
           by the cutting-edge Fooocus API.
         </Text>
       </YStack>
-      <YStack flex={1} justifyContent="flex-end" margin="$4" gap="$3">
+      <YStack flex={1} justifyContent="flex-end" margin="$4" gap="$4">
         <Button
           theme="red"
           onPress={() => refRBSheet.current && refRBSheet.current.open()}

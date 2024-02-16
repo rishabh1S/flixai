@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "tamagui";
-import { dummyImages } from "../constants/data";
 import { Dimensions, FlatList, Pressable, RefreshControl } from "react-native";
 import { router } from "expo-router";
+import { fetchPosts } from "@/api";
+import { useGlobalContext } from "../context/GlobalContext";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const PostsTab = () => {
   const [refreshing, setRefreshing] = useState(false);
-  const repeatedDummyImages = Array.from(
-    { length: 8 },
-    (_, index) => dummyImages
-  ).flat();
+  const [posts, setPosts] = useState<any[]>([]);
+  const { updateCurrentPostId } = useGlobalContext();
+
+  const getPosts = async () => {
+    try {
+      const data = await fetchPosts();
+      setPosts(data.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   const renderItem = ({ item, index }: any) => {
     let itemWidth, itemHeight;
@@ -32,10 +44,15 @@ const PostsTab = () => {
     }
 
     return (
-      <Pressable onPress={() => router.push("/store/post")}>
+      <Pressable
+        onPress={() => {
+          updateCurrentPostId(item._id);
+          router.push({ pathname: "/store/post", params: { id: item._id } });
+        }}
+      >
         <Image
           source={{
-            uri: item,
+            uri: item.imageURL,
             width: itemWidth,
             height: itemHeight,
           }}
@@ -47,6 +64,7 @@ const PostsTab = () => {
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
+    getPosts();
     setTimeout(() => {
       setRefreshing(false);
     }, 1500);
@@ -62,7 +80,7 @@ const PostsTab = () => {
           progressBackgroundColor="#111"
         />
       }
-      data={repeatedDummyImages}
+      data={posts}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item, index) => index.toString()}
       numColumns={2}

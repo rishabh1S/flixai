@@ -1,4 +1,4 @@
-import { generateImage, getCloudImageURI } from "@/api/index";
+import { generateImage } from "@/api/index";
 import {
   Accordians,
   Cards,
@@ -10,7 +10,7 @@ import {
 import { aspectRatios, presetData } from "@/src/constants/data";
 import { defaultValues } from "@/src/constants/default";
 import { randomPrompts } from "@/src/constants/randomPrompts";
-import { useImageContext } from "@/src/context/ImageContext";
+import { useGlobalContext } from "@/src/context/GlobalContext";
 import {
   FontAwesome5,
   MaterialCommunityIcons,
@@ -34,7 +34,7 @@ import {
 } from "tamagui";
 
 export default function GenerateScreen() {
-  const { updateGeneratedImages, updatePrompt } = useImageContext();
+  const { updateGeneratedImages, updatePrompt } = useGlobalContext();
   const [prompt, setPrompt] = useState("");
   const [selectedResolution, setSelectedResolution] = useState(aspectRatios[3]);
   const [imageQuality, setImageQuality] = useState("Speed");
@@ -83,14 +83,6 @@ export default function GenerateScreen() {
     }
     try {
       setIsLoading(true);
-
-      if (cnImage) {
-        const cloudinaryURL = await getCloudImageURI(
-          cnImage,
-          "flixai/user-upload"
-        );
-        setCnImage(cloudinaryURL);
-      }
 
       const params = {
         prompt,

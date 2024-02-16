@@ -1,5 +1,6 @@
 import React from "react";
 import { AlertDialog, Button, XStack, YStack, Text } from "tamagui";
+import { MaterialIcons } from "@expo/vector-icons";
 
 interface AlertsProps {
   title: string;
@@ -19,11 +20,20 @@ const Alerts: React.FC<AlertsProps> = ({
   return (
     <AlertDialog>
       <AlertDialog.Trigger asChild>
-        <Text color="$red11Light" textAlign="center">
-          {btnText}
-        </Text>
+        {actionBtnText === "Delete" ? (
+          <Text color="$red11Light" textAlign="center">
+            {btnText}
+          </Text>
+        ) : (
+          <Button
+            iconAfter={<MaterialIcons name="publish" size={24} color="white" />}
+            size="$3"
+          >
+            {btnText}
+          </Button>
+        )}
       </AlertDialog.Trigger>
-      <AlertDialog.Portal>
+      <AlertDialog.Portal theme="dark">
         <AlertDialog.Overlay
           key="overlay"
           animation="quick"
@@ -62,7 +72,7 @@ const Alerts: React.FC<AlertsProps> = ({
                 <Button size="$3.5">Cancel</Button>
               </AlertDialog.Cancel>
               <AlertDialog.Action asChild>
-                <Button size="$3.5" theme="red" color="$red11" onPress={action}>
+                <Button size="$3.5" color="$red11Light" onPress={action}>
                   {actionBtnText}
                 </Button>
               </AlertDialog.Action>
