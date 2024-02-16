@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, XStack, Text, Label, Button } from "tamagui";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";

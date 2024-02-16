@@ -1,16 +1,14 @@
 import { Text, Image, YStack, XStack, Label, Avatar } from "tamagui";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Pressable } from "react-native";
-import {
-  Feather,
-  FontAwesome,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 import ImageView from "react-native-image-viewing";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useLocalSearchParams } from "expo-router";
 import { fetchPostById } from "@/api";
 import { formatDistanceToNow, parseISO } from "date-fns";
+import { handleDownload, handleShare } from "../utils/utilityFunctions";
+import ImageViewFooter from "./ImageViewFooter";
 
 const width = Dimensions.get("window").width;
 
@@ -43,21 +41,6 @@ const Post = () => {
   useEffect(() => {
     setShowMore(false);
   }, []);
-
-  const ImageViewFooter = (
-    <XStack marginVertical="$4" justifyContent="center" gap="$4">
-      <Pressable
-        style={{ backgroundColor: "#211", padding: 10, borderRadius: 25 }}
-      >
-        <Feather name="download" size={28} color="white" />
-      </Pressable>
-      <Pressable
-        style={{ backgroundColor: "#211", padding: 10, borderRadius: 25 }}
-      >
-        <MaterialCommunityIcons name="share-outline" size={28} color="white" />
-      </Pressable>
-    </XStack>
-  );
 
   return (
     <YStack>
@@ -115,7 +98,12 @@ const Post = () => {
         imageIndex={0}
         visible={isImageViewVisible}
         onRequestClose={() => setImageViewVisible(false)}
-        FooterComponent={() => ImageViewFooter}
+        FooterComponent={() => (
+          <ImageViewFooter
+            onDownload={() => handleDownload(post?.imageURL)}
+            onShare={() => handleShare(post?.imageURL)}
+          />
+        )}
       />
     </YStack>
   );

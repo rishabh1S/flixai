@@ -36,7 +36,7 @@ router.route("/").post(async (req, res) => {
     let photoUrl;
 
     if (cnImage) {
-      cloudinaryResponse = await cloudinary.uploader.upload(cnImage, {
+      const cloudinaryResponse = await cloudinary.uploader.upload(cnImage, {
         folder: "flixai/user-upload",
       });
       photoUrl = cloudinaryResponse.secure_url;

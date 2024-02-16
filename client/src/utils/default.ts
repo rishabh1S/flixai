@@ -1,11 +1,4 @@
-interface PresetValues {
-  [preset: string]: {
-    guidance_scale: number;
-    refiner_switch: number;
-    negative_prompt: string;
-    style_selections: string;
-  };
-}
+import { PresetValues } from "./types";
 
 export const defaultValues: PresetValues = {
   Anime: {

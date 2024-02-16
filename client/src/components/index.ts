@@ -1,31 +1,33 @@
-import Headers from "./Headers";
-import Cards from "./Cards";
 import Accordians from "./Accordians";
-import Sliders from "./Sliders";
-import Chip from "./Chip";
-import NumberStepper from "./NumberStepper";
-import TextInput from "./TextInput";
-import Loader from "./Loader";
-import PostsTab from "./PostsTab";
-import Post from "./Post";
-import OtherPost from "./OtherPost";
-import LoginPage from "./LoginPage";
-import SignUpPage from "./SignUpPage";
 import Alerts from "./Alerts";
+import Cards from "./Cards";
+import Chip from "./Chip";
+import Headers from "./Headers";
+import ImageViewFooter from "./ImageViewFooter";
+import Loader from "./Loader";
+import LoginPage from "./LoginPage";
+import NumberStepper from "./NumberStepper";
+import OtherPost from "./OtherPost";
+import Post from "./Post";
+import PostsLayout from "./PostsLayout";
+import SignUpPage from "./SignUpPage";
+import Sliders from "./Sliders";
+import TextInput from "./TextInput";
 
 export {
-  Cards,
   Accordians,
-  Sliders,
-  Chip,
-  NumberStepper,
-  TextInput,
-  Loader,
-  Headers,
-  PostsTab,
-  Post,
-  OtherPost,
-  LoginPage,
-  SignUpPage,
   Alerts,
+  Cards,
+  Chip,
+  Headers,
+  ImageViewFooter,
+  Loader,
+  LoginPage,
+  NumberStepper,
+  OtherPost,
+  Post,
+  PostsLayout,
+  SignUpPage,
+  Sliders,
+  TextInput,
 };

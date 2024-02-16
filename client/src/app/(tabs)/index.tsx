@@ -40,7 +40,7 @@ export default function GenerateScreen() {
   const [imageNumber, setImageNumber] = useState(1);
   const [selectedPreset, setSelectedPreset] = useState("Default");
 
-  // Advanced
+  const [isLoading, setIsLoading] = useState(false);
 
   const [cnImage, setCnImage] = useState<string | undefined>();
   const [cnType, setCnType] = useState("ImagePrompt");
@@ -50,8 +50,6 @@ export default function GenerateScreen() {
   const [sharpness, setSharpness] = useState(2);
   const [guidanceScale, setGuidanceScale] = useState(4);
   const [refinerSwitch, setRefinerSwitch] = useState(0.5);
-
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const presetDefaults = defaultValues[selectedPreset];

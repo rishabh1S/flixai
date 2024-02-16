@@ -1,9 +1,35 @@
 import { View, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import LottieView from "lottie-react-native";
 import { Label } from "tamagui";
+import Animated, {
+  useSharedValue,
+  withTiming,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 const Loader = () => {
+  const fadeValue = useSharedValue(0);
+
+  const fadeInOut = () => {
+    fadeValue.value = withTiming(fadeValue.value === 0 ? 1 : 0, {
+      duration: 1000,
+    });
+  };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fadeInOut();
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: fadeValue.value,
+    };
+  });
+
   return (
     <View style={styles.container}>
       <Label fontSize="$10" padding="$2">
@@ -14,6 +40,11 @@ const Loader = () => {
         style={styles.animation}
         autoPlay
       />
+      <Animated.View style={[animatedStyle]}>
+        <Label fontSize="$8" padding="$2">
+          Please stand by...
+        </Label>
+      </Animated.View>
     </View>
   );
 };
@@ -25,7 +56,7 @@ const styles = StyleSheet.create({
     minHeight: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.9)",
+    backgroundColor: "rgba(0, 0, 0, 0.92)",
   },
   animation: {
     width: 400,

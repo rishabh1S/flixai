@@ -5,17 +5,9 @@ import {
 } from "@expo/vector-icons";
 import { LinearGradient } from "@tamagui/linear-gradient";
 import * as Clipboard from "expo-clipboard";
-import * as FileSystem from "expo-file-system";
 import * as Haptics from "expo-haptics";
-import * as MediaLibrary from "expo-media-library";
-import React, { useState } from "react";
-import {
-  Alert,
-  Dimensions,
-  Pressable,
-  Share,
-  TouchableOpacity,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { Dimensions, Pressable, TouchableOpacity } from "react-native";
 import ImageView from "react-native-image-viewing";
 import Carousel from "react-native-reanimated-carousel";
 import {
@@ -31,10 +23,15 @@ import {
 } from "tamagui";
 import { useGlobalContext } from "@/src/context/GlobalContext";
 var { width, height } = Dimensions.get("window");
-import Toast from "react-native-simple-toast";
-import { Alerts } from "@/src/components";
-import { createPost } from "@/api";
+import { Alerts, ImageViewFooter, PostsLayout } from "@/src/components";
+import { fetchPosts } from "@/api";
 import { useUserContext } from "../context/UserContext";
+import { PostData } from "../utils/types";
+import {
+  handleDownload,
+  handlePublish,
+  handleShare,
+} from "../utils/utilityFunctions";
 
 interface DotIndicatorProps {
   totalDots: number;
@@ -67,47 +64,6 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
   const { prompt } = useGlobalContext();
   const { username, userAvatar } = useUserContext();
 
-  const handleDownload = async () => {
-    try {
-      const { status } = await MediaLibrary.requestPermissionsAsync();
-
-      if (status !== "granted") {
-        Alert.alert(
-          "Permission Denied",
-          "Please grant permission to save images."
-        );
-        return;
-      }
-
-      const res = await FileSystem.downloadAsync(
-        item,
-        `${FileSystem.documentDirectory}${item.split("/").pop()}`
-      );
-      await MediaLibrary.createAssetAsync(res.uri);
-      Toast.show("Download complete ✅", Toast.BOTTOM);
-    } catch (error) {
-      Toast.show("Failed to save image. Please try again.", Toast.BOTTOM);
-    }
-  };
-
-  const handlePublish = async () => {
-    try {
-      const postData = {
-        username,
-        userAvatar,
-        imageURL: item,
-        prompt,
-        createdAt: new Date(),
-      };
-      await createPost(postData);
-
-      Toast.show("Posted successfully ✅", Toast.BOTTOM);
-    } catch (error) {
-      console.error("Failed to publish post:", error);
-      Toast.show("Failed to publish post. Please try again.", Toast.BOTTOM);
-    }
-  };
-
   return (
     <Pressable onPress={onPress}>
       <YStack gap="$2">
@@ -123,7 +79,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
           <Button
             iconAfter={<Feather name="download" size={24} color="white" />}
             size="$3"
-            onPress={handleDownload}
+            onPress={() => handleDownload(item)}
           >
             Download
           </Button>
@@ -132,7 +88,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
             content="This will make your creation and prompt publicly visible on the Explore Feed."
             btnText="Post"
             actionBtnText="Post"
-            action={handlePublish}
+            action={() => handlePublish({ item, username, userAvatar, prompt })}
           />
           <Button
             iconAfter={
@@ -142,11 +98,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
                 color="white"
               />
             }
-            onPress={() =>
-              Share.share({
-                message: `Check out this amazing image generated with FlixAi! 🚀✨\n\n${item}\n\nDownload the app now to create your own unique images: [Your App Download Link]`,
-              })
-            }
+            onPress={() => handleShare(item)}
             size="$3"
           >
             Share
@@ -161,35 +113,30 @@ export default function result() {
   const { generatedImages, prompt } = useGlobalContext();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isImageViewVisible, setIsImageViewVisible] = useState(false);
+  const [posts, setPosts] = useState<PostData[]>([]);
+
+  const getPosts = async () => {
+    try {
+      const data = await fetchPosts();
+      setPosts(data.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   const openImageView = (index: React.SetStateAction<number>) => {
     setActiveIndex(index);
     setIsImageViewVisible(true);
   };
 
-  const ImageViewFooter = (
-    <XStack marginVertical="$4" justifyContent="center" gap="$4">
-      <Pressable
-        style={{ backgroundColor: "#211", padding: 10, borderRadius: 25 }}
-      >
-        <Feather name="download" size={28} color="white" />
-      </Pressable>
-      <Pressable
-        style={{ backgroundColor: "#211", padding: 10, borderRadius: 25 }}
-      >
-        <MaterialCommunityIcons name="share-outline" size={28} color="white" />
-      </Pressable>
-    </XStack>
-  );
-
   return (
     <LinearGradient colors={["#000", "#000", "#201", "#311"]} flex={1}>
-      <ScrollView
-        flex={1}
-        marginHorizontal="$3"
-        showsVerticalScrollIndicator={false}
-      >
-        <YStack>
+      <ScrollView flex={1} showsVerticalScrollIndicator={false}>
+        <YStack marginHorizontal="$3">
           {generatedImages.length > 1 ? (
             <Carousel
               data={generatedImages}
@@ -216,7 +163,7 @@ export default function result() {
             )}
           </View>
         </YStack>
-        <YStack paddingBottom="$10">
+        <YStack paddingBottom="$2" marginHorizontal="$3">
           <Label fontSize="$7">Prompt</Label>
           <TextArea
             theme={"red"}
@@ -239,13 +186,24 @@ export default function result() {
             />
           </TouchableOpacity>
         </YStack>
+        <YStack marginVertical="$3">
+          <Label marginHorizontal="$3" fontSize="$7">
+            More from Community
+          </Label>
+          <PostsLayout posts={posts} />
+        </YStack>
       </ScrollView>
       <ImageView
         images={generatedImages.map((uri) => ({ uri }))}
         imageIndex={activeIndex}
         visible={isImageViewVisible}
         onRequestClose={() => setIsImageViewVisible(false)}
-        FooterComponent={() => ImageViewFooter}
+        FooterComponent={() => (
+          <ImageViewFooter
+            onDownload={() => handleDownload(generatedImages[activeIndex])}
+            onShare={() => handleShare(generatedImages[activeIndex])}
+          />
+        )}
       />
     </LinearGradient>
   );
