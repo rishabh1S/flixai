@@ -2,7 +2,7 @@ import { LinearGradient } from "@tamagui/linear-gradient";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Headers, PostsTab } from "@/src/components";
-import { Input, Text, XStack } from "tamagui";
+import { Input, Text, XStack, YStack } from "tamagui";
 import { AntDesign } from "@expo/vector-icons";
 import { Pressable } from "react-native";
 

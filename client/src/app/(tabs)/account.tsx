@@ -1,7 +1,7 @@
 import { LinearGradient } from "@tamagui/linear-gradient";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Avatar, Text, Label, View, YStack, XStack } from "tamagui";
+import { Avatar, Text, Label, View, YStack, XStack, Input } from "tamagui";
 import {
   MaterialIcons,
   Ionicons,
@@ -15,6 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 import { useUser } from "@clerk/clerk-expo";
 import Alerts from "@/src/components/Alerts";
 import { useUserContext } from "@/src/context/UserContext";
+import RBSheet from "react-native-raw-bottom-sheet";
 
 interface ActionButtonProps {
   icon: ReactElement;
@@ -43,7 +44,10 @@ const ActionButton: React.FC<ActionButtonProps> = ({
 export default function AccountScreen() {
   const { signOut } = useAuth();
   const { user } = useUser();
-  const { userProfileUri, username, name, email } = useUserContext();
+  const { userAvatar, username, name, email, updateUsername } =
+    useUserContext();
+  const [newUsername, setNewUsername] = useState<string>(username!);
+  const refRBSheet = useRef<RBSheet>(null);
 
   const Logout = async () => {
     try {
@@ -97,7 +101,7 @@ export default function AccountScreen() {
       <YStack alignItems="center" marginVertical="$2" gap="$3">
         <Pressable onPress={pickImage}>
           <Avatar circular size={"$12"}>
-            <Avatar.Image accessibilityLabel="Cam" src={userProfileUri} />
+            <Avatar.Image accessibilityLabel="Cam" src={userAvatar} />
             <Avatar.Fallback backgroundColor="$red10" />
           </Avatar>
           <View
@@ -122,7 +126,66 @@ export default function AccountScreen() {
             {name}
           </Text>
           <Text color="$gray9">{email}</Text>
-          <Text color="$gray11">@{username}</Text>
+          <XStack gap="$2">
+            <Text color="$gray11">@{username}</Text>
+            <Pressable onPress={() => refRBSheet.current?.open()}>
+              <Feather name="edit-3" size={16} color="white" />
+            </Pressable>
+          </XStack>
+          {/* @ts-ignore */}
+          <RBSheet
+            ref={refRBSheet}
+            height={170}
+            closeOnDragDown={true}
+            closeOnPressMask={true}
+            customStyles={{
+              wrapper: {
+                backgroundColor: "rgba(0,0,0,0.7)",
+              },
+              container: {
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
+                backgroundColor: "rgb(22, 22, 22)",
+              },
+              draggableIcon: {
+                display: "none",
+              },
+            }}
+          >
+            <YStack gap="$2" paddingHorizontal="$5" paddingVertical="$3.5">
+              <Label fontSize="$5">Enter your Username</Label>
+              <Input
+                value={newUsername}
+                onChangeText={(username) => setNewUsername(username)}
+                placeholder="Enter new username"
+                cursorColor="white"
+              />
+              <XStack
+                gap="$5"
+                justifyContent="flex-end"
+                paddingHorizontal="$2.5"
+                paddingTop="$2"
+              >
+                <Pressable
+                  onPress={() => {
+                    refRBSheet.current?.close();
+                  }}
+                >
+                  <Text>Cancel</Text>
+                </Pressable>
+                <Pressable
+                  onPress={async () => {
+                    if (updateUsername) {
+                      await updateUsername(newUsername);
+                      refRBSheet.current?.close();
+                    }
+                  }}
+                >
+                  <Text>Save</Text>
+                </Pressable>
+              </XStack>
+            </YStack>
+          </RBSheet>
         </YStack>
       </YStack>
       <YStack marginTop="$15">

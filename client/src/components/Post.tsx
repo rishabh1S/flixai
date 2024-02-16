@@ -68,7 +68,7 @@ const Post = () => {
         alignItems="center"
       >
         <Avatar circular>
-          <Avatar.Image accessibilityLabel="Cam" src={post?.userProfileUri} />
+          <Avatar.Image accessibilityLabel="Cam" src={post?.userAvatar} />
           <Avatar.Fallback backgroundColor="$red10" />
         </Avatar>
         <Label fontSize="$5">{post?.username}</Label>
@@ -89,7 +89,7 @@ const Post = () => {
           <Text fontSize="$3" numberOfLines={maxLines} width={width * 0.85}>
             {post?.prompt}
           </Text>
-          {!showMore && post?.prompt.length > 60 && (
+          {!showMore && post?.prompt.length > 55 && (
             <Text
               onPress={() => setShowMore(true)}
               fontSize="$3"

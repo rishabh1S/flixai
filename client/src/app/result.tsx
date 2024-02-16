@@ -65,7 +65,7 @@ const DotIndicator: React.FC<DotIndicatorProps> = ({
 
 const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
   const { prompt } = useGlobalContext();
-  const { username, userProfileUri } = useUserContext();
+  const { username, userAvatar } = useUserContext();
 
   const handleDownload = async () => {
     try {
@@ -94,7 +94,7 @@ const ResultItem: React.FC<ResultItemProps> = ({ item, onPress }) => {
     try {
       const postData = {
         username,
-        userProfileUri,
+        userAvatar,
         imageURL: item,
         prompt,
         createdAt: new Date(),

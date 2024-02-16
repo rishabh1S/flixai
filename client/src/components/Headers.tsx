@@ -3,7 +3,7 @@ import { View, Image, Avatar } from "tamagui";
 import { useUserContext } from "../context/UserContext";
 
 const Headers = () => {
-  const { userProfileUri } = useUserContext();
+  const { userAvatar } = useUserContext();
   return (
     <View
       flexDirection="row"
@@ -20,7 +20,7 @@ const Headers = () => {
         />
       </View>
       <Avatar circular size={"$3"}>
-        <Avatar.Image accessibilityLabel="Cam" src={userProfileUri} />
+        <Avatar.Image accessibilityLabel="Cam" src={userAvatar} />
         <Avatar.Fallback backgroundColor="$red10" />
       </Avatar>
     </View>

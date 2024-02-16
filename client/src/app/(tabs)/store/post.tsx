@@ -8,7 +8,7 @@ import { useGlobalContext } from "@/src/context/GlobalContext";
 interface PostData {
   _id: string;
   username: string;
-  userProfileUri: string;
+  userAvatar: string;
   imageURL: string;
   tempImageURL: string;
   prompt: string;

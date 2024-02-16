@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image } from "tamagui";
+import { Image, YStack } from "tamagui";
 import { Dimensions, FlatList, Pressable, RefreshControl } from "react-native";
 import { router } from "expo-router";
 import { fetchPosts } from "@/api";

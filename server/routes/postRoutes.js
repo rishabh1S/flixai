@@ -40,7 +40,7 @@ router.route("/:id").get(async (req, res) => {
 
 router.route("/").post(async (req, res) => {
   try {
-    const { username, userProfileUri, imageURL, prompt, createdAt } = req.body;
+    const { username, userAvatar, imageURL, prompt, createdAt } = req.body;
 
     const existingPost = await Post.findOne({ tempImageURL: imageURL });
 
@@ -55,7 +55,7 @@ router.route("/").post(async (req, res) => {
 
     const newPost = await Post.create({
       username,
-      userProfileUri,
+      userAvatar,
       imageURL: photoUrl.secure_url,
       tempImageURL: imageURL,
       prompt,

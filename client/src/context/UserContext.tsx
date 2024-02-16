@@ -12,27 +12,39 @@ interface UserContextProps {
 }
 
 interface UserContextValue {
-  userProfileUri?: string;
+  userAvatar?: string;
   username?: string;
   name?: string;
   email?: string;
+  updateUsername?: ((newUsername: string) => Promise<void>) | undefined;
 }
 
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export const UserProvider: React.FC<UserContextProps> = ({ children }) => {
   const { user, isLoaded } = useUser();
-  const [userContextValue, setUserContextValue] = useState<UserContextValue>(
-    {}
-  );
+  const [userContextValue, setUserContextValue] = useState<UserContextValue>({
+    updateUsername: undefined,
+  });
+
+  const updateUsername = async (newUsername: string) => {
+    if (user) {
+      const updatedUser = await user.update({ username: newUsername });
+      setUserContextValue((prevValue) => ({
+        ...prevValue,
+        username: updatedUser.username!,
+      }));
+    }
+  };
 
   useEffect(() => {
     if (isLoaded && user) {
       setUserContextValue({
-        userProfileUri: user.imageUrl,
+        userAvatar: user.imageUrl,
         username: user.username!,
         name: user.fullName!,
         email: user.emailAddresses[0].emailAddress,
+        updateUsername: updateUsername,
       });
     }
   }, [user, isLoaded]);

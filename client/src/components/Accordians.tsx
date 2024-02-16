@@ -17,7 +17,6 @@ import { Feather } from "@expo/vector-icons";
 import Sliders from "./Sliders";
 import * as ImagePicker from "expo-image-picker";
 import { AntDesign } from "@expo/vector-icons";
-import { getCloudImageURI } from "@/api";
 
 interface AccordiansProps {
   negativePrompt: string;
