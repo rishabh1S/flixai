@@ -1,12 +1,13 @@
-import { Text, Image, YStack, XStack, Label, Avatar } from "tamagui";
+import { fetchPostById } from "@/api";
+import { FontAwesome } from "@expo/vector-icons";
+import { formatDistanceToNow, parseISO } from "date-fns";
+import * as Haptics from "expo-haptics";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Dimensions, Pressable } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import ImageView from "react-native-image-viewing";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useLocalSearchParams } from "expo-router";
-import { fetchPostById } from "@/api";
-import { formatDistanceToNow, parseISO } from "date-fns";
+import ImageView from "react-native-image-viewing";
+import { Avatar, Image, Label, Text, XStack, YStack } from "tamagui";
 import { handleDownload, handleShare } from "../utils/utilityFunctions";
 import ImageViewFooter from "./ImageViewFooter";
 
@@ -89,9 +90,18 @@ const Post = () => {
               : ""}
           </Text>
         </YStack>
-        <XStack marginLeft="auto">
+        <Pressable
+          style={{ marginLeft: "auto" }}
+          onPress={() => {
+            router.push({
+              pathname: "/",
+              params: { postPrompt: post?.prompt },
+            });
+            Haptics.selectionAsync();
+          }}
+        >
           <FontAwesome name="magic" size={24} color="white" />
-        </XStack>
+        </Pressable>
       </XStack>
       <ImageView
         images={[image]}

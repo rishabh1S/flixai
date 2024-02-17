@@ -1,14 +1,16 @@
-import { Text, Image, YStack, XStack, Label, Avatar } from "tamagui";
-import React, { useEffect, useState } from "react";
-import { Dimensions, Pressable } from "react-native";
 import {
   Feather,
   FontAwesome,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import ImageView from "react-native-image-viewing";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { formatDistanceToNow, parseISO } from "date-fns";
+import * as Haptics from "expo-haptics";
+import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Dimensions, Pressable } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import ImageView from "react-native-image-viewing";
+import { Avatar, Image, Label, Text, XStack, YStack } from "tamagui";
 
 const width = Dimensions.get("window").width;
 
@@ -91,9 +93,18 @@ const OtherPost: React.FC<OtherPostProps> = ({ post }) => {
               : ""}
           </Text>
         </YStack>
-        <XStack marginLeft="auto">
+        <Pressable
+          style={{ marginLeft: "auto" }}
+          onPress={() => {
+            router.push({
+              pathname: "/",
+              params: { postPrompt: post?.prompt },
+            });
+            Haptics.selectionAsync();
+          }}
+        >
           <FontAwesome name="magic" size={24} color="white" />
-        </XStack>
+        </Pressable>
       </XStack>
       <ImageView
         images={[image]}

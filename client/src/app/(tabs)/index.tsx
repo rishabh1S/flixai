@@ -16,7 +16,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { LinearGradient } from "@tamagui/linear-gradient";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -34,7 +34,10 @@ import {
 
 export default function GenerateScreen() {
   const { updateGeneratedImages, updatePrompt } = useGlobalContext();
-  const [prompt, setPrompt] = useState("");
+  const { postPrompt = "" } = useLocalSearchParams<{
+    postPrompt: string;
+  }>();
+  const [prompt, setPrompt] = useState(postPrompt);
   const [selectedResolution, setSelectedResolution] = useState(aspectRatios[3]);
   const [imageQuality, setImageQuality] = useState("Speed");
   const [imageNumber, setImageNumber] = useState(1);
@@ -58,6 +61,10 @@ export default function GenerateScreen() {
     setGuidanceScale(presetDefaults.guidance_scale);
     setRefinerSwitch(presetDefaults.refiner_switch);
   }, [selectedPreset]);
+
+  useEffect(() => {
+    setPrompt(postPrompt);
+  }, [postPrompt]);
 
   const isValidPrompt = prompt
     .trim()
