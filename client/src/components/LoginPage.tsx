@@ -1,9 +1,9 @@
-import { Button, View, Spinner, Text, Form, XStack } from "tamagui";
-import React, { useEffect, useState } from "react";
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { Alert, TouchableOpacity } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
+import { LinearGradient } from "@tamagui/linear-gradient";
 import { router } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Alert, TouchableOpacity } from "react-native";
+import { Button, Form, Spinner, Text, View, XStack } from "tamagui";
 import TextInput from "./TextInput";
 
 type LoginPageProps = {

@@ -1,11 +1,11 @@
-import { Button, Input, View, Spinner, Text, Form, XStack } from "tamagui";
-import React, { useEffect, useState } from "react";
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { Alert } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
+import { LinearGradient } from "@tamagui/linear-gradient";
 import { router } from "expo-router";
-import TextInput from "./TextInput";
+import React, { useEffect, useState } from "react";
+import { Alert } from "react-native";
+import { Button, Form, Input, Spinner, Text, View, XStack } from "tamagui";
 import { generateUsername } from "../utils/utilityFunctions";
+import TextInput from "./TextInput";
 
 type SignUpPageProps = {
   toggleVariant: () => void;

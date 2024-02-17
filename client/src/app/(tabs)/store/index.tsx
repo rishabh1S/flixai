@@ -1,13 +1,14 @@
-import { LinearGradient } from "@tamagui/linear-gradient";
-import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Headers, PostsLayout } from "@/src/components";
-import { Input, Text, XStack } from "tamagui";
-import { AntDesign } from "@expo/vector-icons";
-import { Dimensions, Pressable } from "react-native";
-import { PostData } from "@/src/utils/types";
 import { fetchPosts } from "@/api";
+import { Headers, PostsLayout } from "@/src/components";
+import { PostData } from "@/src/utils/types";
+import { shuffleArray } from "@/src/utils/utilityFunctions";
+import { AntDesign } from "@expo/vector-icons";
+import { LinearGradient } from "@tamagui/linear-gradient";
 import SkeletonLoader from "expo-skeleton-loader";
+import React, { useEffect, useState } from "react";
+import { Dimensions, Pressable } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Input, Text, XStack } from "tamagui";
 
 const { width, height } = Dimensions.get("window");
 
@@ -165,7 +166,7 @@ export default function HomeScreen() {
         <PostsLayout
           refreshing={refreshing}
           onRefresh={onRefresh}
-          posts={searchText.length > 2 ? results : posts}
+          posts={searchText.length > 2 ? results : shuffleArray(posts)}
         />
       )}
     </LinearGradient>

@@ -1,7 +1,7 @@
-import { Input, View } from "tamagui";
+import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { KeyboardTypeOptions, TouchableOpacity } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Input, View } from "tamagui";
 
 type InputFieldProps = {
   placeholder: string;

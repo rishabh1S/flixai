@@ -11,7 +11,7 @@ import { Avatar, Image, Label, Text, XStack, YStack } from "tamagui";
 import { handleDownload, handleShare } from "../utils/utilityFunctions";
 import ImageViewFooter from "./ImageViewFooter";
 
-const width = Dimensions.get("window").width;
+const { width } = Dimensions.get("window");
 
 const Post = () => {
   const { id } = useLocalSearchParams<{

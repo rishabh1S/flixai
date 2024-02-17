@@ -12,7 +12,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ImageView from "react-native-image-viewing";
 import { Avatar, Image, Label, Text, XStack, YStack } from "tamagui";
 
-const width = Dimensions.get("window").width;
+const { width } = Dimensions.get("window");
 
 interface OtherPostProps {
   post: any;

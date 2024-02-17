@@ -1,9 +1,9 @@
-import React from "react";
-import { Image } from "tamagui";
-import { Pressable, RefreshControl, ScrollView } from "react-native";
-import { PostData } from "@/src/utils/types";
 import { useGlobalContext } from "@/src/context/GlobalContext";
+import { PostData } from "@/src/utils/types";
 import { router } from "expo-router";
+import React from "react";
+import { Pressable, RefreshControl, ScrollView } from "react-native";
+import { Image } from "tamagui";
 import { getItemDimensions } from "../utils/utilityFunctions";
 
 interface PostLayoutProps {

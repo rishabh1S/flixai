@@ -1,7 +1,10 @@
+import { fetchPosts } from "@/api";
+import { Alerts, ImageViewFooter, PostsLayout } from "@/src/components";
+import { useGlobalContext } from "@/src/context/GlobalContext";
 import {
+  Feather,
   MaterialCommunityIcons,
   MaterialIcons,
-  Feather,
 } from "@expo/vector-icons";
 import { LinearGradient } from "@tamagui/linear-gradient";
 import * as Clipboard from "expo-clipboard";
@@ -21,10 +24,6 @@ import {
   XStack,
   YStack,
 } from "tamagui";
-import { useGlobalContext } from "@/src/context/GlobalContext";
-var { width, height } = Dimensions.get("window");
-import { Alerts, ImageViewFooter, PostsLayout } from "@/src/components";
-import { fetchPosts } from "@/api";
 import { useUserContext } from "../context/UserContext";
 import { PostData } from "../utils/types";
 import {
@@ -32,6 +31,7 @@ import {
   handlePublish,
   handleShare,
 } from "../utils/utilityFunctions";
+var { width, height } = Dimensions.get("window");
 
 interface DotIndicatorProps {
   totalDots: number;

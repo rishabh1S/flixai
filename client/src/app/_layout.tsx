@@ -1,19 +1,19 @@
-import "../../tamagui.css";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { useFonts } from "expo-font";
 import { SplashScreen, Stack, useRouter } from "expo-router";
+import * as SecureStore from "expo-secure-store";
+import React, { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { TamaguiProvider } from "tamagui";
 import { config } from "../../tamagui.config";
-import { useFonts } from "expo-font";
-import React, { useEffect } from "react";
-import * as SecureStore from "expo-secure-store";
-import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { UserProvider } from "../context/UserContext";
+import "../../tamagui.css";
 import { GlobalProvider } from "../context/GlobalContext";
+import { UserProvider } from "../context/UserContext";
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 

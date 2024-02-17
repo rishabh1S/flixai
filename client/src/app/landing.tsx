@@ -1,16 +1,14 @@
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { Button, Text, View, YStack, Image, XStack, Label } from "tamagui";
-import { Dimensions, TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 import { LoginPage, SignUpPage } from "@/src/components";
-import { useCallback, useEffect, useRef, useState } from "react";
-import RBSheet from "react-native-raw-bottom-sheet";
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "@tamagui/linear-gradient";
 import { usePathname } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Dimensions, TouchableOpacity } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
+import { Button, Image, Label, Text, View, XStack, YStack } from "tamagui";
 
 type Variant = "LOGIN" | "REGISTER";
-const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
+const { width, height } = Dimensions.get("window");
 
 export default function LandingScreen() {
   const refRBSheet = useRef<RBSheet>(null);

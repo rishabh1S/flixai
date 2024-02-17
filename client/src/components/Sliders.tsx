@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Label, YStack, Text, XStack } from "tamagui";
 import Slider from "@react-native-community/slider";
+import React, { useEffect, useState } from "react";
+import { Label, Text, XStack, YStack } from "tamagui";
 
 interface SlidersProps {
   title: string;

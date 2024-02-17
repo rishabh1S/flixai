@@ -1,6 +1,6 @@
 import React from "react";
-import { Pressable, TouchableOpacity } from "react-native";
-import { Avatar, Card, Text, Image, XStack } from "tamagui";
+import { Pressable } from "react-native";
+import { Avatar, Card, Image, Text, XStack } from "tamagui";
 
 interface CardsProps {
   uri: string;

@@ -1,22 +1,21 @@
+import { AntDesign, Feather } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
 import React from "react";
 import {
   Accordion,
-  View,
-  Text,
-  Square,
-  Label,
-  TextArea,
-  Input,
-  YStack,
   Button,
-  XStack,
-  Switch,
   Image,
+  Input,
+  Label,
+  Square,
+  Switch,
+  Text,
+  TextArea,
+  View,
+  XStack,
+  YStack,
 } from "tamagui";
-import { Feather } from "@expo/vector-icons";
 import Sliders from "./Sliders";
-import * as ImagePicker from "expo-image-picker";
-import { AntDesign } from "@expo/vector-icons";
 
 interface AccordiansProps {
   negativePrompt: string;

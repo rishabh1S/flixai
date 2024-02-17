@@ -1,14 +1,9 @@
-import React from "react";
-import { Tabs } from "expo-router";
-import { View } from "tamagui";
-import { colorTokens } from "@tamagui/themes";
-import {
-  Ionicons,
-  AntDesign,
-  FontAwesome6,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { FontAwesome6, Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { BottomTabBar } from "@react-navigation/bottom-tabs";
+import { colorTokens } from "@tamagui/themes";
+import { Tabs } from "expo-router";
+import React from "react";
+import { View } from "tamagui";
 
 export default function TabLayout() {
   return (

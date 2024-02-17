@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { LinearGradient } from "@tamagui/linear-gradient";
-import { OtherPost, Post } from "@/src/components";
-import { ScrollView, YStack } from "tamagui";
 import { fetchPosts } from "@/api";
+import { OtherPost, Post } from "@/src/components";
 import { useGlobalContext } from "@/src/context/GlobalContext";
 import { PostData } from "@/src/utils/types";
+import { shuffleArray } from "@/src/utils/utilityFunctions";
+import { LinearGradient } from "@tamagui/linear-gradient";
 import SkeletonLoader from "expo-skeleton-loader";
+import React, { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
+import { ScrollView, YStack } from "tamagui";
 
 const { width } = Dimensions.get("window");
 
@@ -88,8 +89,7 @@ export default function PostScreen() {
         <ScrollView showsVerticalScrollIndicator={false}>
           <Post />
           <YStack paddingBottom="$9">
-            {posts
-              .sort(() => Math.random() - 0.5)
+            {shuffleArray(posts)
               .filter((post) => post._id !== currentPostId)
               .map((post) => (
                 <OtherPost key={post._id} post={post} />

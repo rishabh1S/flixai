@@ -1,7 +1,7 @@
-import React from "react";
-import { XStack } from "tamagui";
-import { Pressable } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
+import { Pressable } from "react-native";
+import { XStack } from "tamagui";
 
 interface ImageViewFooterProps {
   onDownload: () => void;

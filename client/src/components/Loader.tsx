@@ -1,12 +1,12 @@
-import { View, StyleSheet } from "react-native";
-import React, { useEffect } from "react";
 import LottieView from "lottie-react-native";
-import { Label } from "tamagui";
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import Animated, {
+  useAnimatedStyle,
   useSharedValue,
   withTiming,
-  useAnimatedStyle,
 } from "react-native-reanimated";
+import { Label } from "tamagui";
 
 const Loader = () => {
   const fadeValue = useSharedValue(0);

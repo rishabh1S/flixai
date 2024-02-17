@@ -1,21 +1,20 @@
-import { LinearGradient } from "@tamagui/linear-gradient";
-import React, { ReactElement, useRef, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Avatar, Text, Label, View, YStack, XStack, Input } from "tamagui";
-import {
-  MaterialIcons,
-  Ionicons,
-  Feather,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-import { router } from "expo-router";
-import { useAuth } from "@clerk/clerk-expo";
-import { Pressable } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import { useUser } from "@clerk/clerk-expo";
 import Alerts from "@/src/components/Alerts";
 import { useUserContext } from "@/src/context/UserContext";
+import { useAuth, useUser } from "@clerk/clerk-expo";
+import {
+  Feather,
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+import { LinearGradient } from "@tamagui/linear-gradient";
+import * as ImagePicker from "expo-image-picker";
+import { router } from "expo-router";
+import React, { ReactElement, useRef, useState } from "react";
+import { Pressable } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Avatar, Input, Label, Text, View, XStack, YStack } from "tamagui";
 
 interface ActionButtonProps {
   icon: ReactElement;

@@ -1,7 +1,6 @@
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
-import { View, XStack, Text, Label, Button } from "tamagui";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
+import { Button, Label, Text, View, XStack } from "tamagui";
 
 interface NumberStepperProps {
   min: number;

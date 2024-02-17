@@ -7,9 +7,9 @@ import {
   Loader,
   NumberStepper,
 } from "@/src/components";
-import { aspectRatios, presetData, defaultValues } from "@/src/utils/default";
-import { randomPrompts } from "@/src/utils/randomPrompts";
 import { useGlobalContext } from "@/src/context/GlobalContext";
+import { aspectRatios, defaultValues, presetData } from "@/src/utils/default";
+import { randomPrompts } from "@/src/utils/randomPrompts";
 import {
   FontAwesome5,
   MaterialCommunityIcons,

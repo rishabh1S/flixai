@@ -1,6 +1,6 @@
-import React from "react";
-import { AlertDialog, Button, XStack, YStack, Text } from "tamagui";
 import { MaterialIcons } from "@expo/vector-icons";
+import React from "react";
+import { AlertDialog, Button, Text, XStack, YStack } from "tamagui";
 
 interface AlertsProps {
   title: string;

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, Avatar } from "tamagui";
+import { Avatar, Image, View } from "tamagui";
 import { useUserContext } from "../context/UserContext";
 
 const Headers = () => {
