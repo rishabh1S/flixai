@@ -1,5 +1,7 @@
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import React from "react";
+import { AntDesign } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native";
 
 const StackLayout = () => {
   return (
@@ -13,6 +15,11 @@ const StackLayout = () => {
             backgroundColor: "black",
           },
           headerTitleAlign: "center",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()}>
+              <AntDesign name="arrowleft" size={24} color="white" />
+            </TouchableOpacity>
+          ),
         }}
       />
     </Stack>

@@ -125,7 +125,7 @@ export default function GenerateScreen() {
               onPress={handleSurpriseMeClick}
               theme="red"
               iconAfter={
-                <FontAwesome5 name="lightbulb" size={14} color="yellow" />
+                <FontAwesome5 name="lightbulb" size={14} color="#fffdd0" />
               }
               size="$2"
               borderRadius="$4"

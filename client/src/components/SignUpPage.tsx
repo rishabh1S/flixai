@@ -4,8 +4,8 @@ import { LinearGradient } from "@tamagui/linear-gradient";
 import { Alert } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { router } from "expo-router";
-import { generateUsername } from "@/api";
 import TextInput from "./TextInput";
+import { generateUsername } from "../utils/utilityFunctions";
 
 type SignUpPageProps = {
   toggleVariant: () => void;
@@ -98,11 +98,8 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ toggleVariant }) => {
   }, [status, loading]);
 
   useEffect(() => {
-    const generateAndSetUsername = async () => {
-      const generatedUsername = await generateUsername();
-      setUsername(generatedUsername);
-    };
-    generateAndSetUsername();
+    const generatedUsername = generateUsername();
+    setUsername(generatedUsername);
   }, []);
 
   const onSignUpPress = async () => {

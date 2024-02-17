@@ -3,7 +3,6 @@ import cors from "cors";
 
 import connectDB from "./mongo/connect.js";
 import fooocusImage from "./routes/fooocusRoutes.js";
-import generateUsername from "./routes/generateUsername.js";
 import postRoutes from "./routes/postRoutes.js";
 
 const app = express();
@@ -20,7 +19,6 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/api/fooocus", fooocusImage);
-app.use("/api/randomUser", generateUsername);
 app.use("/api/post", postRoutes);
 
 const startServer = async () => {

@@ -55,3 +55,47 @@ export const handleShare = (item: string) => {
     message: `Check out this amazing image generated with FlixAi! 🚀✨\n\n${item}\n\nDownload the app now to create your own unique images: [App download link]`,
   });
 };
+
+export const generateUsername = () => {
+  const uniqueWords = [
+    "zenith",
+    "effervescent",
+    "enigmatic",
+    "quixotic",
+    "ephemeral",
+    "serendipity",
+    "iridescent",
+    "luminescent",
+    "oblivion",
+    "whimsical",
+    "mellifluous",
+    "resplendent",
+    "ethereal",
+    "sonder",
+    "townsmart",
+    "surreptitious",
+    "efflorescence",
+    "evanescent",
+    "solitude",
+    "quasar",
+    "obfuscate",
+    "sonorous",
+    "paradox",
+    "panacea",
+    "labyrinthine",
+    "magniloquent",
+    "ephemeral",
+    "nebulous",
+    "serene",
+    "idyllic",
+    "ephemeral",
+    "ubiquitous",
+    "sibilant",
+    "peregrinate",
+  ];
+  const randomWord =
+    uniqueWords[Math.floor(Math.random() * uniqueWords.length)];
+  const randomNumber = Math.floor(Math.random() * 90 + 10);
+
+  return `${randomWord}${randomNumber}`;
+};

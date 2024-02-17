@@ -13,17 +13,6 @@ export const generateImage = async (params: any): Promise<any> => {
   }
 };
 
-export const generateUsername = async (): Promise<string> => {
-  try {
-    const response = await axios.post(`${server_url}/api/randomUser`);
-
-    return response.data.username;
-  } catch (error) {
-    console.error("Error generating username:", error);
-    throw new Error("Error generating username");
-  }
-};
-
 export const createPost = async (postData: any): Promise<any> => {
   try {
     const response = await axios.post(`${server_url}/api/post`, postData);
