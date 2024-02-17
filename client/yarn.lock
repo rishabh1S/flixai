@@ -7387,6 +7387,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-skeleton-loader@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "expo-skeleton-loader@npm:1.1.3"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-reanimated: ^2.2.0
+  checksum: 904aaab5b704873d9ee3274a8edc07f59b0164ee8195728181c7843ac266343eb5e9f11c47aa244ccf63307dc90aa9bc4320e2daeee1b73779b3b01c0ac23631
+  languageName: node
+  linkType: hard
+
 "expo-splash-screen@npm:0.26.4, expo-splash-screen@npm:~0.26.4":
   version: 0.26.4
   resolution: "expo-splash-screen@npm:0.26.4"
@@ -7689,6 +7700,7 @@ __metadata:
     expo-random: "npm:~13.6.0"
     expo-router: "npm:~3.4.7"
     expo-secure-store: "npm:~12.8.1"
+    expo-skeleton-loader: "npm:^1.1.3"
     expo-splash-screen: "npm:~0.26.4"
     expo-status-bar: "npm:~1.11.1"
     expo-system-ui: "npm:~2.9.3"
@@ -7702,7 +7714,7 @@ __metadata:
     react-native-image-viewing: "npm:^0.2.2"
     react-native-pager-view: "npm:^6.2.3"
     react-native-raw-bottom-sheet: "npm:^2.2.0"
-    react-native-reanimated: "npm:^3.6.2"
+    react-native-reanimated: "npm:~3.6.2"
     react-native-reanimated-carousel: "npm:^3.5.1"
     react-native-safe-area-context: "npm:4.8.2"
     react-native-screens: "npm:~3.29.0"
@@ -11231,7 +11243,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-reanimated@npm:^3.6.2":
+"react-native-reanimated@npm:~3.6.2":
   version: 3.6.2
   resolution: "react-native-reanimated@npm:3.6.2"
   dependencies:

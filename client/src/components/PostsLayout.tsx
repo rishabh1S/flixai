@@ -1,17 +1,10 @@
 import React from "react";
 import { Image } from "tamagui";
-import {
-  Dimensions,
-  Pressable,
-  RefreshControl,
-  ScrollView,
-} from "react-native";
+import { Pressable, RefreshControl, ScrollView } from "react-native";
 import { PostData } from "@/src/utils/types";
 import { useGlobalContext } from "@/src/context/GlobalContext";
 import { router } from "expo-router";
-
-const width = Dimensions.get("window").width;
-const height = Dimensions.get("window").height;
+import { getItemDimensions } from "../utils/utilityFunctions";
 
 interface PostLayoutProps {
   refreshing?: boolean;
@@ -27,21 +20,7 @@ const PostsLayout: React.FC<PostLayoutProps> = ({
   const { updateCurrentPostId } = useGlobalContext();
 
   const renderItem = (item: PostData, index: number) => {
-    let itemWidth, itemHeight;
-    index = index % 7;
-    if (index === 0 || index === 3) {
-      itemWidth = width * 0.6;
-      itemHeight = height * 0.25;
-    } else if (index === 1 || index === 2) {
-      itemWidth = width * 0.378;
-      itemHeight = height * 0.25;
-    } else if (index === 4 || index === 5) {
-      itemWidth = width * 0.489;
-      itemHeight = width * 0.489;
-    } else {
-      itemWidth = width;
-      itemHeight = height * 0.35;
-    }
+    const { itemWidth, itemHeight } = getItemDimensions(index);
 
     return (
       <Pressable
@@ -57,7 +36,7 @@ const PostsLayout: React.FC<PostLayoutProps> = ({
             width: itemWidth,
             height: itemHeight,
           }}
-          style={{ margin: 2 }}
+          style={{ marginVertical: 2 }}
         />
       </Pressable>
     );
@@ -65,6 +44,7 @@ const PostsLayout: React.FC<PostLayoutProps> = ({
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControl
           refreshing={refreshing!}

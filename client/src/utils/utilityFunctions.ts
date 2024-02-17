@@ -3,6 +3,9 @@ import Toast from "react-native-simple-toast";
 import * as MediaLibrary from "expo-media-library";
 import { createPost } from "@/api";
 import * as FileSystem from "expo-file-system";
+import { Dimensions } from "react-native";
+
+const { width, height } = Dimensions.get("window");
 
 export const handleDownload = async (item: string) => {
   try {
@@ -98,4 +101,24 @@ export const generateUsername = () => {
   const randomNumber = Math.floor(Math.random() * 90 + 10);
 
   return `${randomWord}${randomNumber}`;
+};
+
+export const getItemDimensions = (index: number) => {
+  let itemWidth, itemHeight;
+  index = index % 7;
+  if (index === 0 || index === 3) {
+    itemWidth = width * 0.595;
+    itemHeight = height * 0.25;
+  } else if (index === 1 || index === 2) {
+    itemWidth = width * 0.395;
+    itemHeight = height * 0.25;
+  } else if (index === 4 || index === 5) {
+    itemWidth = width * 0.495;
+    itemHeight = width * 0.495;
+  } else {
+    itemWidth = width;
+    itemHeight = height * 0.35;
+  }
+
+  return { itemWidth, itemHeight };
 };

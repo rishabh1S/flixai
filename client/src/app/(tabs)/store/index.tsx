@@ -4,22 +4,98 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Headers, PostsLayout } from "@/src/components";
 import { Input, Text, XStack } from "tamagui";
 import { AntDesign } from "@expo/vector-icons";
-import { Pressable } from "react-native";
+import { Dimensions, Pressable } from "react-native";
 import { PostData } from "@/src/utils/types";
 import { fetchPosts } from "@/api";
+import SkeletonLoader from "expo-skeleton-loader";
+
+const { width, height } = Dimensions.get("window");
+
+const Skeleton = () => {
+  return (
+    <SkeletonLoader>
+      <SkeletonLoader.Container
+        style={{ flexDirection: "row", justifyContent: "space-between" }}
+      >
+        <SkeletonLoader.Item
+          style={{
+            width: width * 0.595,
+            height: height * 0.25,
+            marginVertical: 2,
+          }}
+        />
+        <SkeletonLoader.Item
+          style={{
+            width: width * 0.395,
+            height: height * 0.25,
+            marginVertical: 2,
+          }}
+        />
+      </SkeletonLoader.Container>
+      <SkeletonLoader.Container
+        style={{ flexDirection: "row", justifyContent: "space-between" }}
+      >
+        <SkeletonLoader.Item
+          style={{
+            width: width * 0.395,
+            height: height * 0.25,
+            marginVertical: 2,
+          }}
+        />
+        <SkeletonLoader.Item
+          style={{
+            width: width * 0.595,
+            height: height * 0.25,
+            marginVertical: 2,
+          }}
+        />
+      </SkeletonLoader.Container>
+      <SkeletonLoader.Container
+        style={{ flexDirection: "row", justifyContent: "space-between" }}
+      >
+        <SkeletonLoader.Item
+          style={{
+            width: width * 0.495,
+            height: width * 0.495,
+            marginVertical: 2,
+          }}
+        />
+        <SkeletonLoader.Item
+          style={{
+            width: width * 0.495,
+            height: width * 0.495,
+            marginVertical: 2,
+          }}
+        />
+      </SkeletonLoader.Container>
+      <SkeletonLoader.Item
+        style={{
+          width: width,
+          height: height * 0.35,
+          marginVertical: 2,
+        }}
+      />
+    </SkeletonLoader>
+  );
+};
 
 export default function HomeScreen() {
   const [searchText, setSearchText] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [posts, setPosts] = useState<PostData[]>([]);
   const [results, setResults] = useState<PostData[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const getPosts = async () => {
     try {
+      setLoading(true);
       const data = await fetchPosts();
       setPosts(data.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -45,9 +121,6 @@ export default function HomeScreen() {
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
     getPosts();
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 1500);
   }, []);
 
   return (
@@ -86,11 +159,15 @@ export default function HomeScreen() {
           />
         </XStack>
       </SafeAreaView>
-      <PostsLayout
-        refreshing={refreshing}
-        onRefresh={onRefresh}
-        posts={searchText.length > 2 ? results : posts}
-      />
+      {loading ? (
+        <Skeleton />
+      ) : (
+        <PostsLayout
+          refreshing={refreshing}
+          onRefresh={onRefresh}
+          posts={searchText.length > 2 ? results : posts}
+        />
+      )}
     </LinearGradient>
   );
 }
