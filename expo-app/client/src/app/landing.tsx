@@ -91,9 +91,8 @@ export default function LandingScreen() {
           </Text>{" "}
           and{" "}
           <Text textDecorationLine="underline" color="$red9">
-            Privacy Policy
+            Privacy Policy.
           </Text>
-          .
         </Text>
       </YStack>
       {/* @ts-ignore */}

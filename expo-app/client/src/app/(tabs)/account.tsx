@@ -226,8 +226,8 @@ export default function AccountScreen() {
           actionBtnText="Delete"
           action={deleteAccount}
         />
-        <Text textAlign="center" color="$color9" fontSize="$1">
-          App Version 0.5.0 (beta)
+        <Text textAlign="center" color="$color8" fontSize="$1">
+          App Version 1.0.0
         </Text>
       </YStack>
     </LinearGradient>
