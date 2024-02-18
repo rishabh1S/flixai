@@ -8,7 +8,6 @@ Explore the realm of creative possibilities with Flixai, a cutting-edge AI image
 - [Tech Stack](#tech-stack)
 - [Installation](#installation)
 - [Screenshots](#screenshots)
-- [License](#license)
 
 ## Features:
 
@@ -59,7 +58,9 @@ cd expo-app
 2. Create a .env file in the client directory and set the following environment variables:
 
 `EXPO_PUBLIC_SERVER_URL`
-`EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY` 3. Create a .env file in the server directory and set the following environment variables:
+`EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY`
+
+3. Create a .env file in the server directory and set the following environment variables:
 
 `REPLICATE_API_TOKEN`
 `MONGODB_URL`
@@ -81,9 +82,10 @@ npm install
 
 4. Create account / Login in these to get the environment variables.
 
+- [Clerk](https://clerk.com/)
 - [Replicate](https://replicate.com/)
 - [Cloudinary](https://cloudinary.com/)
-- [MongoDb Atlast](https://www.mongodb.com/)
+- [MongoDb Atlas](https://www.mongodb.com/)
 
 4. Start the server.
 
@@ -99,18 +101,11 @@ npx expo start
 
 ## Screenshots
 
-![App Screenshot](https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273883/FlixAi/Screenshot_2024-02-18-16-38-13-886_com.rishabh1s.flixai_xwkqhh.jpg)
-
-![App Screenshot](https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273884/FlixAi/Screenshot_2024-02-18-16-41-24-774_com.rishabh1s.flixai_blshqj.jpg)
-
-![App Screenshot](https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273883/FlixAi/Screenshot_2024-02-18-16-51-12-389_host.exp.exponent_dyxguo.jpg)
-
-![App Screenshot](https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273883/FlixAi/Screenshot_2024-02-18-16-41-44-013_com.rishabh1s.flixai_r0hrzi.jpg)
-
-![App Screenshot](https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273883/FlixAi/Screenshot_2024-02-18-02-10-35-555_com.rishabh1s.flixai_qinjy1.jpg)
-
-![App Screenshot](https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273884/FlixAi/Screenshot_2024-02-18-16-45-45-037_com.rishabh1s.flixai_lzyedd.jpg)
-
-## License
-
-This project is licensed under the [MIT](https://choosealicense.com/licenses/mit/).
+<div style="display: flex; justify-content: space-between;">
+    <img src="https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273883/FlixAi/Screenshot_2024-02-18-16-38-13-886_com.rishabh1s.flixai_xwkqhh.jpg" width="150" height="300">
+    <img src="https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273884/FlixAi/Screenshot_2024-02-18-16-41-24-774_com.rishabh1s.flixai_blshqj.jpg" width="150" height="300">
+    <img src="https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273883/FlixAi/Screenshot_2024-02-18-16-51-12-389_host.exp.exponent_dyxguo.jpg" width="150" height="300">
+    <img src="https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273883/FlixAi/Screenshot_2024-02-18-16-41-44-013_com.rishabh1s.flixai_r0hrzi.jpg" width="150" height="300">
+    <img src="https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273883/FlixAi/Screenshot_2024-02-18-02-10-35-555_com.rishabh1s.flixai_qinjy1.jpg" width="150" height="300">
+    <img src="https://res.cloudinary.com/dnp36kqdc/image/upload/v1708273884/FlixAi/Screenshot_2024-02-18-16-45-45-037_com.rishabh1s.flixai_lzyedd.jpg" width="150" height="300">
+</div>
