@@ -1,0 +1,65 @@
+import React from "react";
+import { Pressable } from "react-native";
+import { Avatar, Card, Image, Text, XStack } from "tamagui";
+
+interface CardsProps {
+  uri: string;
+  avataruri?: string;
+  title: string;
+  selected?: boolean;
+  onPress: () => void;
+  width: number;
+  height: number;
+  mr: string;
+}
+
+const Cards: React.FC<CardsProps> = ({
+  uri,
+  avataruri,
+  title,
+  selected,
+  onPress,
+  width,
+  height,
+  mr,
+}) => {
+  return (
+    <Pressable onPress={onPress}>
+      <Card
+        elevate
+        animation="bouncy"
+        marginRight={mr}
+        width={width}
+        height={height}
+        overflow="hidden"
+        borderWidth={selected ? 1 : 0}
+        borderColor="$red11Dark"
+      >
+        <Card.Header padded>
+          <Text fontSize={20} fontWeight={"bold"}>
+            {selected ? null : title}
+          </Text>
+        </Card.Header>
+        <Card.Footer padded>
+          <XStack flex={1} />
+          <Avatar circular>
+            <Avatar.Image accessibilityLabel="Cam" src={avataruri} />
+            <Avatar.Fallback backgroundColor="$red10" />
+          </Avatar>
+        </Card.Footer>
+        <Card.Background>
+          <Image
+            alignSelf="center"
+            source={{
+              width: width,
+              height: height,
+              uri: uri,
+            }}
+          />
+        </Card.Background>
+      </Card>
+    </Pressable>
+  );
+};
+
+export default Cards;
